@@ -7,7 +7,9 @@ import { TweetyModule } from './tweety/tweety.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URI ?? 'mongodb://localhost/'),
+    MongooseModule.forRoot(
+      process.env.MONGO_URI ?? 'mongodb://localhost/tweety',
+    ),
     ConfigModule.forRoot(),
     TweetyModule,
   ],

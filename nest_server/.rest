@@ -2,7 +2,10 @@
 POST http://localhost:5000/tweety
 Content-Type: application/json
 
-
 {
   "content":"This is first tweet"
 }
+
+###
+GET http://localhost:5000/tweety
+Content-Type: application/json

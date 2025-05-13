@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Tweety, TweetySchema } from '../schemas/tweety.schema';
+import { Tweety, TweetySchema } from './schema/tweety.schema';
 import { TweetyService } from './tweety.service';
 import { TweetyController } from './tweety.controller';
 

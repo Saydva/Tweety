@@ -1,11 +1,12 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateTweetyDto } from '../dto/create.dto';
+import { CreateTweetyDto } from './dto/create.dto';
 import { TweetyService } from './tweety.service';
 
 @Controller('tweety')
@@ -20,5 +21,13 @@ export class TweetyController {
     // Handle the creation of a tweet here
     // You can use a service to interact with the database or perform other operations
     return this.tweetyService.createTweety(createTweetDto);
+  }
+
+  @Get()
+  @UsePipes(new ValidationPipe())
+  async getAllTweeties() {
+    // Handle the retrieval of all tweets here
+    // You can use a service to interact with the database or perform other operations
+    return this.tweetyService.getAllTweeties();
   }
 }
