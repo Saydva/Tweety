@@ -1,6 +1,6 @@
 import { useInputStore } from "../../store/input.store";
 import { useMessagesStore } from "../../store/messages.store";
-import { AxiosActions } from "../../utilities/axios";
+import { useAxios } from "../../utilities/axios";
 
 const Input = () => {
   const InputStore = useInputStore((state) => state);
@@ -23,9 +23,8 @@ const Input = () => {
           <button
             className="btn border-cyan-800"
             onClick={() => {
-              AxiosActions.AxiosPost({ content: InputStore.inputValue })
-                .then(() => InputStore.clearInputValue())
-                .then(() => AxiosActions.AxiosGet());
+              useAxios.sendMessage();
+              useAxios.getMessages();
             }}
           >
             send

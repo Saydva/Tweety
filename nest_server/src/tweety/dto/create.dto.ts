@@ -4,7 +4,7 @@ export class CreateTweetyDto {
   @IsOptional()
   @IsString()
   userId: string;
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   content: string;
 }

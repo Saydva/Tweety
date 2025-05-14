@@ -3,13 +3,15 @@ import Input from "./components/input/input";
 import MessageBoard from "./components/messages/MessageBoard";
 import { useMessagesStore } from "./store/messages.store";
 import { useEffect } from "react";
-import { AxiosActions } from "./utilities/axios";
+import { useAxios } from "./utilities/axios";
 
 function App() {
   const messagesStore = useMessagesStore((state) => state);
+
   useEffect(() => {
-    AxiosActions.AxiosGet();
+    useAxios.getMessages();
   }, []);
+
   return (
     <>
       <Navbar />

@@ -29,7 +29,7 @@ const Navbar = () => {
 
       <div className="navbar-end">
         <div className="ps-4">
-          <a className="text-lg font-bold">daisyUI</a>
+          <a className="text-lg font-bold">Tweety</a>
         </div>
       </div>
     </div>
