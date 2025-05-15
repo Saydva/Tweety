@@ -28,6 +28,23 @@ const axiosGet = async () => {
     console.log(error);
   }
 };
+
+const axiosDelete = async (id: string) => {
+  try {
+    await axios.delete(`http://localhost:5000/tweety/${id}`);
+    useMessagesStore.getState().clearError();
+    useMessagesStore.getState().setError(null);
+  } catch (error) {
+    if (error instanceof Error) {
+      useMessagesStore
+        .getState()
+        .setError((error as any).response.data.message);
+      console.log(error);
+    }
+  }
+};
+// Function to delete a message by ID
+
 // Function to check if the input contains only spaces
 // and set an error message if it does
 // This function uses a regular expression to check if the input contains only spaces
@@ -46,7 +63,10 @@ export const useAxios = {
       useMessagesStore.getState().setError("Please enter a message");
       return;
     } else {
-      axiosPost({ content: useInputStore.getState().inputValue })
+      axiosPost({
+        content: useInputStore.getState().inputValue,
+        date: new Date().toString(),
+      })
         .then(() => useInputStore.getState().clearInputValue())
         .then(() => axiosGet());
     }
@@ -54,5 +74,10 @@ export const useAxios = {
   },
   getMessages: () => {
     axiosGet();
+  },
+  deleteMessage: (id: string) => {
+    axiosDelete(id)
+      .then(() => useMessagesStore.getState().clearError())
+      .then(() => axiosGet());
   },
 };

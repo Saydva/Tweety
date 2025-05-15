@@ -16,6 +16,7 @@ const Navbar = () => {
             onClick={() => NavbarStore.toggle()}
             className="btn m-1"
           >
+            {/* icon from react-feather */}
             <AlignJustify />
           </div>
 

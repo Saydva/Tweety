@@ -6,5 +6,7 @@ export class Tweety {
   userId: string;
   @Prop({ required: true })
   content: string;
+  @Prop({ required: true })
+  date: string;
 }
 export const TweetySchema = SchemaFactory.createForClass(Tweety);

@@ -1,4 +1,9 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateTweetyDto {
   @IsOptional()
@@ -7,4 +12,7 @@ export class CreateTweetyDto {
   @IsNotEmpty()
   @IsString()
   content: string;
+  @IsNotEmpty()
+  @IsString()
+  date: string;
 }

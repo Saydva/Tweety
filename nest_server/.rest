@@ -3,9 +3,21 @@ POST http://localhost:5000/tweety
 Content-Type: application/json
 
 {
-  "content":"This is first tweet"
+  "content":"This is first tweet",
+  "date":"2023-10-01T12:11:00Z"
 }
 
 ###
 GET http://localhost:5000/tweety
 Content-Type: application/json
+
+###
+GET http://localhost:5000/tweety/68264506e2b2b93bf5c8ddbb
+Content-Type: application/json  
+
+###
+DELETE http://localhost:5000/tweety/6826448c4dc15ce953f51524
+Content-Type: application/json
+
+
+

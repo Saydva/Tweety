@@ -1,16 +1,21 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpException,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateTweetyDto } from './dto/create.dto';
 import { TweetyService } from './tweety.service';
+import mongoose from 'mongoose';
 
 @Controller('tweety')
 export class TweetyController {
+  userService: any;
   constructor(private readonly tweetyService: TweetyService) {}
   // Add your controller methods and properties here
   // For example, you can define routes and handle requests
@@ -29,5 +34,27 @@ export class TweetyController {
     // Handle the retrieval of all tweets here
     // You can use a service to interact with the database or perform other operations
     return this.tweetyService.getAllTweeties();
+  }
+  @Get(':id')
+  @UsePipes(new ValidationPipe())
+  async getTweetyById(@Param('id') id: string) {
+    // Handle the retrieval of a tweet by ID here
+    // You can use a service to interact with the database or perform other operations
+    // Check if the ID is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new HttpException('Invalid ID format', 400);
+    } else {
+      return this.tweetyService.getTweetyById(id);
+    }
+  }
+
+  @Delete(':id')
+  @UsePipes(new ValidationPipe())
+  async deleteTweety(@Param('id') id: string) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new HttpException('Invalid ID format', 400);
+    } else {
+      return this.tweetyService.deleteTweety(id);
+    }
   }
 }

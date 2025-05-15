@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { get, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateTweetyDto } from 'src/tweety/dto/create.dto';
 import { Tweety } from 'src/tweety/schema/tweety.schema';
 
@@ -12,10 +12,17 @@ export class TweetyService {
   async createTweety(createTweetyDto: CreateTweetyDto) {
     const newTweety = new this.tweetyModel(createTweetyDto);
     await newTweety.save();
+    return newTweety;
   }
-  getAllTweeties() {
-    return this.tweetyModel.find();
+  async getAllTweeties() {
+    return await this.tweetyModel.find();
   }
-
-  // Add your service methods and properties here
+  async getTweetyById(id: string) {
+    const tweety = await this.tweetyModel.findById(id);
+    return tweety;
+  }
+  async deleteTweety(id: string) {
+    const tweety = await this.tweetyModel.findByIdAndDelete(id);
+    return tweety;
+  }
 }

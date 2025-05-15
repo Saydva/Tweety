@@ -8,28 +8,24 @@ const Input = () => {
 
   return (
     <div>
-      <fieldset className="fieldset">
-        <legend className="fieldset-legend text-slate-400">Type message</legend>
-        <div className="flex flex-row gap-1">
-          <input
-            value={InputStore.inputValue}
-            onChange={(e) => InputStore.setInputValue(e.target.value)}
-            type="text"
-            className="input"
-            placeholder={
-              MessagesStore.error ? MessagesStore.error : "Type your message"
-            }
-          />
-          <button
-            className="btn border-cyan-800"
-            onClick={() => {
-              useAxios.sendMessage();
-              useAxios.getMessages();
-            }}
-          >
-            send
-          </button>
-        </div>
+      <fieldset className="fieldset flex flexrow">
+        <textarea
+          value={InputStore.inputValue}
+          onChange={(e) => InputStore.setInputValue(e.target.value)}
+          className="textarea "
+          placeholder={
+            MessagesStore.error ? MessagesStore.error : "Type your message"
+          }
+        ></textarea>
+        <button
+          className="btn border-cyan-800"
+          onClick={() => {
+            useAxios.sendMessage();
+            useAxios.getMessages();
+          }}
+        >
+          send
+        </button>
       </fieldset>
     </div>
   );

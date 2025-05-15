@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 type Element = {
+  date: string;
   content: string;
   _id: string;
 };
