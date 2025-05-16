@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateTweetyDto {
+export class createCommentDto {
   @IsOptional()
   @IsString()
   userId: string;

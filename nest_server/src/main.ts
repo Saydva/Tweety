@@ -6,9 +6,10 @@ async function bootstrap() {
   app.enableCors();
   await app.listen(process.env.PORT ?? 3000);
   console.log(
-    `Application is running on:`,
-    process.env.PORT,
+    `MongoDB is running on:`,
     process.env.MONGO_URI,
+    'port:',
+    process.env.PORT,
   );
 }
 bootstrap();
