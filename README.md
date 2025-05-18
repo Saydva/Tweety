@@ -14,9 +14,10 @@ npm i --save @nestjs/config
 npm i --save class-validator
 npm i --save class-transform
 
-inside .env :
+inside .env paste :
 
 PORT = 5000
+
 MONGO_URI= "mongodb://localhost:27017/tweety"
 
 
