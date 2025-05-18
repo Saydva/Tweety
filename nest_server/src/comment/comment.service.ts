@@ -9,9 +9,14 @@ export class CommentService {
   constructor(
     @InjectModel('comment') private readonly CommentModel: Model<Comment>,
   ) {}
-  async createSubTweety(createCommentDto: createCommentDto) {
+  async createComment(createCommentDto: createCommentDto) {
     const newComment = new this.CommentModel(createCommentDto);
     await newComment.save();
     return newComment;
+  }
+
+  async getAllComments() {
+    const comments = await this.CommentModel.find();
+    return comments;
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
@@ -12,9 +13,15 @@ import { createCommentDto } from './dto/comment.dto';
 export class CommmentController {
   constructor(private readonly CommentService: CommentService) {}
 
+  @Get()
+  @UsePipes(new ValidationPipe())
+  async getAllComments() {
+    return this.CommentService.getAllComments();
+  }
+
   @Post()
   @UsePipes(new ValidationPipe())
-  async createSubTweety(@Body() createCommentDto: createCommentDto) {
-    return this.CommentService.createSubTweety(createCommentDto);
+  async createComment(@Body() createCommentDto: createCommentDto) {
+    return this.CommentService.createComment(createCommentDto);
   }
 }
