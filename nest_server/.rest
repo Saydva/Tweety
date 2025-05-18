@@ -26,15 +26,15 @@ Content-Type: application/json
 /////////////////////////////////////SubTweety API/////////////////////////////////////
 
 ###
-GET http://localhost:5000/subtweety
+GET http://localhost:5000/comment
 Content-Type: application/json
 
 ###
-POST http://localhost:5000/subtweety
+POST http://localhost:5000/comment
 Content-Type: application/json
 
 {
-  "content":"This is first subtweet",
+  "content":"This is second subtweet",
   "date":"2023-10-01T12:11:00Z"
   
 }
