@@ -8,6 +8,7 @@ const axiosPost = async (data: object) => {
     await axios.post("http://localhost:5000/tweety", data);
     useMessagesStore.getState().clearError();
     useMessagesStore.getState().setError(null);
+    axiosGet();
   } catch (error) {
     if (error instanceof Error) {
       useMessagesStore
@@ -45,6 +46,58 @@ const axiosDelete = async (id: string) => {
 };
 // Function to delete a message by ID
 
+type CommentType = {
+  content: string;
+  date: string;
+};
+// Function to send a comment to the server
+
+const updateTweetyComments = async (id: string, data: CommentType) => {
+  try {
+    const tweetToUpdate = await axios.get(`http://localhost:5000/tweety/${id}`);
+    const updatedComments = [
+      ...tweetToUpdate.data.comments,
+      { content: data.content, date: data.date },
+    ];
+    console.log(updatedComments);
+    await axios.put(`http://localhost:5000/tweety/${id}`, {
+      comments: updatedComments,
+    });
+    axiosGet();
+    useMessagesStore.getState().clearError();
+    useMessagesStore.getState().setError(null);
+  } catch (error) {
+    if (error instanceof Error) {
+      useMessagesStore
+        .getState()
+        .setError((error as any).response.data.message);
+      console.log(error);
+    }
+  }
+};
+
+type SendNewCommentsType = CommentType[];
+
+const sendNewCommentList = async (
+  id: string,
+  newComments: SendNewCommentsType
+) => {
+  try {
+    await axios.put(`http://localhost:5000/tweety/${id}`, {
+      comments: newComments,
+    });
+    useMessagesStore.getState().clearError();
+    useMessagesStore.getState().setError(null);
+  } catch (error) {
+    if (error instanceof Error) {
+      useMessagesStore
+        .getState()
+        .setError((error as any).response.data.message);
+      console.log(error);
+    }
+  }
+};
+
 // Function to check if the input contains only spaces
 // and set an error message if it does
 // This function uses a regular expression to check if the input contains only spaces
@@ -55,9 +108,14 @@ function useRegex(input: string) {
 }
 
 export const useAxios = {
+  getTweets: () => {
+    axiosGet();
+  },
+  getTwety: (id: string) => {
+    axios.get(`http://localhost:5000/tweety/${id}`);
+  },
   // Function to send a message
-  // and clear the input value
-  sendMessage: () => {
+  sendTweets: () => {
     if (useRegex(useInputStore.getState().inputValue)) {
       useInputStore.getState().clearInputValue();
       useMessagesStore.getState().setError("Please enter a message");
@@ -66,18 +124,31 @@ export const useAxios = {
       axiosPost({
         content: useInputStore.getState().inputValue,
         date: new Date().toString(),
-      })
-        .then(() => useInputStore.getState().clearInputValue())
-        .then(() => axiosGet());
+      });
+      useInputStore.getState().clearInputValue();
     }
     useMessagesStore.getState().setError(null);
   },
-  getMessages: () => {
+  // Function to delete a message by ID
+  deleteMessage: (id: string) => {
+    axiosDelete(id);
+    useMessagesStore.getState().clearError();
     axiosGet();
   },
-  deleteMessage: (id: string) => {
-    axiosDelete(id)
-      .then(() => useMessagesStore.getState().clearError())
-      .then(() => axiosGet());
+  // Function to send a comment to the server
+  sendComment: (id: string, data: CommentType) => {
+    updateTweetyComments(id, data);
+    useMessagesStore.getState().clearError();
+  },
+  // // Function to update a comment by ID
+  // updateTweetyComments: (id: string, data: CommentType) => {
+  //   updateTweetyComments(id, data);
+  //   useMessagesStore.getState().clearError();
+  //   useMessagesStore.getState().setError(null);
+  // },
+  // Function to send a list of comments to the server
+  sendCommentList: (id: string, updatedComments: SendNewCommentsType) => {
+    sendNewCommentList(id, updatedComments);
+    useMessagesStore.getState().clearError();
   },
 };

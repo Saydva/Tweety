@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 type Element = {
+  comments: { content: string; date: string }[] | undefined;
   date: string;
   content: string;
   _id: string;

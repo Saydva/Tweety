@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTweetyDto } from 'src/tweety/dto/create.dto';
 import { Tweety } from 'src/tweety/schema/tweety.schema';
+import { UpdateTweetyDto } from './dto/updateTweety.dto';
 
 @Injectable()
 export class TweetyService {
@@ -23,6 +24,17 @@ export class TweetyService {
   }
   async deleteTweety(id: string) {
     const tweety = await this.tweetyModel.findByIdAndDelete(id);
+    return tweety;
+  }
+  async updateTweety(id: string, updateTweetyDto: UpdateTweetyDto) {
+    const tweety = await this.tweetyModel.findByIdAndUpdate(
+      id,
+      updateTweetyDto,
+      { new: true },
+    );
+    if (!tweety) {
+      throw new Error('Tweety not found');
+    }
     return tweety;
   }
 }

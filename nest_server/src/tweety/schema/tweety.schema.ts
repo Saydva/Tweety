@@ -8,5 +8,9 @@ export class Tweety {
   content: string;
   @Prop({ required: true })
   date: string;
+  @Prop({ required: false })
+  comments: string[];
+  @Prop({ required: false })
+  likes: number;
 }
 export const TweetySchema = SchemaFactory.createForClass(Tweety);

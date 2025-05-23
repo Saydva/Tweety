@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { TweetyModule } from './tweety/tweety.module';
-import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -13,7 +12,6 @@ import { CommentModule } from './comment/comment.module';
     ),
     ConfigModule.forRoot(),
     TweetyModule,
-    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

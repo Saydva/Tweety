@@ -20,8 +20,8 @@ const Input = () => {
         <button
           className="btn border-cyan-800"
           onClick={() => {
-            useAxios.sendMessage();
-            useAxios.getMessages();
+            useAxios.sendTweets();
+            useAxios.getTweets();
           }}
         >
           send

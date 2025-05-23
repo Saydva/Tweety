@@ -9,20 +9,20 @@ function App() {
   const messagesStore = useMessagesStore((state) => state);
 
   useEffect(() => {
-    useAxios.getMessages();
-  }, []);
+    useAxios.getTweets();
+  });
 
   return (
-    <>
+    <div className="m-auto w-1/2 min-w-96">
       <Navbar />
-      <div className="m-3">
+      <div className="flex flex-col gap-4 ">
         <Input />
         <div>
           Messages :
           <MessageBoard array={messagesStore.messages} />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

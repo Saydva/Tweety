@@ -10,13 +10,17 @@ type ArrayType = {
 
 const MessageBoard = ({ array }: ArrayType) => {
   const list = array
-
     .map((e) => (
-      <List key={e._id} elId={e._id} name={e.content} date={e.date} />
+      <List
+        key={e._id}
+        elId={e._id}
+        content={e.content}
+        date={e.date}
+        comments={e.comments}
+      />
     ))
     .reverse();
   return <div>{list}</div>;
 };
-console.log(List);
 
 export default MessageBoard;
