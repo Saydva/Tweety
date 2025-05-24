@@ -1,6 +1,7 @@
 import { useNavbarStore } from "../../store/navbar.store";
 import { AlignJustify } from "react-feather";
-// icon from react-feather
+
+// component to display the navbar
 
 const Navbar = () => {
   const NavbarStore = useNavbarStore((state) => state);

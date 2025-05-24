@@ -2,6 +2,8 @@ import { useInputStore } from "../../store/input.store";
 import { useMessagesStore } from "../../store/messages.store";
 import { useAxios } from "../../utilities/axios";
 
+// component to input a new message
+
 const Input = () => {
   const InputStore = useInputStore((state) => state);
   const MessagesStore = useMessagesStore((state) => state);

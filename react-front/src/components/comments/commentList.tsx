@@ -1,46 +1,41 @@
-import { XSquare } from "react-feather";
+import { Trash } from "react-feather";
+import type { CommentType } from "../../store/messages.store";
 import { useAxios } from "../../utilities/axios";
 
-type CommentElement = {
-  content: string;
-  date: string;
+type CommentsListProps = {
+  array: CommentType[];
 };
 
-type CommentListProps = {
-  comments: CommentElement[];
-};
-
-type IdType = {
-  id: string;
-};
-
-const CommentList = ({ comments, id }: CommentListProps & IdType) => {
-  const list = comments.map((comment, index) => (
-    <li
-      key={index}
-      className="list-none border-2 border-slate-600 rounded-lg p-2 m-2"
-    >
-      <div className="flex flex-row justify-between gap-3">
-        <div>
-          <p>{comment.content}</p>
-          <p className="textarea-xs p-2">{comment.date}</p>
+const CommentList = ({ array }: CommentsListProps) => {
+  const CommentList = array.map((comment, index) => (
+    <div key={index} className="p-2 border-b border-gray-200">
+      <div className="flex justify-between items-start">
+        <div className="flex flex-col">
+          <span className=" border-2 border-slate-500 p-1 text-xs rounded-md w-auto">
+            {comment.content}
+          </span>
+          <span className="text-gray-500 chat-footer">
+            {comment.date.slice(0, 25)}
+          </span>
         </div>
-        <button
+        <Trash
+          className="cursor-pointer bg-error rounded-sm p-1 min-w-6 m-1"
           onClick={() => {
-            const newComments = comments.filter((e) => e.date !== comment.date);
-            useAxios.sendCommentList(id, newComments);
-
-            console.log(newComments);
+            useAxios.sendNewCommentList(
+              comment.id,
+              array.filter((c) => c.content !== comment.content)
+            );
           }}
-          className="hover:bg-slate-600 rounded-full p-1 h-min"
-        >
-          <XSquare />
-        </button>
+        />
       </div>
-    </li>
+    </div>
   ));
 
-  return <div className="flex flex-col">{list}</div>;
+  return (
+    <div>
+      <ul>{CommentList}</ul>
+    </div>
+  );
 };
 
 export default CommentList;

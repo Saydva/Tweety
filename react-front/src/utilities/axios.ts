@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useMessagesStore } from "../store/messages.store";
 import { useInputStore } from "../store/input.store";
+import { useIdUpdatedMessageStore } from "../store/idUpatedMessage.sore";
+
 // Define the AxiosActions object with axiosPost and axiosGet methods
 // Function to send a message to the server
 const axiosPost = async (data: object) => {
@@ -18,6 +20,7 @@ const axiosPost = async (data: object) => {
     }
   }
 };
+
 // Function to get messages from the server
 // and update the messages store
 const axiosGet = async () => {
@@ -30,6 +33,8 @@ const axiosGet = async () => {
   }
 };
 
+// Function to delete a message by ID
+// and update the messages store
 const axiosDelete = async (id: string) => {
   try {
     await axios.delete(`http://localhost:5000/tweety/${id}`);
@@ -44,25 +49,33 @@ const axiosDelete = async (id: string) => {
     }
   }
 };
-// Function to delete a message by ID
 
+// Function to delete a message by ID
+// and update the messages store
+// Define the type for the comment data
 type CommentType = {
+  id: string;
   content: string;
   date: string;
 };
-// Function to send a comment to the server
 
-const updateTweetyComments = async (id: string, data: CommentType) => {
+// Function to send a comment to the server
+// and update the comments of the tweet
+const updateTweetyComments = async (data: CommentType) => {
   try {
-    const tweetToUpdate = await axios.get(`http://localhost:5000/tweety/${id}`);
+    const tweetToUpdate = await axios.get(
+      `http://localhost:5000/tweety/${useIdUpdatedMessageStore.getState().id}`
+    );
     const updatedComments = [
       ...tweetToUpdate.data.comments,
-      { content: data.content, date: data.date },
+      { id: data.id, content: data.content, date: data.date },
     ];
-    console.log(updatedComments);
-    await axios.put(`http://localhost:5000/tweety/${id}`, {
-      comments: updatedComments,
-    });
+    await axios.put(
+      `http://localhost:5000/tweety/${useIdUpdatedMessageStore.getState().id}`,
+      {
+        comments: updatedComments,
+      }
+    );
     axiosGet();
     useMessagesStore.getState().clearError();
     useMessagesStore.getState().setError(null);
@@ -76,8 +89,11 @@ const updateTweetyComments = async (id: string, data: CommentType) => {
   }
 };
 
+// Define the type for the comments to be sent
+// This type is used to send a list of new comments to the server
 type SendNewCommentsType = CommentType[];
-
+// Function to send a list of new comments to the server
+// and update the comments of the tweet
 const sendNewCommentList = async (
   id: string,
   newComments: SendNewCommentsType
@@ -107,6 +123,7 @@ function useRegex(input: string) {
   return regex.test(input);
 }
 
+// Export the useAxios object with methods for getting, sending, and deleting tweets
 export const useAxios = {
   getTweets: () => {
     axiosGet();
@@ -136,19 +153,11 @@ export const useAxios = {
     axiosGet();
   },
   // Function to send a comment to the server
-  sendComment: (id: string, data: CommentType) => {
-    updateTweetyComments(id, data);
+  sendComment: (data: CommentType) => {
+    updateTweetyComments(data);
     useMessagesStore.getState().clearError();
   },
-  // // Function to update a comment by ID
-  // updateTweetyComments: (id: string, data: CommentType) => {
-  //   updateTweetyComments(id, data);
-  //   useMessagesStore.getState().clearError();
-  //   useMessagesStore.getState().setError(null);
-  // },
-  // Function to send a list of comments to the server
-  sendCommentList: (id: string, updatedComments: SendNewCommentsType) => {
-    sendNewCommentList(id, updatedComments);
-    useMessagesStore.getState().clearError();
+  sendNewCommentList: (id: string, newComments: SendNewCommentsType) => {
+    sendNewCommentList(id, newComments);
   },
 };

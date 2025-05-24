@@ -9,7 +9,7 @@ export class Tweety {
   @Prop({ required: true })
   date: string;
   @Prop({ required: false })
-  comments: string[];
+  comments: object[];
   @Prop({ required: false })
   likes: number;
 }

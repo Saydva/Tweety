@@ -1,14 +1,17 @@
 import { create } from "zustand";
 
-type Element = {
-  comments: { content: string; date: string }[] | undefined;
-  date: string;
+// Zustand store for managing input value state
+// This store is used to manage the messages displayed in the application
+export type CommentType = {
+  comments: CommentType[];
   content: string;
+  date: string;
+  id: string;
   _id: string;
 };
 
 export type MessagesStoreType = {
-  messages: Element[];
+  messages: CommentType[];
   error: null | string;
 };
 
