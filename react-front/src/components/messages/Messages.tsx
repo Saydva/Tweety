@@ -1,8 +1,8 @@
 import { useAxios } from "../../utilities/axios";
 import type { CommentType } from "../../store/messages.store";
 import Comment from "../comments/Comment";
-import CommentList from "../comments/commentList";
-import { XCircle, XSquare } from "react-feather";
+import CommentList from "../comments/CommentList";
+import { ThumbsUp, XSquare } from "react-feather";
 
 type ArrayTypeProps = {
   array: CommentType[];
@@ -21,11 +21,19 @@ const Messages = ({ array }: ArrayTypeProps) => {
           <div className="chat-footer "> {message.date.slice(0, 25)}</div>
         </div>
         <div className="buttons flex flex-row gap-2">
+          <ThumbsUp
+            className="bg-info cursor-pointer rounded-sm p-1"
+            onClick={() => {
+              useAxios.sendLikes(message._id, message.likes);
+              useAxios.getTweets();
+            }}
+          />
+          <span className="text-xs text-white">{message.likes}</span>
+          <Comment id={message._id} />
           <XSquare
             className="bg-error cursor-pointer rounded-sm p-1"
             onClick={() => message._id && DeleteMessage(message._id)}
           />
-          <Comment id={message._id} />
         </div>
       </div>
 

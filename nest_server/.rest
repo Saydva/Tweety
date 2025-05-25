@@ -23,7 +23,7 @@ DELETE http://localhost:5000/tweety/68264d1abc7f9d4a501def64
 Content-Type: application/json
 
 ###
-PUT http://localhost:5000/tweety/683244fba0994dc415671ce7
+PUT http://localhost:5000/tweety/68334a18840561da973b2452
 Content-Type: application/json
 
 {
@@ -37,7 +37,8 @@ Content-Type: application/json
     {"content": "This is first comment",
      "date": "2023-10-01T12:11:00Z"
     }
-  ]
+  ],
+  "likes":1
 }
 
 

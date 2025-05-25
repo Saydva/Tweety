@@ -15,5 +15,5 @@ export class CreateTweetyDto {
   comments: object[];
   @IsOptional()
   @IsNumber()
-  likes: number;
+  likes?: number;
 }

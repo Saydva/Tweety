@@ -7,6 +7,7 @@ export type CommentType = {
   content: string;
   date: string;
   id: string;
+  likes: number;
   _id: string;
 };
 

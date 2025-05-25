@@ -22,8 +22,15 @@ const Input = () => {
         <button
           className="btn border-cyan-800"
           onClick={() => {
-            useAxios.sendTweets();
-            useAxios.getTweets();
+            if (InputStore.inputValue.trim() === "") {
+              alert("Please enter a message");
+              return;
+            } else {
+              useAxios.sendTweets();
+              useAxios.getTweets();
+              InputStore.clearInputValue();
+              MessagesStore.clearError();
+            }
           }}
         >
           send

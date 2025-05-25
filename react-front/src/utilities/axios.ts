@@ -123,6 +123,22 @@ function useRegex(input: string) {
   return regex.test(input);
 }
 
+const sendLikes = async (id: string, likes: number) => {
+  try {
+    await axios.put(`http://localhost:5000/tweety/${id}`, {
+      likes: likes + 1,
+    });
+    axiosGet();
+  } catch (error) {
+    if (error instanceof Error) {
+      useMessagesStore
+        .getState()
+        .setError((error as any).response.data.message);
+      console.log(error);
+    }
+  }
+};
+
 // Export the useAxios object with methods for getting, sending, and deleting tweets
 export const useAxios = {
   getTweets: () => {
@@ -159,5 +175,8 @@ export const useAxios = {
   },
   sendNewCommentList: (id: string, newComments: SendNewCommentsType) => {
     sendNewCommentList(id, newComments);
+  },
+  sendLikes: (id: string, likes: number) => {
+    sendLikes(id, likes);
   },
 };
