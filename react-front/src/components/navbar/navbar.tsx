@@ -1,4 +1,4 @@
-import { useNavbarStore } from "../../store/navbar.store";
+import { useNavbarStore } from "./navbar.store";
 import { AlignJustify } from "react-feather";
 
 // component to display the navbar

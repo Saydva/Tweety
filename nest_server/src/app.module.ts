@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { TweetyModule } from './tweety/tweety.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { TweetyModule } from './tweety/tweety.module';
     ),
     ConfigModule.forRoot(),
     TweetyModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

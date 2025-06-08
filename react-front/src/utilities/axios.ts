@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useMessagesStore } from "../store/messages.store";
-import { useInputStore } from "../store/input.store";
+import { useMessagesStore } from "./messages.store";
+import { useNewTweetStore } from "../components/newTweet/NewTweet.store";
 import { useIdUpdatedMessageStore } from "../store/idUpatedMessage.sore";
 
 // Define the AxiosActions object with axiosPost and axiosGet methods
@@ -128,7 +128,7 @@ const sendLikes = async (id: string, likes: number) => {
     await axios.put(`http://localhost:5000/tweety/${id}`, {
       likes: likes + 1,
     });
-    axiosGet();
+    await axiosGet();
   } catch (error) {
     if (error instanceof Error) {
       useMessagesStore
@@ -149,16 +149,17 @@ export const useAxios = {
   },
   // Function to send a message
   sendTweets: () => {
-    if (useRegex(useInputStore.getState().inputValue)) {
-      useInputStore.getState().clearInputValue();
+    if (useRegex(useNewTweetStore.getState().inputValue)) {
+      useNewTweetStore.getState().clearInputValue();
       useMessagesStore.getState().setError("Please enter a message");
       return;
     } else {
       axiosPost({
-        content: useInputStore.getState().inputValue,
+        content: useNewTweetStore.getState().inputValue,
         date: new Date().toString(),
+        likes: 0,
       });
-      useInputStore.getState().clearInputValue();
+      useNewTweetStore.getState().clearInputValue();
     }
     useMessagesStore.getState().setError(null);
   },

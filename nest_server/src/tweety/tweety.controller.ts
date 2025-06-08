@@ -23,7 +23,6 @@ export class TweetyController {
   // For example, you can define routes and handle requests
   // using decorators like @Get(), @Post(), etc.
   @Post()
-  @UsePipes(new ValidationPipe())
   async createTweet(@Body() createTweetDto: CreateTweetyDto) {
     // Handle the creation of a tweet here
     // You can use a service to interact with the database or perform other operations
@@ -31,14 +30,12 @@ export class TweetyController {
   }
 
   @Get()
-  @UsePipes(new ValidationPipe())
   async getAllTweeties() {
     // Handle the retrieval of all tweets here
     // You can use a service to interact with the database or perform other operations
     return this.tweetyService.getAllTweeties();
   }
   @Get(':id')
-  @UsePipes(new ValidationPipe())
   async getTweetyById(@Param('id') id: string) {
     // Handle the retrieval of a tweet by ID here
     // You can use a service to interact with the database or perform other operations
@@ -51,7 +48,6 @@ export class TweetyController {
   }
 
   @Delete(':id')
-  @UsePipes(new ValidationPipe())
   async deleteTweety(@Param('id') id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new HttpException('Invalid ID format', 400);
@@ -61,7 +57,6 @@ export class TweetyController {
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe())
   async updateTweety(
     @Param('id') id: string,
     @Body() updateTweetyDto: UpdateTweetyDto,

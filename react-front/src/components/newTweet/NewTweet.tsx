@@ -1,11 +1,11 @@
-import { useInputStore } from "../../store/input.store";
-import { useMessagesStore } from "../../store/messages.store";
+import { useNewTweetStore } from "./NewTweet.store";
+import { useMessagesStore } from "../../utilities/messages.store";
 import { useAxios } from "../../utilities/axios";
 
-// component to input a new message
+// component for new message
 
-const Input = () => {
-  const InputStore = useInputStore((state) => state);
+const NewTweet = () => {
+  const InputStore = useNewTweetStore((state) => state);
   const MessagesStore = useMessagesStore((state) => state);
 
   return (
@@ -40,4 +40,4 @@ const Input = () => {
   );
 };
 
-export default Input;
+export default NewTweet;

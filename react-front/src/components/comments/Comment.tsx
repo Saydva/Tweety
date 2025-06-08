@@ -1,76 +1,75 @@
-import { MessageSquare } from "react-feather";
-import { useIdUpdatedMessageStore } from "../../store/idUpatedMessage.sore";
 import { useAxios } from "../../utilities/axios";
-import { useNewCommentStore } from "../../store/newComment.store";
-
-// this component is used to comment on a message
-// component is used in the Messages component
+import { Trash } from "react-feather";
 
 type CommentProps = {
-  id: string;
+  comment: {
+    id: string;
+    content: string;
+    date: string;
+  };
 };
 
-const Comment = ({ id }: CommentProps) => {
-  // this is used to get id of the message to be commented on
-  const idToUpdate = useIdUpdatedMessageStore((state) => state.id);
-  // this is used to update the state of id of the message to be commented on
-  const updateIdMessage = useIdUpdatedMessageStore(
-    (state) => state.updateIdMessage
-  );
-  // this is used to set the input value for the comment
-  const handelComment = useNewCommentStore((state) => state);
-  // this is used to send the comment to the server
-  const sendComment = useAxios.sendComment;
-  // this is used to get the input value for the comment
+type ArrayProps = {
+  array: CommentProps["comment"][];
+};
 
+const Comment = ({
+  comment,
+
+  array,
+}: CommentProps & ArrayProps) => {
   return (
-    <div>
-      <MessageSquare
-        className="cursor-pointer bg-info rounded-sm p-1"
-        onClick={() => {
-          updateIdMessage(id);
-          (
-            document.getElementById("my_modal_1") as HTMLDialogElement | null
-          )?.showModal();
-        }}
-      />
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">Comment tweety</h3>
-          <input
-            value={handelComment.newComment}
-            onChange={(e) => {
-              handelComment.setNewComment(e.target.value);
-            }}
-            placeholder="comment a tweety"
-            className="py-4 input"
-          />
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button
-                onClick={() => {
-                  if (handelComment.newComment.trim() === "") {
-                    alert("Please enter a comment");
-                  } else {
-                    sendComment({
-                      id: idToUpdate,
-                      content: handelComment.newComment,
-                      date: new Date().toString(),
-                    });
-                  }
-                  handelComment.setNewComment("");
-                }}
-                className="btn"
-              >
-                Comment
-              </button>
-            </form>
-          </div>
+    <div className="p-2 border-b border-gray-200">
+      <div className="flex justify-between items-start">
+        <div className="flex flex-col">
+          <span className=" border-2 border-slate-500 p-1 text-xs rounded-md w-auto">
+            {comment.content}
+          </span>
+          <span className="text-gray-500 chat-footer">
+            {comment.date.slice(0, 25)}
+          </span>
         </div>
-      </dialog>
+        <Trash
+          className="cursor-pointer bg-error rounded-sm p-1 min-w-6 m-1"
+          onClick={() => {
+            useAxios.sendNewCommentList(
+              comment.id,
+              array.filter((c) => c.content !== comment.content)
+            );
+            useAxios.getTweets();
+          }}
+        />
+      </div>
     </div>
   );
 };
 
 export default Comment;
+
+// import { useAxios } from "../../utilities/axios";
+// import { Trash } from "react-feather";
+
+{
+  /* <div key={index} className="p-2 border-b border-gray-200">
+      <div className="flex justify-between items-start">
+        <div className="flex flex-col">
+          <span className=" border-2 border-slate-500 p-1 text-xs rounded-md w-auto">
+            {comment.content}
+          </span>
+          <span className="text-gray-500 chat-footer">
+            {comment.date.slice(0, 25)}
+          </span>
+        </div>
+        <Trash
+          className="cursor-pointer bg-error rounded-sm p-1 min-w-6 m-1"
+          onClick={() => {
+            useAxios.sendNewCommentList(
+              comment.id,
+              array.filter((c) => c.content !== comment.content)
+            );
+            useAxios.getTweets();
+          }}
+        />
+      </div>
+    </div> */
+}
