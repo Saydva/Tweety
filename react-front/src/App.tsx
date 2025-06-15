@@ -1,15 +1,18 @@
+import { useEffect } from "react";
+import { useMessagesStore } from "./components/newTweet/messages.store";
+import { useAxios } from "./utilities/axios";
 import Navbar from "./components/navbar/navbar";
 import NewTweet from "./components/newTweet/NewTweet";
-import { useAxios } from "./utilities/axios";
-import { useEffect } from "react";
 import MessagesList from "./components/messages/MessagesList";
-import { useMessagesStore } from "./utilities/messages.store";
+import SignupPage from "./components/authorization/SignupPage";
+import MessageModal from "./components/message_Modal/messageModal";
+import LoginPage from "./components/authorization/LoginPage";
+import LogoutModal from "./components/authorization/LogoutModal";
 
 function App() {
   useEffect(() => {
     useAxios.getTweets();
   }, []);
-
   const array = useMessagesStore((state) => state.messages);
 
   return (
@@ -21,6 +24,11 @@ function App() {
           <MessagesList array={array} />
         </div>
       </div>
+      {/* <LoginPage /> */}
+      <SignupPage />
+      <MessageModal />
+      <LoginPage />
+      <LogoutModal />
     </div>
   );
 }

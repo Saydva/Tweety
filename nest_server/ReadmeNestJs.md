@@ -9,3 +9,6 @@ npm i --save class-validator
 npm i --save class-transform
 npm i --save @nestjs/jwt
 npm i uuid
+npm install bcrypt
+npm install --save @nestjs/jwt
+npm install uuid

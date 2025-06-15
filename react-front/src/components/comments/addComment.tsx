@@ -1,5 +1,5 @@
 import { MessageSquare } from "react-feather";
-import { useIdUpdatedMessageStore } from "../../store/idUpatedMessage.sore";
+import { useIdUpdatedMessageStore } from "./idUpatedMessage.sore";
 import { useAxios } from "../../utilities/axios";
 import { useAddCommentStore } from "./addComment.store";
 

@@ -40,6 +40,26 @@ Content-Type: application/json
   ],
   "likes":1
 }
+// authorization requests
+
+###
+POST http://localhost:5000/auth/signup
+Content-Type: application/json
+
+{
+  "name": "testuser",
+  "email": "teasdgmail.com",
+  "password": "test"
+}
+
+###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email":"dodo@gmail.com",
+  "password":"Dodo1234"
+}
 
 
 

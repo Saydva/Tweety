@@ -10,7 +10,7 @@ export class RefreshToken extends Document {
   userId: mongoose.Schema.Types.ObjectId;
 
   @Prop({ required: true }) // Token expires after 7 days
-  expiryrDate: Date;
+  expiryDate: Date;
 }
 
 export const RefreshTokenSchema = SchemaFactory.createForClass(RefreshToken);

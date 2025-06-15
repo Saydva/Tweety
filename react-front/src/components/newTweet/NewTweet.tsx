@@ -1,5 +1,5 @@
 import { useNewTweetStore } from "./NewTweet.store";
-import { useMessagesStore } from "../../utilities/messages.store";
+import { useMessagesStore } from "./messages.store";
 import { useAxios } from "../../utilities/axios";
 
 // component for new message

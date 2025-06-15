@@ -2,7 +2,7 @@ import { useAxios } from "../../utilities/axios";
 import AddComment from "../comments/addComment";
 import CommentList from "../comments/CommentList";
 import { ThumbsUp, XSquare } from "react-feather";
-import type { CommentType } from "../../utilities/messages.store";
+import type { CommentType } from "../newTweet/messages.store";
 
 type MessageProps = {
   message: {
@@ -48,7 +48,3 @@ const Message = ({ message }: MessageProps) => {
 };
 
 export default Message;
-
-{
-  /*  */
-}

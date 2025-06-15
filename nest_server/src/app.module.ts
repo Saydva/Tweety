@@ -5,9 +5,20 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { TweetyModule } from './tweety/tweety.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    JwtModule.registerAsync({
+      global: true,
+      useFactory: () => ({
+        secret: process.env.secret || undefined,
+        signOptions: {
+          expiresIn: '1h', // Set token expiration time
+        },
+      }),
+    }),
     MongooseModule.forRoot(
       process.env.MONGO_URI ?? 'mongodb://localhost:27017/tweety',
     ),

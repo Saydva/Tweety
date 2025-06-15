@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useMessagesStore } from "./messages.store";
+import { useMessagesStore } from "../components/newTweet/messages.store";
 import { useNewTweetStore } from "../components/newTweet/NewTweet.store";
-import { useIdUpdatedMessageStore } from "../store/idUpatedMessage.sore";
+import { useIdUpdatedMessageStore } from "../components/comments/idUpatedMessage.sore";
 
 // Define the AxiosActions object with axiosPost and axiosGet methods
 // Function to send a message to the server
@@ -92,6 +92,7 @@ const updateTweetyComments = async (data: CommentType) => {
 // Define the type for the comments to be sent
 // This type is used to send a list of new comments to the server
 type SendNewCommentsType = CommentType[];
+
 // Function to send a list of new comments to the server
 // and update the comments of the tweet
 const sendNewCommentList = async (
@@ -123,6 +124,7 @@ function useRegex(input: string) {
   return regex.test(input);
 }
 
+// Function to send likes to the server
 const sendLikes = async (id: string, likes: number) => {
   try {
     await axios.put(`http://localhost:5000/tweety/${id}`, {
@@ -136,6 +138,17 @@ const sendLikes = async (id: string, likes: number) => {
         .setError((error as any).response.data.message);
       console.log(error);
     }
+  }
+};
+
+const login = async (email: string, password: string) => {
+  try {
+    await axios.post(`http://localhost:5000/tweety/auth`, {
+      email: email,
+      password: password,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -179,5 +192,9 @@ export const useAxios = {
   },
   sendLikes: (id: string, likes: number) => {
     sendLikes(id, likes);
+  },
+  //auth axios functions
+  sendLogin: (email: string, password: string) => {
+    login(email, password);
   },
 };
