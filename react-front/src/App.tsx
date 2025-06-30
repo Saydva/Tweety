@@ -4,9 +4,9 @@ import { useAxios } from "./utilities/axios";
 import Navbar from "./components/navbar/navbar";
 import NewTweet from "./components/newTweet/NewTweet";
 import MessagesList from "./components/messages/MessagesList";
-import SignupPage from "./components/authorization/SignupPage";
+import SignupPage from "./components/authorization/SignupModal";
 import MessageModal from "./components/message_Modal/messageModal";
-import LoginPage from "./components/authorization/LoginPage";
+import LoginPage from "./components/authorization/LoginModal";
 import LogoutModal from "./components/authorization/LogoutModal";
 
 function App() {

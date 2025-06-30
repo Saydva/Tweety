@@ -1,13 +1,20 @@
 import { useSignUp } from "./signUp.store";
 import { SignUpAxios } from "../../utilities/loginSignUp.axios";
 import { useMessageModalStore } from "../message_Modal/messageModal.store";
-import { useModalOpenSore } from "./modalOpen.store";
-import { use } from "react";
+import { useModalOpenStore } from "./modalOpen.store";
+import { XSquare } from "react-feather";
 
-const LoginPage = () => {
+const LoginModal = () => {
   const signUpData = useSignUp((state) => state);
   const signUp = SignUpAxios.signUp;
-  const modalOpen = useModalOpenSore((state) => state.modadSignUpOpen);
+  const modalOpen = useModalOpenStore((state) => state.modadSignUpOpen);
+  function signUpHandler() {
+    signUp(signUpData.name, signUpData.email, signUpData.password);
+    useMessageModalStore.getState().clearError();
+    useMessageModalStore.getState().clearMessage();
+    useSignUp.getState().resetCredentials();
+    useModalOpenStore.getState().setSignUpOpen(false);
+  }
   return (
     <dialog
       className={`modal ${
@@ -16,7 +23,15 @@ const LoginPage = () => {
     >
       <div className="modal-box">
         <form method="dialog" className="flex flex-col gap-3 bg-content">
-          <h2 className="card-title self-baseline">Login</h2>
+          <div className="flex flex-row justify-between">
+            <h2 className="card-title self-baseline">Login</h2>
+            <button
+              className="btn"
+              onClick={() => useModalOpenStore.getState().setSignUpOpen(false)}
+            >
+              <XSquare />
+            </button>
+          </div>
           <input
             value={useSignUp.getState().name}
             type="text"
@@ -41,16 +56,7 @@ const LoginPage = () => {
           />
 
           <div className="card-actions justify-end">
-            <button
-              onClick={() => {
-                signUp(signUpData.name, signUpData.email, signUpData.password);
-                useMessageModalStore.getState().clearError();
-                useMessageModalStore.getState().clearMessage();
-                useSignUp.getState().resetCredentials();
-                useModalOpenSore.getState().setSignUpOpen(false);
-              }}
-              className="btn"
-            >
+            <button onClick={() => signUpHandler()} className="btn">
               SignUp
             </button>
           </div>
@@ -60,4 +66,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginModal;

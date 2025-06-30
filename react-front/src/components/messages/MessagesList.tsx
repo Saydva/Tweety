@@ -6,11 +6,13 @@ type ArrayTypeProps = {
 };
 
 const MessagesList = ({ array }: ArrayTypeProps) => {
-  const MessagesList = array.map((message, index) => (
-    <div key={index}>
-      <Message message={message} />
-    </div>
-  ));
+  const MessagesList = array
+    .map((message, index) => (
+      <div key={index}>
+        <Message message={message} />
+      </div>
+    ))
+    .reverse(); // Reverse the order of messages
   return (
     <div>
       <ul>{MessagesList}</ul>

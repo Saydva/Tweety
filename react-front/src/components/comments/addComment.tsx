@@ -1,5 +1,5 @@
 import { MessageSquare } from "react-feather";
-import { useIdUpdatedMessageStore } from "./idUpatedMessage.sore";
+import { useIdUpdatedMessageStore } from "./idUpatedMessage.store";
 import { useAxios } from "../../utilities/axios";
 import { useAddCommentStore } from "./addComment.store";
 
@@ -22,6 +22,18 @@ const AddComment = ({ id }: addCommentProps) => {
   // this is used to send the comment to the server
   const sendComment = useAxios.sendComment;
   // this is used to get the input value for the comment
+  function addCommentHandler() {
+    if (handelComment.newComment.trim() === "") {
+      alert("Please enter a comment");
+    } else {
+      sendComment({
+        id: idToUpdate,
+        content: handelComment.newComment,
+        date: new Date().toString(),
+      });
+    }
+    handelComment.setNewComment("");
+  }
 
   return (
     <div>
@@ -48,21 +60,7 @@ const AddComment = ({ id }: addCommentProps) => {
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button
-                onClick={() => {
-                  if (handelComment.newComment.trim() === "") {
-                    alert("Please enter a comment");
-                  } else {
-                    sendComment({
-                      id: idToUpdate,
-                      content: handelComment.newComment,
-                      date: new Date().toString(),
-                    });
-                  }
-                  handelComment.setNewComment("");
-                }}
-                className="btn"
-              >
+              <button onClick={() => addCommentHandler()} className="btn">
                 Comment
               </button>
             </form>

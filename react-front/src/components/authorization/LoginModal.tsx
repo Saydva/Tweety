@@ -1,12 +1,21 @@
 import { useSignUp } from "./signUp.store";
 import { SignUpAxios } from "../../utilities/loginSignUp.axios";
 import { useMessageModalStore } from "../message_Modal/messageModal.store";
-import { useModalOpenSore } from "./modalOpen.store";
+import { useModalOpenStore } from "./modalOpen.store";
+import { XSquare } from "react-feather";
 
-const LoginPage = () => {
+const LoginModal = () => {
   const loginData = useSignUp((state) => state);
-  const login = SignUpAxios.login;
-  const modalOpen = useModalOpenSore((state) => state.modalLoginOpen);
+
+  const modalOpen = useModalOpenStore((state) => state.modalLoginOpen);
+  function LoginHandler() {
+    const login = SignUpAxios.login;
+    login(loginData.email, loginData.password);
+    useMessageModalStore.getState().clearError();
+    useMessageModalStore.getState().clearMessage();
+    useSignUp.getState().resetCredentials();
+    useModalOpenStore.getState().setLoginOpen(false);
+  }
   return (
     <dialog
       id="my_modal_5"
@@ -16,7 +25,15 @@ const LoginPage = () => {
     >
       <div className="modal-box">
         <form method="dialog" className="flex flex-col gap-3 bg-content">
-          <h2 className="card-title self-baseline">Login</h2>
+          <div className="flex flex-row justify-between">
+            <h2 className="card-title self-baseline">Login</h2>
+            <button
+              className="btn"
+              onClick={() => useModalOpenStore.getState().setLoginOpen(false)}
+            >
+              <XSquare />
+            </button>
+          </div>
           <input
             value={useSignUp.getState().email}
             type="Email"
@@ -26,23 +43,13 @@ const LoginPage = () => {
           />
           <input
             value={useSignUp.getState().password}
-            type="text"
+            type="password"
             placeholder="password"
             className="input input-neutral"
             onChange={(e) => useSignUp.getState().setPassword(e.target.value)}
           />
-
           <div className="card-actions justify-end align-top">
-            <button
-              onClick={() => {
-                login(loginData.email, loginData.password);
-                useMessageModalStore.getState().clearError();
-                useMessageModalStore.getState().clearMessage();
-                useSignUp.getState().resetCredentials();
-                useModalOpenSore.getState().setLoginOpen(false);
-              }}
-              className="btn"
-            >
+            <button onClick={() => LoginHandler()} className="btn">
               Login
             </button>
           </div>
@@ -52,4 +59,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginModal;

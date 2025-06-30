@@ -1,13 +1,15 @@
 import axios from "axios";
 import { useMessagesStore } from "../components/newTweet/messages.store";
 import { useNewTweetStore } from "../components/newTweet/NewTweet.store";
-import { useIdUpdatedMessageStore } from "../components/comments/idUpatedMessage.sore";
+import { useIdUpdatedMessageStore } from "../components/comments/idUpatedMessage.store";
+
+const PORT = import.meta.env.VITE_PORT || 3000;
 
 // Define the AxiosActions object with axiosPost and axiosGet methods
 // Function to send a message to the server
 const axiosPost = async (data: object) => {
   try {
-    await axios.post("http://localhost:5000/tweety", data);
+    await axios.post(`http://localhost:${PORT}/tweety`, data);
     useMessagesStore.getState().clearError();
     useMessagesStore.getState().setError(null);
     axiosGet();
@@ -25,7 +27,7 @@ const axiosPost = async (data: object) => {
 // and update the messages store
 const axiosGet = async () => {
   try {
-    axios.get("http://localhost:5000/tweety").then(function (response) {
+    axios.get(`http://localhost:${PORT}/tweety`).then(function (response) {
       useMessagesStore.getState().updateMesagges(response.data);
     });
   } catch (error) {
@@ -37,7 +39,7 @@ const axiosGet = async () => {
 // and update the messages store
 const axiosDelete = async (id: string) => {
   try {
-    await axios.delete(`http://localhost:5000/tweety/${id}`);
+    await axios.delete(`http://localhost:${PORT}/tweety/${id}`);
     useMessagesStore.getState().clearError();
     useMessagesStore.getState().setError(null);
   } catch (error) {
@@ -64,14 +66,18 @@ type CommentType = {
 const updateTweetyComments = async (data: CommentType) => {
   try {
     const tweetToUpdate = await axios.get(
-      `http://localhost:5000/tweety/${useIdUpdatedMessageStore.getState().id}`
+      `http://localhost:${PORT}/tweety/${
+        useIdUpdatedMessageStore.getState().id
+      }`
     );
     const updatedComments = [
       ...tweetToUpdate.data.comments,
       { id: data.id, content: data.content, date: data.date },
     ];
     await axios.put(
-      `http://localhost:5000/tweety/${useIdUpdatedMessageStore.getState().id}`,
+      `http://localhost:${PORT}/tweety/${
+        useIdUpdatedMessageStore.getState().id
+      }`,
       {
         comments: updatedComments,
       }
@@ -100,7 +106,7 @@ const sendNewCommentList = async (
   newComments: SendNewCommentsType
 ) => {
   try {
-    await axios.put(`http://localhost:5000/tweety/${id}`, {
+    await axios.put(`http://localhost:${PORT}/tweety/${id}`, {
       comments: newComments,
     });
     useMessagesStore.getState().clearError();
@@ -127,7 +133,7 @@ function useRegex(input: string) {
 // Function to send likes to the server
 const sendLikes = async (id: string, likes: number) => {
   try {
-    await axios.put(`http://localhost:5000/tweety/${id}`, {
+    await axios.put(`http://localhost:${PORT}/tweety/${id}`, {
       likes: likes + 1,
     });
     await axiosGet();
@@ -143,7 +149,7 @@ const sendLikes = async (id: string, likes: number) => {
 
 const login = async (email: string, password: string) => {
   try {
-    await axios.post(`http://localhost:5000/tweety/auth`, {
+    await axios.post(`http://localhost:${PORT}/tweety/auth`, {
       email: email,
       password: password,
     });
@@ -158,7 +164,7 @@ export const useAxios = {
     axiosGet();
   },
   getTwety: (id: string) => {
-    axios.get(`http://localhost:5000/tweety/${id}`);
+    axios.get(`http://localhost:${PORT}/tweety/${id}`);
   },
   // Function to send a message
   sendTweets: () => {

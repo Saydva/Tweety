@@ -3,6 +3,11 @@ import { useMessageModalStore } from "./messageModal.store";
 const MessageModal = () => {
   const openModal = useMessageModalStore((state) => state.setIsOpen);
   const isOpen = useMessageModalStore((state) => state.isOpen);
+  function messageModalHandler() {
+    openModal(!isOpen);
+    useMessageModalStore.getState().clearError;
+    useMessageModalStore.getState().clearMessage;
+  }
   return (
     <div>
       <dialog
@@ -31,14 +36,7 @@ const MessageModal = () => {
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button
-                onClick={() => {
-                  openModal(!isOpen);
-                  useMessageModalStore.getState().clearError;
-                  useMessageModalStore.getState().clearMessage;
-                }}
-                className="btn"
-              >
+              <button onClick={() => messageModalHandler()} className="btn">
                 Close
               </button>
             </form>

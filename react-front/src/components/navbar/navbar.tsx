@@ -1,4 +1,4 @@
-import { useModalOpenSore } from "../authorization/modalOpen.store";
+import { useModalOpenStore } from "../authorization/modalOpen.store";
 import { useSignUp } from "../authorization/signUp.store";
 import { useNavbarStore } from "./navbar.store";
 import { AlignJustify } from "react-feather";
@@ -6,8 +6,30 @@ import { AlignJustify } from "react-feather";
 // component to display the navbar
 
 const Navbar = () => {
+  // get the navbar store to toggle the navbar
   const NavbarStore = useNavbarStore((state) => state);
+  // get the user from the sign up store
   const user = useSignUp((state) => state.user);
+  // function to open the login modal
+  function loginOpen() {
+    useModalOpenStore.getState().setLoginOpen(true);
+  }
+  // function to handle sign up click
+  // it toggles the navbar and sets the sign up modal to open
+  function signOnClick() {
+    NavbarStore.toggle();
+    useModalOpenStore.getState().setSignUpOpen(true);
+  }
+  // function to handle logout click
+  // it resets the credentials, clears tokens, sets user to empty string,
+  function LogOutOnClick() {
+    useSignUp.getState().resetCredentials;
+    useSignUp.getState().clearTokens;
+    useSignUp.getState().setUser("");
+    useSignUp.getState().setIsLogedIn(false);
+    useModalOpenStore.getState().setLogoutOpen(true);
+    console.log("clicked logout");
+  }
 
   return (
     <div className="navbar bg-base-200 flex flex-row justify-between items-center">
@@ -27,14 +49,7 @@ const Navbar = () => {
               <a onClick={() => NavbarStore.toggle()}>Home Page</a>
             </li>
             <li>
-              <a
-                onClick={() => {
-                  NavbarStore.toggle();
-                  useModalOpenSore.getState().setSignUpOpen(true);
-                }}
-              >
-                SignUp
-              </a>
+              <a onClick={() => signOnClick()}>SignUp</a>
             </li>
           </ul>
         </div>
@@ -50,12 +65,7 @@ const Navbar = () => {
             <div
               className={`btn hidden bg-neutral text-neutral-content rounded-full`}
             >
-              <span
-                className="text-xs"
-                onClick={() => {
-                  useModalOpenSore.getState().setLoginOpen(true);
-                }}
-              >
+              <span className="text-xs" onClick={() => loginOpen()}>
                 Login
               </span>
             </div>
@@ -66,17 +76,7 @@ const Navbar = () => {
             } avatar-placeholder`}
           >
             <div className="btn bg-neutral text-neutral-content rounded-full">
-              <span
-                className="text-xs"
-                onClick={() => {
-                  useSignUp.getState().resetCredentials;
-                  useSignUp.getState().clearTokens;
-                  useSignUp.getState().setUser("");
-                  useSignUp.getState().setIsLogedIn(false);
-                  useModalOpenSore.getState().setLogoutOpen(true);
-                  console.log("clicked logout");
-                }}
-              >
+              <span className="text-xs" onClick={() => LogOutOnClick()}>
                 Logout
               </span>
             </div>

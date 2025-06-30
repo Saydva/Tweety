@@ -2,9 +2,11 @@ import axios from "axios";
 import { useSignUp } from "../components/authorization/signUp.store";
 import { useMessageModalStore } from "../components/message_Modal/messageModal.store";
 
+const PORT = import.meta.env.VITE_PORT || 3000; // Default to 5000 if not set
+
 const signUp = async (name: string, email: string, password: string) => {
   try {
-    await axios.post(`http://localhost:5000/auth/signup`, {
+    await axios.post(`http://localhost:${PORT}/auth/signup`, {
       name: name,
       email: email,
       password: password,
@@ -36,7 +38,7 @@ const signUp = async (name: string, email: string, password: string) => {
 
 const login = async (email: string, password: string) => {
   try {
-    const response = await axios.post(`http://localhost:5000/auth/login`, {
+    const response = await axios.post(`http://localhost:${PORT}/auth/login`, {
       email: email,
       password: password,
     });

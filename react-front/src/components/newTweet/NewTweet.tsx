@@ -1,15 +1,27 @@
 import { useNewTweetStore } from "./NewTweet.store";
 import { useMessagesStore } from "./messages.store";
 import { useAxios } from "../../utilities/axios";
+import { useSignUp } from "../authorization/signUp.store";
 
 // component for new message
 
 const NewTweet = () => {
+  const loggedInUser = useSignUp((state) => state.isLoged);
   const InputStore = useNewTweetStore((state) => state);
   const MessagesStore = useMessagesStore((state) => state);
 
+  function sendTweetHandler() {
+    useAxios.sendTweets();
+    useAxios.getTweets();
+    InputStore.clearInputValue();
+    MessagesStore.clearError();
+  }
+
   return (
     <div>
+      <p className={`text-error ${loggedInUser ? " hidden " : ""}`}>
+        LoggIn first please!
+      </p>
       <fieldset className="fieldset flex flexrow">
         <textarea
           value={InputStore.inputValue}
@@ -20,16 +32,13 @@ const NewTweet = () => {
           }
         ></textarea>
         <button
-          className="btn border-cyan-800"
+          className={`btn border-cyan-800 ${loggedInUser ? "" : " hidden "}`}
           onClick={() => {
             if (InputStore.inputValue.trim() === "") {
               alert("Please enter a message");
               return;
             } else {
-              useAxios.sendTweets();
-              useAxios.getTweets();
-              InputStore.clearInputValue();
-              MessagesStore.clearError();
+              sendTweetHandler();
             }
           }}
         >

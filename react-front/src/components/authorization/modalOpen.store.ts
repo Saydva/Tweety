@@ -12,7 +12,7 @@ type ModalStoreActions = {
   setLogoutOpen: (setting: boolean) => void;
 };
 
-export const useModalOpenSore = create<ModalStoreProps & ModalStoreActions>(
+export const useModalOpenStore = create<ModalStoreProps & ModalStoreActions>(
   (set) => ({
     modadSignUpOpen: false,
     modalLoginOpen: false,

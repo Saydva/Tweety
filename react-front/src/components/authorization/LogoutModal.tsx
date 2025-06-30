@@ -1,7 +1,7 @@
-import { useModalOpenSore } from "./modalOpen.store";
+import { useModalOpenStore } from "./modalOpen.store";
 
 const LogoutModal = () => {
-  const openLogoutModal = useModalOpenSore((state) => state);
+  const openLogoutModal = useModalOpenStore((state) => state);
   return (
     <div>
       <dialog
