@@ -48,7 +48,7 @@ const Navbar = () => {
             <li>
               <a onClick={() => NavbarStore.toggle()}>Home Page</a>
             </li>
-            <li>
+            <li className={`${useSignUp.getState().isLoged ? "hidden " : ""}`}>
               <a onClick={() => signOnClick()}>SignUp</a>
             </li>
           </ul>
