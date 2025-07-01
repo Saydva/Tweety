@@ -12,9 +12,9 @@ const MessageModal = () => {
     <div>
       <dialog
         id="my_modal_5"
-        className={`modal modal-bottom sm:modal-middle ${
-          isOpen ? "modal-open" : ""
-        }`}
+        className={`modal modal-bottom sm:modal-middle
+           ${isOpen ? "modal-open" : ""}
+        `}
       >
         <div className="modal-box">
           <h3 className="font-bold text-lg">
@@ -23,7 +23,15 @@ const MessageModal = () => {
           <p className="py-4 ">
             {useMessageModalStore.getState().error?.map((error, index) => {
               return (
-                <li key={index} className="text-red-500 mb-3">
+                <li
+                  key={index}
+                  className={`${
+                    useMessageModalStore.getState().message ==
+                    "Sign up successful"
+                      ? "text-green-600"
+                      : "text-red-500"
+                  } mb-3`}
+                >
                   {error}
                   {index <
                   (useMessageModalStore.getState().error?.length ?? 0) - 1

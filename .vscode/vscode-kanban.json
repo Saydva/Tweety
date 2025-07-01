@@ -123,19 +123,6 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T09:49:48.307Z",
-      "description": {
-        "content": "- \"you can login now\" je cervene ako keby to bola chyba\n",
-        "mime": "text/markdown"
-      },
-      "id": "13",
-      "references": [],
-      "title": "- \"you can login now\" je cervene ako keby to bola chyba"
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
       "creation_time": "2025-06-29T09:51:08.253Z",
       "description": {
         "content": "- ked som prihlaseny, nemal by som vidiet tlacitko \"sign up\"\n",
@@ -242,6 +229,19 @@
       "assignedTo": {
         "name": "Saydva"
       },
+      "creation_time": "2025-06-29T09:48:52.737Z",
+      "description": {
+        "content": "- neda sa zavriet login modal",
+        "mime": "text/markdown"
+      },
+      "id": "9",
+      "references": [],
+      "title": "Login modal"
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
       "creation_time": "2025-06-29T09:48:37.591Z",
       "description": {
         "content": " aj v newtweet to iste, nedavaj logiku do onclick, v onclick ma byt iba ze co sa ma zavolat na onclick, a potom v tej funckii ktora sa zavola budu detaily..\n",
@@ -255,14 +255,14 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T09:48:52.737Z",
+      "creation_time": "2025-06-29T09:49:48.307Z",
       "description": {
-        "content": "- neda sa zavriet login modal",
+        "content": "- \"you can login now\" je cervene ako keby to bola chyba\n",
         "mime": "text/markdown"
       },
-      "id": "9",
+      "id": "13",
       "references": [],
-      "title": "Login modal"
+      "title": "- \"you can login now\" je cervene ako keby to bola chyba"
     }
   ]
 }

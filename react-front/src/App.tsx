@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useMessagesStore } from "./components/newTweet/messages.store";
 import { useAxios } from "./utilities/axios";
-import Navbar from "./components/navbar/navbar";
+import Navbar from "./components/navbar/Navbar";
 import NewTweet from "./components/newTweet/NewTweet";
 import MessagesList from "./components/messages/MessagesList";
-import SignupPage from "./components/authorization/SignupModal";
-import MessageModal from "./components/message_Modal/messageModal";
-import LoginPage from "./components/authorization/LoginModal";
+import SignupModal from "./components/authorization/SignupModal";
+import MessageModal from "./components/message_Modal/MessageModal";
+import LoginModal from "./components/authorization/LoginModal";
 import LogoutModal from "./components/authorization/LogoutModal";
 
 function App() {
@@ -25,9 +25,9 @@ function App() {
         </div>
       </div>
       {/* <LoginPage /> */}
-      <SignupPage />
+      <SignupModal />
       <MessageModal />
-      <LoginPage />
+      <LoginModal />
       <LogoutModal />
     </div>
   );
