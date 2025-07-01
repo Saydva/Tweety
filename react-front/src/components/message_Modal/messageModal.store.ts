@@ -18,7 +18,7 @@ export const useMessageModalStore = create<MessageProps & MessageActions>(
   (set) => ({
     isOpen: false,
     message: "",
-    error: ["yes"],
+    error: null,
     setMessage: (message: string) => set({ message }),
     setIsOpen: (isOpen: boolean) => set({ isOpen }),
     setError: (error: string[] | null) => set({ error }),
