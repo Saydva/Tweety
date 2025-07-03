@@ -1,3 +1,4 @@
+import { SignUpAxios } from "../../utilities/loginSignUp.axios";
 import { useModalOpenStore } from "../authorization/modalOpen.store";
 import { useSignUp } from "../authorization/signUp.store";
 import { useNavbarStore } from "./navbar.store";
@@ -28,7 +29,6 @@ const Navbar = () => {
     useSignUp.getState().setUser("");
     useSignUp.getState().setIsLogedIn(false);
     useModalOpenStore.getState().setLogoutOpen(true);
-    console.log("clicked logout");
   }
 
   return (
@@ -54,6 +54,14 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+      <p
+        className="text-sm border-2 border-error rounded-sm p-1 btn"
+        onClick={() => {
+          SignUpAxios.devSignUpLogin();
+        }}
+      >
+        Prefill login
+      </p>
       <div className="navbar-end min-w-64">
         <div className="ps-4 flex flex-row items-center gap-3">
           <p className="text-sm">{user}Tweets</p>

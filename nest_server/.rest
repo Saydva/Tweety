@@ -2,28 +2,29 @@
 ////////////////////////////////////////Tweety API////////////////////////////////////////
 
 ###
-POST http://localhost:5000/tweety
+POST http://localhost:4000/tweety
 Content-Type: application/json
 
 {
   "content":"next one",
-  "date":"2023-10-01T12:11:00Z"
+  "date":"2023-10-01T12:11:00Z",
+  "owner":"Dodo"
 }
 
 ###
-GET  http://localhost:5000/tweety
+GET  http://localhost:4000/tweety
 Content-Type: application/json
 
 ###
-GET http://localhost:5000/tweety/6826569a575c638ceefb9275
+GET http://localhost:4000/tweety/6826569a575c638ceefb9275
 Content-Type: application/json  
 
 ###
-DELETE http://localhost:5000/tweety/68264d1abc7f9d4a501def64
+DELETE http://localhost:4000/tweety/68264d1abc7f9d4a501def64
 Content-Type: application/json
 
 ###
-PUT http://localhost:5000/tweety/68334a18840561da973b2452
+PUT http://localhost:4000/tweety/686437bae878898177aa31a3
 Content-Type: application/json
 
 {
@@ -32,28 +33,31 @@ Content-Type: application/json
     {
       "id":"68264d1abc7f9d4a501def64",
       "content":"This is a comment",
-      "date":"2023-10-01T12:11:00Z"
+      "date":"2023-10-01T12:11:00Z",
+      "owner": "Dodo"
     },
     {"content": "This is first comment",
-     "date": "2023-10-01T12:11:00Z"
+     "date": "2023-10-01T12:11:00Z",
+     "owner": "Dodo"
     }
   ],
-  "likes":1
+  "likes":1,
+  "owner": "Dodo"
 }
 // authorization requests
 
 ###
-POST http://localhost:5000/auth/signup
+POST http://localhost:4000/auth/signup
 Content-Type: application/json
 
 {
   "name": "testuser",
-  "email": "teasdgmail.com",
-  "password": "test"
+  "email": "teasd@gmail.com",
+  "password": "test1234A"
 }
 
 ###
-POST http://localhost:5000/auth/login
+POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
@@ -61,5 +65,13 @@ Content-Type: application/json
   "password":"Dodo1234"
 }
 
+###
+POST  http://localhost:4000/auth/localhost:4000/auth/signup
 
+Content-Type: application/json
 
+{
+  "name": "testuser",
+  "email": "teasdgmail.com",
+  "password": "test"
+}

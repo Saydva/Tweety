@@ -3,6 +3,7 @@ import AddComment from "../comments/AddComment";
 import CommentList from "../comments/CommentList";
 import { ThumbsUp, XSquare } from "react-feather";
 import type { CommentType } from "../newTweet/messages.store";
+import { Twitter } from "react-feather";
 
 type MessageProps = {
   message: {
@@ -11,6 +12,7 @@ type MessageProps = {
     date: string;
     likes: number;
     comments: CommentType[];
+    owner: string;
   };
 };
 
@@ -24,6 +26,11 @@ const Message = ({ message }: MessageProps) => {
     <div className="p-2 border-b border-gray-200">
       <div className="chat chat-start flex flex-row w-full justify-between items-start">
         <div className="flex flex-col">
+          <div className="flex flex-row">
+            <Twitter />
+            <p className="text-xs">---{message.owner}</p>
+          </div>
+
           <div className="chat-bubble chat-bubble-primary m-3">
             {message.content}
           </div>

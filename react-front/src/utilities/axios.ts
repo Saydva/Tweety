@@ -2,6 +2,7 @@ import axios from "axios";
 import { useMessagesStore } from "../components/newTweet/messages.store";
 import { useNewTweetStore } from "../components/newTweet/NewTweet.store";
 import { useIdUpdatedMessageStore } from "../components/comments/idUpatedMessage.store";
+import { useSignUp } from "../components/authorization/signUp.store";
 
 const PORT = import.meta.env.VITE_PORT || 3000;
 
@@ -59,6 +60,7 @@ type CommentType = {
   id: string;
   content: string;
   date: string;
+  owner: string;
 };
 
 // Function to send a comment to the server
@@ -72,7 +74,12 @@ const updateTweetyComments = async (data: CommentType) => {
     );
     const updatedComments = [
       ...tweetToUpdate.data.comments,
-      { id: data.id, content: data.content, date: data.date },
+      {
+        id: data.id,
+        content: data.content,
+        date: data.date,
+        owner: data.owner,
+      },
     ];
     await axios.put(
       `http://localhost:${PORT}/tweety/${
@@ -168,6 +175,7 @@ export const useAxios = {
   },
   // Function to send a message
   sendTweets: () => {
+    let owner = useSignUp.getState().user;
     if (useRegex(useNewTweetStore.getState().inputValue)) {
       useNewTweetStore.getState().clearInputValue();
       useMessagesStore.getState().setError("Please enter a message");
@@ -177,6 +185,7 @@ export const useAxios = {
         content: useNewTweetStore.getState().inputValue,
         date: new Date().toString(),
         likes: 0,
+        owner: owner,
       });
       useNewTweetStore.getState().clearInputValue();
     }

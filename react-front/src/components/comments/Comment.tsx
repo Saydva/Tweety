@@ -1,11 +1,13 @@
 import { useAxios } from "../../utilities/axios";
 import { Trash } from "react-feather";
+import { MessageSquare } from "react-feather";
 
 type CommentProps = {
   comment: {
     id: string;
     content: string;
     date: string;
+    owner: string;
   };
 };
 
@@ -26,6 +28,11 @@ const Comment = ({ comment, array }: CommentProps & ArrayProps) => {
     <div className="p-2 border-b border-gray-200">
       <div className="flex justify-between items-start">
         <div className="flex flex-col">
+          <div className="flex flex-row">
+            <p className="text-xs">{comment.owner} ---</p>
+            <MessageSquare />
+          </div>
+
           <span className=" border-2 border-slate-500 p-1 text-xs rounded-md w-auto">
             {comment.content}
           </span>

@@ -17,19 +17,6 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T09:50:57.281Z",
-      "description": {
-        "content": "- nezobrazuje sa nikde meno toho uzivatela ktory dal tweet, takze je to prihlasenie takto zbytocne..\n",
-        "mime": "text/markdown"
-      },
-      "id": "15",
-      "references": [],
-      "title": "- nezobrazuje sa nikde meno toho uzivatela ktory dal tweet, takze je to prihlasenie takto zbytocne.."
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
       "creation_time": "2025-06-29T09:45:53.148Z",
       "description": {
         "content": "- FE: ked stlacim delete, tak sa nic nestane v ui, musim refreshnut - vyzera ze sa nove tweety getuju najprv a potom az sa zavola delete..\n",
@@ -69,19 +56,6 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T09:49:37.061Z",
-      "description": {
-        "content": " neviem preco je cervenym vysvietene meno v registracii ako keby bola chyba..",
-        "mime": "text/markdown"
-      },
-      "id": "12",
-      "references": [],
-      "title": "neviem preco je cervenym vysvietene meno v registracii ako keby bola chyba.."
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
       "creation_time": "2025-06-29T09:49:26.729Z",
       "description": {
         "content": "- ked nevyhovuje heslo pri registracii, mal by si to iba napisat vo formulari a nie zavriet cely formular.",
@@ -89,50 +63,10 @@
       },
       "id": "11",
       "references": [],
-      "title": "Passwort form"
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
-      "creation_time": "2025-06-29T09:46:57.445Z",
-      "description": {
-        "content": "- FE neviem ake je meno heslo do loginu, takze pridaj tam dev tlacitko len suchy cerveny text ze \"prefill login\", ktory predvyplni udaje",
-        "mime": "text/markdown"
-      },
-      "id": "3",
-      "references": [],
-      "title": "prefill login"
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
-      "creation_time": "2025-06-29T10:00:08.435Z",
-      "description": {
-        "content": "- \"useSignUp.getState()\n.resetCredentials\" \ntoto neviem ci nemas zle, nema to byt volanie funkcie?",
-        "mime": "text/markdown"
-      },
-      "id": "20",
-      "references": [],
-      "title": "useSignUp"
+      "title": "Password form"
     }
   ],
-  "in-progress": [
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
-      "creation_time": "2025-06-29T09:51:08.253Z",
-      "description": {
-        "content": "- ked som prihlaseny, nemal by som vidiet tlacitko \"sign up\"\n",
-        "mime": "text/markdown"
-      },
-      "id": "16",
-      "references": [],
-      "title": "- ked som prihlaseny, nemal by som vidiet tlacitko \"sign up\""
-    }
-  ],
+  "in-progress": [],
   "testing": [],
   "done": [
     {
@@ -151,6 +85,19 @@
         "content": "Opravene",
         "mime": "text/markdown"
       }
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
+      "creation_time": "2025-06-29T09:49:48.307Z",
+      "description": {
+        "content": "- \"you can login now\" je cervene ako keby to bola chyba\n",
+        "mime": "text/markdown"
+      },
+      "id": "13",
+      "references": [],
+      "title": "- \"you can login now\" je cervene ako keby to bola chyba"
     },
     {
       "assignedTo": {
@@ -203,6 +150,32 @@
       "assignedTo": {
         "name": "Saydva"
       },
+      "creation_time": "2025-06-29T09:51:08.253Z",
+      "description": {
+        "content": "- ked som prihlaseny, nemal by som vidiet tlacitko \"sign up\"\n",
+        "mime": "text/markdown"
+      },
+      "id": "16",
+      "references": [],
+      "title": "- ked som prihlaseny, nemal by som vidiet tlacitko \"sign up\""
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
+      "creation_time": "2025-06-29T09:50:57.281Z",
+      "description": {
+        "content": "- nezobrazuje sa nikde meno toho uzivatela ktory dal tweet, takze je to prihlasenie takto zbytocne..\n",
+        "mime": "text/markdown"
+      },
+      "id": "15",
+      "references": [],
+      "title": "- nezobrazuje sa nikde meno toho uzivatela ktory dal tweet, takze je to prihlasenie takto zbytocne.."
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
       "creation_time": "2025-06-29T09:47:37.353Z",
       "description": {
         "content": "- komponenty davaj velkym pismenom na zaciatku, napr AddComment.tsx a CommentList.tsx, navbar.",
@@ -242,6 +215,19 @@
       "assignedTo": {
         "name": "Saydva"
       },
+      "creation_time": "2025-06-29T09:49:37.061Z",
+      "description": {
+        "content": " neviem preco je cervenym vysvietene meno v registracii ako keby bola chyba..",
+        "mime": "text/markdown"
+      },
+      "id": "12",
+      "references": [],
+      "title": "neviem preco je cervenym vysvietene meno v registracii ako keby bola chyba.."
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
       "creation_time": "2025-06-29T09:48:37.591Z",
       "description": {
         "content": " aj v newtweet to iste, nedavaj logiku do onclick, v onclick ma byt iba ze co sa ma zavolat na onclick, a potom v tej funckii ktora sa zavola budu detaily..\n",
@@ -255,14 +241,27 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T09:49:48.307Z",
+      "creation_time": "2025-06-29T10:00:08.435Z",
       "description": {
-        "content": "- \"you can login now\" je cervene ako keby to bola chyba\n",
+        "content": "- \"useSignUp.getState()\n.resetCredentials\" \ntoto neviem ci nemas zle, nema to byt volanie funkcie?",
         "mime": "text/markdown"
       },
-      "id": "13",
+      "id": "20",
       "references": [],
-      "title": "- \"you can login now\" je cervene ako keby to bola chyba"
+      "title": "useSignUp"
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
+      "creation_time": "2025-06-29T09:46:57.445Z",
+      "description": {
+        "content": "- FE neviem ake je meno heslo do loginu, takze pridaj tam dev tlacitko len suchy cerveny text ze \"prefill login\", ktory predvyplni udaje",
+        "mime": "text/markdown"
+      },
+      "id": "3",
+      "references": [],
+      "title": "prefill login"
     }
   ]
 }

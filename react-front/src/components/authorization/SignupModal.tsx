@@ -36,7 +36,7 @@ const LoginModal = () => {
             value={useSignUp.getState().name}
             type="text"
             placeholder="Name"
-            className="input input-secondary"
+            className="input input-neutral"
             onChange={(e) => useSignUp.getState().setName(e.target.value)}
           />
 

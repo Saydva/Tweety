@@ -12,5 +12,7 @@ export class Tweety {
   comments: object[];
   @Prop({ required: false })
   likes: number;
+  @Prop({ required: true })
+  owner: string;
 }
 export const TweetySchema = SchemaFactory.createForClass(Tweety);

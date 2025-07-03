@@ -2,6 +2,7 @@ import { MessageSquare } from "react-feather";
 import { useIdUpdatedMessageStore } from "./idUpatedMessage.store";
 import { useAxios } from "../../utilities/axios";
 import { useAddCommentStore } from "./addComment.store";
+import { useSignUp } from "../authorization/signUp.store";
 
 // this component is used to comment on a message
 // component is used in the Messages component
@@ -21,6 +22,8 @@ const AddComment = ({ id }: addCommentProps) => {
   const handelComment = useAddCommentStore((state) => state);
   // this is used to send the comment to the server
   const sendComment = useAxios.sendComment;
+  // this is used to get the user name of the owner of the comment
+  const owner = useSignUp((state) => state.user);
   // this is used to get the input value for the comment
   function addCommentHandler() {
     if (handelComment.newComment.trim() === "") {
@@ -30,6 +33,7 @@ const AddComment = ({ id }: addCommentProps) => {
         id: idToUpdate,
         content: handelComment.newComment,
         date: new Date().toString(),
+        owner: owner,
       });
     }
     handelComment.setNewComment("");

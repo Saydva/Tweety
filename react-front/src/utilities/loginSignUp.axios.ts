@@ -4,6 +4,39 @@ import { useMessageModalStore } from "../components/message_Modal/messageModal.s
 
 const PORT = import.meta.env.VITE_PORT || 3000; // Default to 5000 if not set
 
+//developer login axios actions
+// This file contains the axios functions for sign up and login
+const devSignUp = async (
+  name: string = "Dev",
+  email: string = "dev@gmail.com",
+  password: string = "Dev12345"
+) => {
+  await axios.post(`http://localhost:${PORT}/auth/signup`, {
+    name: name,
+    email: email,
+    password: password,
+  });
+};
+
+const devLogin = async (
+  email: string = "dev@gmail.com",
+  password: string = "Dev12345"
+) => {
+  const response = await axios.post(`http://localhost:${PORT}/auth/login`, {
+    email: email,
+    password: password,
+  });
+  const { refreshToken, accessToken } = response.data.tokens;
+  const name = response.data.name;
+  useSignUp.getState().setUser(name + " :");
+  useSignUp.getState().setEmail(email);
+  useSignUp.getState().setIsLogedIn(true);
+  useSignUp.getState().setAccessToken(accessToken);
+  useSignUp.getState().setRefreshToken(refreshToken);
+  useMessageModalStore.getState().setMessage("Login successful");
+  useSignUp.getState().resetCredentials;
+};
+
 const signUp = async (name: string, email: string, password: string) => {
   try {
     await axios.post(`http://localhost:${PORT}/auth/signup`, {
@@ -68,6 +101,11 @@ const login = async (email: string, password: string) => {
 };
 
 export const SignUpAxios = {
+  // Developer login methods
+  devSignUpLogin: () => {
+    devSignUp();
+    devLogin();
+  },
   signUp: (name: string, email: string, password: string) => {
     signUp(name, email, password);
   },

@@ -10,12 +10,12 @@ const NewTweet = () => {
   const InputStore = useNewTweetStore((state) => state);
   const MessagesStore = useMessagesStore((state) => state);
 
-  function sendTweetHandler() {
-    useAxios.sendTweets();
-    useAxios.getTweets();
-    InputStore.clearInputValue();
-    MessagesStore.clearError();
-  }
+  // function sendTweetHandler() {
+  //   useAxios.sendTweets();
+  //   useAxios.getTweets();
+  //   InputStore.clearInputValue();
+  //   MessagesStore.clearError();
+  // }
 
   return (
     <div>
@@ -38,7 +38,10 @@ const NewTweet = () => {
               alert("Please enter a message");
               return;
             } else {
-              sendTweetHandler();
+              useAxios.sendTweets();
+              useAxios.getTweets();
+              InputStore.clearInputValue();
+              MessagesStore.clearError();
             }
           }}
         >
