@@ -1,14 +1,10 @@
-Install all pkg bellow:
+NestJs backend:
 
-npm i bcrypt
-npm i --save @nestjs/config
-npm i -g @nestjs/cli
-npm i @nestjs/mongoose mongoose
-npm i --save @nestjs/config
-npm i --save class-validator
-npm i --save class-transform
-npm i --save @nestjs/jwt
-npm i uuid
-npm install bcrypt
-npm install --save @nestjs/jwt
-npm install uuid
+token expiry time
+
+C:\d\VsCode\Tweety\nest_server\src\app.module.ts
+C:\d\VsCode\Tweety\nest_server\src\auth\auth.service.ts
+
+PORT and Secret in .env file
+
+npm run start:dev for run backend
