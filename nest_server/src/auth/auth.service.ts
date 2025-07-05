@@ -23,6 +23,8 @@ export class AuthService {
     private RefreshTokenModel: Model<RefreshToken>,
     private jwtService: JwtService,
   ) {}
+  // This function signs up a new user
+  // It checks if the email already exists, hashes the password, and saves the user to
   async signup(signUpData: SignUpDto) {
     const { name, email, password } = signUpData;
     //Todo: Check if email already exists
@@ -41,6 +43,8 @@ export class AuthService {
       password: hashedPassword,
     });
   }
+  // This function logs in a user
+  // It checks if the user exists by email, compares the password,
   async login(loginData: LoginDto) {
     const { email, password } = loginData;
     //todo: Check if user exists
@@ -60,7 +64,10 @@ export class AuthService {
     const tokens = await this.generateTokens((user._id as any).toString());
     return { name, tokens };
   }
-
+  // This function refreshes the access token using the refresh token
+  // It checks if the refresh token is valid and not expired
+  // if valid, it generates a new access token
+  // If the refresh token is invalid or expired, it throws an UnauthorizedException
   async refreshToken(refreshToken: string) {
     const token = await this.RefreshTokenModel.findOne({
       token: refreshToken,
@@ -81,10 +88,15 @@ export class AuthService {
       refreshToken,
     };
   }
+  // This function stores the refresh token in the database
+  // It will create a new refresh token if it doesn't exist for the user, or update
   async storeRefreshToken(token: string, userId: string) {
     // Store the refresh token in the database
     const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + 7); // Set expiration date to 7 days from now
+    expiryDate.setMinutes(expiryDate.getMinutes() + 10);
+    // Set the expiry date to 100 minutes from now
+    // If the user already has a refresh token, update it; otherwise, create a new one
+    // This will ensure that the refresh token is unique per user
     await this.RefreshTokenModel.updateOne(
       { userId },
       {

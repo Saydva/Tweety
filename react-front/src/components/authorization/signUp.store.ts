@@ -18,6 +18,7 @@ type AuthStoreActions = {
   setIsLogedIn: (isLoged: boolean) => void;
   setAccessToken: (accessToken: string) => void;
   setRefreshToken: (token: string) => void;
+
   resetCredentials: () => void;
   clearTokens: () => void;
 };

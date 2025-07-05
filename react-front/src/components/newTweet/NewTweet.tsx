@@ -1,7 +1,7 @@
 import { useNewTweetStore } from "./NewTweet.store";
 import { useMessagesStore } from "./messages.store";
-import { useAxios } from "../../utilities/axios";
 import { useSignUp } from "../authorization/signUp.store";
+import { useAxios } from "../../utilities/axios";
 
 // component for new message
 
@@ -10,12 +10,13 @@ const NewTweet = () => {
   const InputStore = useNewTweetStore((state) => state);
   const MessagesStore = useMessagesStore((state) => state);
 
-  // function sendTweetHandler() {
-  //   useAxios.sendTweets();
-  //   useAxios.getTweets();
-  //   InputStore.clearInputValue();
-  //   MessagesStore.clearError();
-  // }
+  // const sendTweets = useHandlerFunctions.SendTweets();
+  function sendTweetHandler() {
+    useAxios.sendTweets();
+    useAxios.getTweets();
+    InputStore.clearInputValue();
+    MessagesStore.clearError();
+  }
 
   return (
     <div>
@@ -38,10 +39,7 @@ const NewTweet = () => {
               alert("Please enter a message");
               return;
             } else {
-              useAxios.sendTweets();
-              useAxios.getTweets();
-              InputStore.clearInputValue();
-              MessagesStore.clearError();
+              sendTweetHandler();
             }
           }}
         >

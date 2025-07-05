@@ -3,14 +3,23 @@ import { useMessagesStore } from "../components/newTweet/messages.store";
 import { useNewTweetStore } from "../components/newTweet/NewTweet.store";
 import { useIdUpdatedMessageStore } from "../components/comments/idUpatedMessage.store";
 import { useSignUp } from "../components/authorization/signUp.store";
+import { checkTokenValidity } from "./tokenHandler";
 
 const PORT = import.meta.env.VITE_PORT || 3000;
+
+// const accessToken = useSignUp.getState().accessToken ?? "";
+// const refreshtoken = useSignUp.getState().refreshToken ?? "";
 
 // Define the AxiosActions object with axiosPost and axiosGet methods
 // Function to send a message to the server
 const axiosPost = async (data: object) => {
+  console.log(checkTokenValidity());
   try {
-    await axios.post(`http://localhost:${PORT}/tweety`, data);
+    await axios.post(`http://localhost:${PORT}/tweety`, data, {
+      headers: {
+        Authorization: "Bearer " + useSignUp.getState().accessToken,
+      },
+    });
     useMessagesStore.getState().clearError();
     useMessagesStore.getState().setError(null);
     axiosGet();
@@ -28,9 +37,15 @@ const axiosPost = async (data: object) => {
 // and update the messages store
 const axiosGet = async () => {
   try {
-    axios.get(`http://localhost:${PORT}/tweety`).then(function (response) {
-      useMessagesStore.getState().updateMesagges(response.data);
-    });
+    await axios
+      .get(`http://localhost:${PORT}/tweety`, {
+        headers: {
+          Authorization: "Bearer " + useSignUp.getState().accessToken,
+        },
+      })
+      .then(function (response) {
+        useMessagesStore.getState().updateMesagges(response.data);
+      });
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +55,11 @@ const axiosGet = async () => {
 // and update the messages store
 const axiosDelete = async (id: string) => {
   try {
-    await axios.delete(`http://localhost:${PORT}/tweety/${id}`);
+    await axios.delete(`http://localhost:${PORT}/tweety/${id}`, {
+      headers: {
+        Authorization: "Bearer " + useSignUp.getState().accessToken,
+      },
+    });
     useMessagesStore.getState().clearError();
     useMessagesStore.getState().setError(null);
   } catch (error) {
@@ -70,7 +89,12 @@ const updateTweetyComments = async (data: CommentType) => {
     const tweetToUpdate = await axios.get(
       `http://localhost:${PORT}/tweety/${
         useIdUpdatedMessageStore.getState().id
-      }`
+      }`,
+      {
+        headers: {
+          Authorization: "Bearer " + useSignUp.getState().accessToken,
+        },
+      }
     );
     const updatedComments = [
       ...tweetToUpdate.data.comments,
@@ -87,6 +111,11 @@ const updateTweetyComments = async (data: CommentType) => {
       }`,
       {
         comments: updatedComments,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + useSignUp.getState().accessToken,
+        },
       }
     );
     axiosGet();
@@ -113,9 +142,17 @@ const sendNewCommentList = async (
   newComments: SendNewCommentsType
 ) => {
   try {
-    await axios.put(`http://localhost:${PORT}/tweety/${id}`, {
-      comments: newComments,
-    });
+    await axios.put(
+      `http://localhost:${PORT}/tweety/${id}`,
+      {
+        comments: newComments,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + useSignUp.getState().accessToken,
+        },
+      }
+    );
     useMessagesStore.getState().clearError();
     useMessagesStore.getState().setError(null);
   } catch (error) {
@@ -140,9 +177,17 @@ function useRegex(input: string) {
 // Function to send likes to the server
 const sendLikes = async (id: string, likes: number) => {
   try {
-    await axios.put(`http://localhost:${PORT}/tweety/${id}`, {
-      likes: likes + 1,
-    });
+    await axios.put(
+      `http://localhost:${PORT}/tweety/${id}`,
+      {
+        likes: likes + 1,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + useSignUp.getState().accessToken,
+        },
+      }
+    );
     await axiosGet();
   } catch (error) {
     if (error instanceof Error) {

@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -14,7 +15,9 @@ import { CreateTweetyDto } from './dto/create.dto';
 import { TweetyService } from './tweety.service';
 import mongoose from 'mongoose';
 import { UpdateTweetyDto } from './dto/updateTweety.dto';
+import { AuthGuard } from 'src/guards/auth.guards';
 
+@UseGuards(AuthGuard)
 @Controller('tweety')
 export class TweetyController {
   userService: any;

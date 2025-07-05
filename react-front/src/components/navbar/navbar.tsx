@@ -3,6 +3,8 @@ import { useModalOpenStore } from "../authorization/modalOpen.store";
 import { useSignUp } from "../authorization/signUp.store";
 import { useNavbarStore } from "./navbar.store";
 import { AlignJustify } from "react-feather";
+import { useHandlerFunctions } from "../../utilities/logoutHandler";
+// import { useHandlerFunctions } from "../../utilities/handlerFunctions";
 
 // component to display the navbar
 
@@ -21,15 +23,8 @@ const Navbar = () => {
     NavbarStore.toggle();
     useModalOpenStore.getState().setSignUpOpen(true);
   }
-  // function to handle logout click
-  // it resets the credentials, clears tokens, sets user to empty string,
-  function LogOutOnClick() {
-    useSignUp.getState().resetCredentials;
-    useSignUp.getState().clearTokens;
-    useSignUp.getState().setUser("");
-    useSignUp.getState().setIsLogedIn(false);
-    useModalOpenStore.getState().setLogoutOpen(true);
-  }
+
+  const logout = useHandlerFunctions.LogOutOnClick;
 
   return (
     <div className="navbar bg-base-200 flex flex-row justify-between items-center">
@@ -84,7 +79,7 @@ const Navbar = () => {
             } avatar-placeholder`}
           >
             <div className="btn bg-neutral text-neutral-content rounded-full">
-              <span className="text-xs" onClick={() => LogOutOnClick()}>
+              <span className="text-xs" onClick={() => logout()}>
                 Logout
               </span>
             </div>

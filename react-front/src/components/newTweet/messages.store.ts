@@ -9,6 +9,7 @@ export type CommentType = {
   id: string;
   likes: number;
   _id: string;
+  owner: string;
 };
 
 export type MessagesStoreType = {

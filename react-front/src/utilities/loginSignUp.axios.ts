@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useSignUp } from "../components/authorization/signUp.store";
 import { useMessageModalStore } from "../components/message_Modal/messageModal.store";
+import { useAxios } from "./axios";
 
 const PORT = import.meta.env.VITE_PORT || 3000; // Default to 5000 if not set
 
@@ -11,11 +12,15 @@ const devSignUp = async (
   email: string = "dev@gmail.com",
   password: string = "Dev12345"
 ) => {
-  await axios.post(`http://localhost:${PORT}/auth/signup`, {
-    name: name,
-    email: email,
-    password: password,
-  });
+  await axios
+    .post(`http://localhost:${PORT}/auth/signup`, {
+      name: name,
+      email: email,
+      password: password,
+    })
+    .finally(() => {
+      devLogin(email, password);
+    });
 };
 
 const devLogin = async (
@@ -34,7 +39,7 @@ const devLogin = async (
   useSignUp.getState().setAccessToken(accessToken);
   useSignUp.getState().setRefreshToken(refreshToken);
   useMessageModalStore.getState().setMessage("Login successful");
-  useSignUp.getState().resetCredentials;
+  useAxios.getTweets();
 };
 
 const signUp = async (name: string, email: string, password: string) => {
@@ -83,7 +88,7 @@ const login = async (email: string, password: string) => {
     useSignUp.getState().setRefreshToken(refreshToken);
     useMessageModalStore.getState().setMessage("Login successful");
     useMessageModalStore.getState().setIsOpen(true);
-    useSignUp.getState().resetCredentials;
+    useAxios.getTweets();
   } catch (error) {
     if (error instanceof Error) {
       useMessageModalStore
@@ -100,17 +105,37 @@ const login = async (email: string, password: string) => {
   }
 };
 
+const refreshToken = async (token: string) => {
+  try {
+    const response = await axios.post(`http://localhost:${PORT}/auth/refresh`, {
+      Headers: { Authorization: `Bearer ${token}` },
+    });
+    const { refreshToken, accessToken } = response.data.tokens;
+    useSignUp.getState().setAccessToken(accessToken);
+    useSignUp.getState().setRefreshToken(refreshToken);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error during token refresh:", error.message);
+    }
+  }
+};
+
 export const SignUpAxios = {
   // Developer login methods
   devSignUpLogin: () => {
     devSignUp();
-    devLogin();
   },
   signUp: (name: string, email: string, password: string) => {
     signUp(name, email, password);
   },
   login: (email: string, password: string) => {
-    login(email, password);
+    login(email, password).then(() => {
+      // After login, fetch tweets to update the state
+      useAxios.getTweets();
+    });
+  },
+  refreshToken: (refreshTokenStr: string): Promise<any> => {
+    return refreshToken(refreshTokenStr);
   },
 };
 // You can add more methods here for login, etc.

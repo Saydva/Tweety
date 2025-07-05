@@ -8,7 +8,7 @@ const LoginModal = () => {
   const loginData = useSignUp((state) => state);
 
   const modalOpen = useModalOpenStore((state) => state.modalLoginOpen);
-  function LoginHandler() {
+  async function LoginHandler() {
     const login = SignUpAxios.login;
     login(loginData.email, loginData.password);
     useMessageModalStore.getState().clearError();
@@ -49,7 +49,12 @@ const LoginModal = () => {
             onChange={(e) => useSignUp.getState().setPassword(e.target.value)}
           />
           <div className="card-actions justify-end align-top">
-            <button onClick={() => LoginHandler()} className="btn">
+            <button
+              onClick={() => {
+                LoginHandler();
+              }}
+              className="btn"
+            >
               Login
             </button>
           </div>

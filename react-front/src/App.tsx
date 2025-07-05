@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { useMessagesStore } from "./components/newTweet/messages.store";
-import { useAxios } from "./utilities/axios";
 import Navbar from "./components/navbar/Navbar";
 import NewTweet from "./components/newTweet/NewTweet";
 import MessagesList from "./components/messages/MessagesList";
@@ -8,14 +6,10 @@ import SignupModal from "./components/authorization/SignupModal";
 import MessageModal from "./components/message_Modal/MessageModal";
 import LoginModal from "./components/authorization/LoginModal";
 import LogoutModal from "./components/authorization/LogoutModal";
-import { useSignUp } from "./components/authorization/signUp.store";
 
 function App() {
-  useEffect(() => {
-    useAxios.getTweets();
-  }, []);
+  //
   const array = useMessagesStore((state) => state.messages);
-  console.log(useSignUp((state) => state));
 
   return (
     <div className="m-auto w-1/2 min-w-96">

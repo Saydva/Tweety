@@ -49,7 +49,6 @@ const Message = ({ message }: MessageProps) => {
               onClick={() => message._id && DeleteMessage(message._id)}
             />
           </div>
-          <div>User</div>
         </div>
       </div>
 

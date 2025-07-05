@@ -43,19 +43,6 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T09:50:39.671Z",
-      "description": {
-        "content": "- nepamata si ze som prihlaseny ked dam refresh, malo by si pamatat jwt token v localstoragi a po refreshi si vypytat userinfo o userovi ktore ak je to validny token, tak sa zobrazi ui ako ze je prihlaseny\n",
-        "mime": "text/markdown"
-      },
-      "id": "14",
-      "references": [],
-      "title": "Jwt- tokens localStorage"
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
       "creation_time": "2025-06-29T09:49:26.729Z",
       "description": {
         "content": "- ked nevyhovuje heslo pri registracii, mal by si to iba napisat vo formulari a nie zavriet cely formular.",
@@ -202,6 +189,19 @@
       "assignedTo": {
         "name": "Saydva"
       },
+      "creation_time": "2025-06-29T09:50:39.671Z",
+      "description": {
+        "content": "- nepamata si ze som prihlaseny ked dam refresh, malo by si pamatat jwt token v localstoragi a po refreshi si vypytat userinfo o userovi ktore ak je to validny token, tak sa zobrazi ui ako ze je prihlaseny\n",
+        "mime": "text/markdown"
+      },
+      "id": "14",
+      "references": [],
+      "title": "Jwt- tokens localStorage"
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
       "creation_time": "2025-06-29T09:48:52.737Z",
       "description": {
         "content": "- neda sa zavriet login modal",
@@ -241,19 +241,6 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T10:00:08.435Z",
-      "description": {
-        "content": "- \"useSignUp.getState()\n.resetCredentials\" \ntoto neviem ci nemas zle, nema to byt volanie funkcie?",
-        "mime": "text/markdown"
-      },
-      "id": "20",
-      "references": [],
-      "title": "useSignUp"
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
       "creation_time": "2025-06-29T09:46:57.445Z",
       "description": {
         "content": "- FE neviem ake je meno heslo do loginu, takze pridaj tam dev tlacitko len suchy cerveny text ze \"prefill login\", ktory predvyplni udaje",
@@ -262,6 +249,19 @@
       "id": "3",
       "references": [],
       "title": "prefill login"
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
+      "creation_time": "2025-06-29T10:00:08.435Z",
+      "description": {
+        "content": "- \"useSignUp\n.getState()\n.resetCredentials\" \ntoto neviem ci nemas zle,\nnema to byt volanie funkcie?",
+        "mime": "text/markdown"
+      },
+      "id": "20",
+      "references": [],
+      "title": "useSignUp"
     }
   ]
 }

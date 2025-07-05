@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -10,6 +11,7 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { AuthGuard } from 'src/guards/auth.guards';
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +28,7 @@ export class AuthController {
     // Implement sign-up logic here
   }
   //TODO: Post Login
+
   @Post('login')
   async login(@Body() loginData: LoginDto) {
     return this.authService.login(loginData);
