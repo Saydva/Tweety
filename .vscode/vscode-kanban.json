@@ -4,19 +4,6 @@
       "assignedTo": {
         "name": "Saydva"
       },
-      "creation_time": "2025-06-29T09:52:02.647Z",
-      "description": {
-        "content": "- BOTH: readme upravit aby tam bolo len pointa ze co ma clovek realne citat ked otvori projekt, nech tam neni ten placeholder balast\n",
-        "mime": "text/markdown"
-      },
-      "id": "19",
-      "references": [],
-      "title": "- BOTH: readme upravit aby tam bolo len pointa ze co ma clovek realne citat ked otvori projekt, nech tam neni ten placeholder balast"
-    },
-    {
-      "assignedTo": {
-        "name": "Saydva"
-      },
       "creation_time": "2025-06-29T09:45:53.148Z",
       "description": {
         "content": "- FE: ked stlacim delete, tak sa nic nestane v ui, musim refreshnut - vyzera ze sa nove tweety getuju najprv a potom az sa zavola delete..\n",
@@ -262,6 +249,19 @@
       "id": "20",
       "references": [],
       "title": "useSignUp"
+    },
+    {
+      "assignedTo": {
+        "name": "Saydva"
+      },
+      "creation_time": "2025-06-29T09:52:02.647Z",
+      "description": {
+        "content": "- BOTH: readme upravit aby tam bolo len pointa ze co ma clovek realne citat ked otvori projekt, nech tam neni ten placeholder balast\n",
+        "mime": "text/markdown"
+      },
+      "id": "19",
+      "references": [],
+      "title": "- BOTH: readme upravit aby tam bolo len pointa ze co ma clovek realne citat ked otvori projekt, nech tam neni ten placeholder balast"
     }
   ]
 }

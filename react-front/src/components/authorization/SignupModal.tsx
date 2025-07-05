@@ -3,6 +3,7 @@ import { SignUpAxios } from "../../utilities/loginSignUp.axios";
 import { useMessageModalStore } from "../message_Modal/messageModal.store";
 import { useModalOpenStore } from "./modalOpen.store";
 import { XSquare } from "react-feather";
+import { regexHandler } from "../../utilities/regexHandlex";
 
 const LoginModal = () => {
   const signUpData = useSignUp((state) => state);
@@ -15,6 +16,7 @@ const LoginModal = () => {
     useSignUp.getState().resetCredentials();
     useModalOpenStore.getState().setSignUpOpen(false);
   }
+
   return (
     <dialog
       className={`modal ${
@@ -27,7 +29,10 @@ const LoginModal = () => {
             <h2 className="card-title self-baseline">Login</h2>
             <button
               className="btn"
-              onClick={() => useModalOpenStore.getState().setSignUpOpen(false)}
+              onClick={() => {
+                useModalOpenStore.getState().setSignUpOpen(false),
+                  useSignUp.getState().resetCredentials();
+              }}
             >
               <XSquare />
             </button>
@@ -39,22 +44,42 @@ const LoginModal = () => {
             className="input input-neutral"
             onChange={(e) => useSignUp.getState().setName(e.target.value)}
           />
-
-          <input
-            value={useSignUp.getState().email}
-            type="email"
-            placeholder="Email"
-            className="input input-neutral"
-            onChange={(e) => useSignUp.getState().setEmail(e.target.value)}
-          />
-          <input
-            value={useSignUp.getState().password}
-            type="text"
-            placeholder="Password"
-            className="input input-neutral"
-            onChange={(e) => useSignUp.getState().setPassword(e.target.value)}
-          />
-
+          <div className="flex flex-row items-center gap-2">
+            <input
+              value={useSignUp.getState().email}
+              type="email"
+              placeholder="Email"
+              className="input input-neutral"
+              onChange={(e) => useSignUp.getState().setEmail(e.target.value)}
+            />
+            <span
+              className={`text-xs text-error ${
+                regexHandler.isValidEmail(useSignUp.getState().email)
+                  ? " hidden "
+                  : ""
+              }`}
+            >
+              not valid email
+            </span>
+          </div>
+          <div className="flex flex-row items-center gap-2">
+            <input
+              value={useSignUp.getState().password}
+              type="text"
+              placeholder="Password"
+              className="input input-neutral"
+              onChange={(e) => useSignUp.getState().setPassword(e.target.value)}
+            />
+            <span
+              className={`textarea-xs text-error ${
+                regexHandler.isValidPassword(useSignUp.getState().password)
+                  ? " hidden "
+                  : ""
+              }`}
+            >
+              6 characters 1 Uppercase and num.
+            </span>
+          </div>
           <div className="card-actions justify-end">
             <button onClick={() => signUpHandler()} className="btn">
               SignUp
