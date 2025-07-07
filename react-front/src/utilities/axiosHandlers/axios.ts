@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useMessagesStore } from "../components/newTweet/messages.store";
-import { useNewTweetStore } from "../components/newTweet/NewTweet.store";
-import { useIdUpdatedMessageStore } from "../components/comments/idUpatedMessage.store";
-import { useSignUp } from "../components/authorization/signUp.store";
-import { checkTokenValidity } from "./tokenHandler";
+import { useMessagesStore } from "../../components/newTweet/messages.store";
+import { useNewTweetStore } from "../../components/newTweet/NewTweet.store";
+import { useIdUpdatedMessageStore } from "../../components/comments/idUpatedMessage.store";
+import { useSignUp } from "../../components/authorization/signUp.store";
+import { checkTokenValidity } from "../handlers/tokenHandler";
 
 const PORT = import.meta.env.VITE_PORT || 3000;
 
@@ -88,7 +88,7 @@ const updateTweetyComments = async (data: CommentType) => {
   try {
     const tweetToUpdate = await axios.get(
       `http://localhost:${PORT}/tweety/${
-        useIdUpdatedMessageStore.getState().id
+        useIdUpdatedMessageStore.getState().idMessage
       }`,
       {
         headers: {
@@ -107,7 +107,7 @@ const updateTweetyComments = async (data: CommentType) => {
     ];
     await axios.put(
       `http://localhost:${PORT}/tweety/${
-        useIdUpdatedMessageStore.getState().id
+        useIdUpdatedMessageStore.getState().idMessage
       }`,
       {
         comments: updatedComments,

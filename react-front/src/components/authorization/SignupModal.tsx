@@ -1,62 +1,63 @@
 import { useSignUp } from "./signUp.store";
-import { SignUpAxios } from "../../utilities/loginSignUp.axios";
-import { useMessageModalStore } from "../message_Modal/messageModal.store";
+import { useAuthHandler } from "./authHandler";
 import { useModalOpenStore } from "./modalOpen.store";
 import { XSquare } from "react-feather";
-import { regexHandler } from "../../utilities/regexHandlex";
+import { regexHandler } from "../../utilities/handlers/regexHandler";
 
 const LoginModal = () => {
-  const signUpData = useSignUp((state) => state);
-  const signUp = SignUpAxios.signUp;
-  const modalOpen = useModalOpenStore((state) => state.modadSignUpOpen);
-  function signUpHandler() {
-    signUp(signUpData.name, signUpData.email, signUpData.password);
-    useMessageModalStore.getState().clearError();
-    useMessageModalStore.getState().clearMessage();
-    useSignUp.getState().resetCredentials();
-    useModalOpenStore.getState().setSignUpOpen(false);
-  }
+  const { signUpHandler } = useAuthHandler();
+  const {
+    setName,
+    setEmail,
+    setPassword,
+    name,
+    email,
+    password,
+    resetCredentials,
+  } = useSignUp((state) => state);
+  const { modadSignUpOpen, setSignUpOpen } = useModalOpenStore(
+    (state) => state
+  );
+  const { isValidEmail, isValidPassword } = regexHandler;
 
   return (
     <dialog
       className={`modal ${
-        modalOpen ? " modal-open " : ""
+        modadSignUpOpen ? " modal-open " : ""
       } modal-bottom sm:modal-middle`}
     >
       <div className="modal-box">
         <form method="dialog" className="flex flex-col gap-3 bg-content">
           <div className="flex flex-row justify-between">
-            <h2 className="card-title self-baseline">Login</h2>
+            <h2 className="card-title self-baseline">Sign Up</h2>
             <button
               className="btn"
               onClick={() => {
-                useModalOpenStore.getState().setSignUpOpen(false),
-                  useSignUp.getState().resetCredentials();
+                setSignUpOpen(false);
+                resetCredentials();
               }}
             >
               <XSquare />
             </button>
           </div>
           <input
-            value={useSignUp.getState().name}
+            value={name}
             type="text"
             placeholder="Name"
             className="input input-neutral"
-            onChange={(e) => useSignUp.getState().setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
           <div className="flex flex-row items-center gap-2">
             <input
-              value={useSignUp.getState().email}
+              value={email}
               type="email"
               placeholder="Email"
               className="input input-neutral"
-              onChange={(e) => useSignUp.getState().setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <span
               className={`text-xs text-error ${
-                regexHandler.isValidEmail(useSignUp.getState().email)
-                  ? " hidden "
-                  : ""
+                isValidEmail(email) ? " hidden " : ""
               }`}
             >
               not valid email
@@ -64,17 +65,15 @@ const LoginModal = () => {
           </div>
           <div className="flex flex-row items-center gap-2">
             <input
-              value={useSignUp.getState().password}
+              value={password}
               type="text"
               placeholder="Password"
               className="input input-neutral"
-              onChange={(e) => useSignUp.getState().setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span
               className={`textarea-xs text-error ${
-                regexHandler.isValidPassword(useSignUp.getState().password)
-                  ? " hidden "
-                  : ""
+                isValidPassword(password) ? " hidden " : ""
               }`}
             >
               6 characters 1 Uppercase and num.

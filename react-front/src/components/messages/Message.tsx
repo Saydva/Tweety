@@ -1,58 +1,48 @@
-import { useAxios } from "../../utilities/axios";
+import { useAxios } from "../../utilities/axiosHandlers/axios";
 import AddComment from "../comments/AddComment";
-import CommentList from "../comments/CommentList";
 import { ThumbsUp, XSquare } from "react-feather";
-import type { CommentType } from "../newTweet/messages.store";
 import { Twitter } from "react-feather";
-
-type MessageProps = {
-  message: {
-    _id: string;
-    content: string;
-    date: string;
-    likes: number;
-    comments: CommentType[];
-    owner: string;
-  };
-};
+import CommentList from "../comments/CommentList";
+import type { MessageProps } from "../../utilities/types/myTypes";
 
 const Message = ({ message }: MessageProps) => {
   const DeleteMessage = useAxios.deleteMessage;
-  function ThumbsUpHandler() {
-    useAxios.sendLikes(message._id, message.likes);
-    useAxios.getTweets();
+  const { owner, date, likes, _id, content, comments } = message;
+
+  function ThumbsUpHandler({ _id, likes }: { _id: string; likes: number }) {
+    const { sendLikes, getTweets } = useAxios;
+    sendLikes(_id, likes);
+    getTweets();
   }
+
   return (
     <div className="p-2 border-b border-gray-200">
       <div className="chat chat-start flex flex-row w-full justify-between items-start">
         <div className="flex flex-col">
           <div className="flex flex-row">
             <Twitter />
-            <p className="text-xs">---{message.owner}</p>
+            <p className="text-xs">---{owner}</p>
           </div>
 
-          <div className="chat-bubble chat-bubble-primary m-3">
-            {message.content}
-          </div>
-          <div className="chat-footer "> {message.date.slice(0, 25)}</div>
+          <div className="chat-bubble chat-bubble-primary m-3">{content}</div>
+          <div className="chat-footer "> {date.slice(0, 25)}</div>
         </div>
         <div className="buttons flex flex-col gap-2">
           <div className="flex flex-row justify-between gap-1">
             <ThumbsUp
               className="bg-info cursor-pointer rounded-sm p-1"
-              onClick={() => ThumbsUpHandler()}
+              onClick={() => ThumbsUpHandler({ likes, _id })}
             />
-            <span className="text-xs text-base-content">{message.likes}</span>
-            <AddComment id={message._id} />
+            <span className="text-xs text-base-content">{likes}</span>
+            <AddComment id={_id} />
             <XSquare
               className="bg-error cursor-pointer rounded-sm p-1"
-              onClick={() => message._id && DeleteMessage(message._id)}
+              onClick={() => DeleteMessage(_id)}
             />
           </div>
         </div>
       </div>
-
-      <CommentList array={message.comments} />
+      <CommentList array={comments} />
     </div>
   );
 };

@@ -1,9 +1,5 @@
-import type { CommentType } from "../newTweet/messages.store";
 import Comment from "./Comment";
-
-type CommentsListProps = {
-  array: CommentType[];
-};
+import type { CommentsListProps } from "../../utilities/types/myTypes";
 
 const CommentList = ({ array }: CommentsListProps) => {
   const CommentList = array.map((comment, index) => (

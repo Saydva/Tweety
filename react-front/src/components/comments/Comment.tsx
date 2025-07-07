@@ -1,29 +1,9 @@
-import { useAxios } from "../../utilities/axios";
 import { Trash } from "react-feather";
 import { MessageSquare } from "react-feather";
-
-type CommentProps = {
-  comment: {
-    id: string;
-    content: string;
-    date: string;
-    owner: string;
-  };
-};
-
-type ArrayProps = {
-  array: CommentProps["comment"][];
-};
+import { commentList } from "./commentHandler";
+import type { CommentProps, ArrayProps } from "../../utilities/types/myTypes";
 
 const Comment = ({ comment, array }: CommentProps & ArrayProps) => {
-  function commnetHandler() {
-    useAxios.sendNewCommentList(
-      comment.id,
-      array.filter((c) => c.content !== comment.content)
-    );
-    useAxios.getTweets();
-  }
-
   return (
     <div className="p-2 border-b border-gray-200">
       <div className="flex justify-between items-start">
@@ -42,7 +22,7 @@ const Comment = ({ comment, array }: CommentProps & ArrayProps) => {
         </div>
         <Trash
           className="cursor-pointer bg-error rounded-sm p-1 min-w-6 m-1"
-          onClick={() => commnetHandler()}
+          onClick={() => commentList({ comment, array })}
         />
       </div>
     </div>

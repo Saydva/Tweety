@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useSignUp } from "../components/authorization/signUp.store";
-import { useMessageModalStore } from "../components/message_Modal/messageModal.store";
+import { useSignUp } from "../../components/authorization/signUp.store";
+import { useMessageModalStore } from "../../components/message_Modal/messageModal.store";
 import { useAxios } from "./axios";
 
 const PORT = import.meta.env.VITE_PORT || 3000; // Default to 5000 if not set

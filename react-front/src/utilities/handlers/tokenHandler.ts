@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useSignUp } from "../components/authorization/signUp.store";
-import { useHandlerFunctions } from "./logoutHandler";
+import { useSignUp } from "../../components/authorization/signUp.store";
+import { useAuthHandler } from "../../components/authorization/authHandler";
 
 export function checkTokenValidity() {
   const accessToken = useSignUp.getState().accessToken;
@@ -49,6 +49,6 @@ const getRefreshToken = async (token: string) => {
       });
   } catch (error) {
     console.log("Error refreshing token");
-    useHandlerFunctions.LogOutOnClick();
+    useAuthHandler().LogOutOnClick();
   }
 };

@@ -1,52 +1,43 @@
 import { useSignUp } from "./signUp.store";
-import { SignUpAxios } from "../../utilities/loginSignUp.axios";
-import { useMessageModalStore } from "../message_Modal/messageModal.store";
+import { useAuthHandler } from "./authHandler";
 import { useModalOpenStore } from "./modalOpen.store";
 import { XSquare } from "react-feather";
 
 const LoginModal = () => {
-  const loginData = useSignUp((state) => state);
+  const { modalLoginOpen, setLoginOpen } = useModalOpenStore((state) => state);
+  const { setEmail, setPassword, email, password } = useSignUp(
+    (state) => state
+  );
+  const { LoginHandler } = useAuthHandler();
 
-  const modalOpen = useModalOpenStore((state) => state.modalLoginOpen);
-  async function LoginHandler() {
-    const login = SignUpAxios.login;
-    login(loginData.email, loginData.password);
-    useMessageModalStore.getState().clearError();
-    useMessageModalStore.getState().clearMessage();
-    useSignUp.getState().resetCredentials();
-    useModalOpenStore.getState().setLoginOpen(false);
-  }
   return (
     <dialog
       id="my_modal_5"
       className={`modal ${
-        modalOpen ? "modal-open" : ""
+        modalLoginOpen ? "modal-open" : ""
       } modal-bottom sm:modal-middle`}
     >
       <div className="modal-box">
         <form method="dialog" className="flex flex-col gap-3 bg-content">
           <div className="flex flex-row justify-between">
             <h2 className="card-title self-baseline">Login</h2>
-            <button
-              className="btn"
-              onClick={() => useModalOpenStore.getState().setLoginOpen(false)}
-            >
+            <button className="btn" onClick={() => setLoginOpen(false)}>
               <XSquare />
             </button>
           </div>
           <input
-            value={useSignUp.getState().email}
+            value={email}
             type="Email"
             placeholder="Email"
             className="input input-neutral"
-            onChange={(e) => useSignUp.getState().setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            value={useSignUp.getState().password}
+            value={password}
             type="password"
             placeholder="password"
             className="input input-neutral"
-            onChange={(e) => useSignUp.getState().setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <div className="card-actions justify-end align-top">
             <button

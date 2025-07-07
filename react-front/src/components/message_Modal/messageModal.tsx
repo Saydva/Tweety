@@ -1,12 +1,15 @@
 import { useMessageModalStore } from "./messageModal.store";
 
 const MessageModal = () => {
-  const openModal = useMessageModalStore((state) => state.setIsOpen);
-  const isOpen = useMessageModalStore((state) => state.isOpen);
+  const { setIsOpen, isOpen } = useMessageModalStore((state) => state);
+  const { clearError, clearMessage, error, message } =
+    useMessageModalStore.getState();
+
+  // This function toggles the modal open state and clears the error and message
   function messageModalHandler() {
-    openModal(!isOpen);
-    useMessageModalStore.getState().clearError;
-    useMessageModalStore.getState().clearMessage;
+    setIsOpen(!isOpen);
+    clearError();
+    clearMessage();
   }
   return (
     <div>
@@ -17,26 +20,20 @@ const MessageModal = () => {
         `}
       >
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            {useMessageModalStore.getState().message}
-          </h3>
+          <h3 className="font-bold text-lg">{message}</h3>
           <p className="py-4 ">
-            {useMessageModalStore.getState().error?.map((error, index) => {
+            {error?.map((error, index) => {
               return (
                 <li
                   key={index}
                   className={`${
-                    useMessageModalStore.getState().message ==
-                    "Sign up successful"
+                    message == "Sign up successful"
                       ? "text-green-600"
                       : "text-red-500"
                   } mb-3`}
                 >
                   {error}
-                  {index <
-                  (useMessageModalStore.getState().error?.length ?? 0) - 1
-                    ? ", "
-                    : ""}
+                  {index < (error?.length ?? 0) - 1 ? ", " : ""}
                 </li>
               );
             })}

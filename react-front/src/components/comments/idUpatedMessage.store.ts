@@ -4,7 +4,7 @@ import { create } from "zustand";
 // component is used in the MessageBoard component
 
 type IdUpdatedMessageStoreType = {
-  id: string;
+  idMessage: string;
 };
 type IdUpdatedMessageStoreActions = {
   updateIdMessage: (id: string) => void;
@@ -14,10 +14,10 @@ type IdUpdatedMessageStoreActions = {
 export const useIdUpdatedMessageStore = create<
   IdUpdatedMessageStoreType & IdUpdatedMessageStoreActions
 >((set) => ({
-  id: "",
+  idMessage: "",
   updateIdMessage: (id: string) =>
     set(() => ({
-      id: id,
+      idMessage: id,
     })),
-  clearIdUpdatedMessage: () => set({ id: "" }),
+  clearIdUpdatedMessage: () => set({ idMessage: "" }),
 }));

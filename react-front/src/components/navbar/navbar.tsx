@@ -1,49 +1,35 @@
-import { SignUpAxios } from "../../utilities/loginSignUp.axios";
+import { SignUpAxios } from "../../utilities/axiosHandlers/loginSignUp.axios";
 import { useModalOpenStore } from "../authorization/modalOpen.store";
 import { useSignUp } from "../authorization/signUp.store";
 import { useNavbarStore } from "./navbar.store";
 import { AlignJustify } from "react-feather";
-import { useHandlerFunctions } from "../../utilities/logoutHandler";
-// import { useHandlerFunctions } from "../../utilities/handlerFunctions";
-
-// component to display the navbar
+import { useAuthHandler } from "../authorization/authHandler";
 
 const Navbar = () => {
-  // get the navbar store to toggle the navbar
-  const NavbarStore = useNavbarStore((state) => state);
-  // get the user from the sign up store
-  const user = useSignUp((state) => state.user);
-  // function to open the login modal
-  function loginOpen() {
-    useModalOpenStore.getState().setLoginOpen(true);
-  }
-  // function to handle sign up click
-  // it toggles the navbar and sets the sign up modal to open
-  function signOnClick() {
-    NavbarStore.toggle();
-    useModalOpenStore.getState().setSignUpOpen(true);
-  }
+  const { toggle, isClosed } = useNavbarStore((state) => state);
 
-  const logout = useHandlerFunctions.LogOutOnClick;
+  const { isLoged, user } = useSignUp((state) => state);
+  const { setSignUpOpen, setLoginOpen } = useModalOpenStore((state) => state);
+  const { devSignUpLogin } = SignUpAxios;
+  const { LogOutOnClick } = useAuthHandler();
+
+  function signOnClick() {
+    toggle();
+    setSignUpOpen(true);
+  }
 
   return (
     <div className="navbar bg-base-200 flex flex-row justify-between items-center">
       <div className="navbar-start w-20">
-        <div
-          className={`dropdown ${NavbarStore.isClosed ? "dropdown-open" : ""}`}
-        >
-          <div
-            role="button"
-            onClick={() => NavbarStore.toggle()}
-            className="btn m-1"
-          >
+        <div className={`dropdown ${isClosed ? "dropdown-open" : ""}`}>
+          <div role="button" onClick={() => toggle()} className="btn m-1">
             <AlignJustify />
           </div>
           <ul className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
             <li>
-              <a onClick={() => NavbarStore.toggle()}>Home Page</a>
+              <a onClick={() => toggle()}>Home Page</a>
             </li>
-            <li className={`${useSignUp.getState().isLoged ? "hidden " : ""}`}>
+            <li className={`${isLoged ? "hidden " : ""}`}>
               <a onClick={() => signOnClick()}>SignUp</a>
             </li>
           </ul>
@@ -52,7 +38,7 @@ const Navbar = () => {
       <p
         className="text-sm border-2 border-error rounded-sm p-1 btn"
         onClick={() => {
-          SignUpAxios.devSignUpLogin();
+          devSignUpLogin();
         }}
       >
         Prefill login
@@ -61,25 +47,21 @@ const Navbar = () => {
         <div className="ps-4 flex flex-row items-center gap-3">
           <p className="text-sm">{user}Tweets</p>
           <div
-            className={`avatar ${
-              useSignUp.getState().isLoged ? " hidden " : ""
-            } avatar-placeholder`}
+            className={`avatar ${isLoged ? " hidden " : ""} avatar-placeholder`}
           >
             <div
               className={`btn hidden bg-neutral text-neutral-content rounded-full`}
             >
-              <span className="text-xs" onClick={() => loginOpen()}>
+              <span className="text-xs" onClick={() => setLoginOpen(true)}>
                 Login
               </span>
             </div>
           </div>
           <div
-            className={`avatar ${
-              useSignUp.getState().isLoged ? "" : " hidden "
-            } avatar-placeholder`}
+            className={`avatar ${isLoged ? "" : " hidden "} avatar-placeholder`}
           >
             <div className="btn bg-neutral text-neutral-content rounded-full">
-              <span className="text-xs" onClick={() => logout()}>
+              <span className="text-xs" onClick={() => LogOutOnClick()}>
                 Logout
               </span>
             </div>
