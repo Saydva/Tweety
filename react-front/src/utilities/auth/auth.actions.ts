@@ -23,6 +23,7 @@ export const authActions = {
       setUser(response.name);
       setAccessToken(response.tokens.accessToken);
       setRefreshToken(response.tokens.refreshToken);
+
       return response;
     } catch (error: any) {
       setError(error.message || "Login failed");

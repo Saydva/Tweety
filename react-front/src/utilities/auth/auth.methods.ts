@@ -21,11 +21,6 @@ const login = async (data: { email: string; password: string }) => {
   return response.data;
 };
 
-const logout = async () => {
-  const response = await api.post(`/auth/logout`);
-  return response.data;
-};
-
 const refresh = async (token: string) => {
   const response = await api.post(`/auth/refresh`, { token });
   return response.data;
@@ -35,5 +30,4 @@ export const authAPI = {
   signup,
   login,
   refresh,
-  logout,
 };
