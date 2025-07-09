@@ -1,30 +1,23 @@
-import { useMessagesStore } from "./components/newTweet/messages.store";
-import Navbar from "./components/navbar/Navbar";
-import NewTweet from "./components/newTweet/NewTweet";
-import MessagesList from "./components/messages/MessagesList";
-import SignupModal from "./components/authorization/SignupModal";
-import MessageModal from "./components/message_Modal/MessageModal";
-import LoginModal from "./components/authorization/LoginModal";
-import LogoutModal from "./components/authorization/LogoutModal";
+import { Route, Routes } from "react-router";
+import LogInPage from "./components/authComponents/LogInPage";
+import SignUpPage from "./components/authComponents/SignUpPage";
+import NavBar from "./components/navBar/NavBar";
+import { useUIStore } from "./stores/ui/uiStore";
+import HomePage from "./components/appComponents/HomePage";
 
 function App() {
-  //
-  const array = useMessagesStore((state) => state.messages);
+  const { theme } = useUIStore();
 
   return (
-    <div className="m-auto w-1/2 min-w-96">
-      <Navbar />
-      <div className="flex flex-col gap-4 ">
-        <NewTweet />
-        <div>
-          <MessagesList array={array} />
-        </div>
+    <div data-theme={`${theme}`} className="min-h-screen ">
+      <NavBar />
+      <div className="flex flex-col items-center ">
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="SignUp" element={<SignUpPage />} />
+          <Route path="LogIn" element={<LogInPage />} />
+        </Routes>
       </div>
-      {/* <LoginPage /> */}
-      <SignupModal />
-      <MessageModal />
-      <LoginModal />
-      <LogoutModal />
     </div>
   );
 }

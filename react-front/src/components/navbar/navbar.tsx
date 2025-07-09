@@ -1,75 +1,60 @@
-import { SignUpAxios } from "../../utilities/axiosHandlers/loginSignUp.axios";
-import { useModalOpenStore } from "../authorization/modalOpen.store";
-import { useSignUp } from "../authorization/signUp.store";
-import { useNavbarStore } from "./navbar.store";
-import { AlignJustify } from "react-feather";
-import { useAuthHandler } from "../authorization/authHandler";
+import { LogOut, Menu } from "react-feather";
+import { useUIStore } from "../../stores/ui/uiStore";
+import ThemeButton from "./buttons/ThemeButton";
+import { useAuthStore } from "../../stores/auth/auth.store";
+import { authActions } from "../../utilities/auth/auth.actions";
+import { Link } from "react-router";
 
-const Navbar = () => {
-  const { toggle, isClosed } = useNavbarStore((state) => state);
-
-  const { isLoged, user } = useSignUp((state) => state);
-  const { setSignUpOpen, setLoginOpen } = useModalOpenStore((state) => state);
-  const { devSignUpLogin } = SignUpAxios;
-  const { LogOutOnClick } = useAuthHandler();
-
-  function signOnClick() {
-    toggle();
-    setSignUpOpen(true);
-  }
+const NavBar = () => {
+  const { navbarOpen, toggleNavbar } = useUIStore();
+  const { user } = useAuthStore();
+  const { logoutUser } = authActions;
 
   return (
-    <div className="navbar bg-base-200 flex flex-row justify-between items-center">
-      <div className="navbar-start w-20">
-        <div className={`dropdown ${isClosed ? "dropdown-open" : ""}`}>
-          <div role="button" onClick={() => toggle()} className="btn m-1">
-            <AlignJustify />
-          </div>
-          <ul className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-            <li>
-              <a onClick={() => toggle()}>Home Page</a>
-            </li>
-            <li className={`${isLoged ? "hidden " : ""}`}>
-              <a onClick={() => signOnClick()}>SignUp</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <p
-        className="text-sm border-2 border-error rounded-sm p-1 btn"
-        onClick={() => {
-          devSignUpLogin();
-        }}
-      >
-        Prefill login
-      </p>
-      <div className="navbar-end min-w-64">
-        <div className="ps-4 flex flex-row items-center gap-3">
-          <p className="text-sm">{user}Tweets</p>
-          <div
-            className={`avatar ${isLoged ? " hidden " : ""} avatar-placeholder`}
-          >
+    <div>
+      <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar-start">
+          <div className={`dropdown ${navbarOpen ? " dropdown-open " : " "}`}>
             <div
-              className={`btn hidden bg-neutral text-neutral-content rounded-full`}
+              onClick={() => toggleNavbar(!navbarOpen)}
+              role="button"
+              className="btn btn-ghost btn-circle"
             >
-              <span className="text-xs" onClick={() => setLoginOpen(true)}>
-                Login
-              </span>
+              <Menu />
             </div>
+            <ul
+              onMouseEnter={() => toggleNavbar(true)}
+              onMouseLeave={() => toggleNavbar(false)}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <Link onClick={() => console.log("clicked")} to="/">
+                  Home
+                </Link>
+              </li>
+              <li className={user !== null ? "hidden" : ""}>
+                <Link to="SignUp">SignUp</Link>
+              </li>
+              <li className={user !== null ? "hidden" : ""}>
+                <Link to="Login">LogIn</Link>
+              </li>
+              <li>
+                <button>
+                  <LogOut onClick={logoutUser} />
+                </button>
+              </li>
+            </ul>
           </div>
-          <div
-            className={`avatar ${isLoged ? "" : " hidden "} avatar-placeholder`}
-          >
-            <div className="btn bg-neutral text-neutral-content rounded-full">
-              <span className="text-xs" onClick={() => LogOutOnClick()}>
-                Logout
-              </span>
-            </div>
-          </div>
+        </div>
+        <div className="navbar-center">
+          {user ? `Hello, ${user}` : "Tweety"}
+        </div>
+        <div className="navbar-end">
+          <ThemeButton />
         </div>
       </div>
     </div>
   );
 };
 
-export default Navbar;
+export default NavBar;
