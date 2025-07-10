@@ -1,27 +1,24 @@
-import { useInputStore } from "../../stores/auth/input.store";
-import { validationRegex } from "../../utilities/validation/regex";
 import { useAuthStore } from "../../stores/auth/auth.store";
 import { useLogInHandler } from "./onLogInHandler";
-import { loginPrefill } from "../../utilities/auth/prefill.actions";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
+import { usePrefill } from "./usePrefill";
 
 const LogInPage = () => {
-  const { loading, error, user } = useAuthStore();
-  const { setEmail, setPassword, email, password } = useInputStore();
-  const isEmailValid = validationRegex.email(email);
-  const isPasswordValid = password.length >= 1;
-  const { handleSubmit } = useLogInHandler();
-  const navigate = useNavigate(); // Add this line
-
-  useEffect(() => {
-    if (user) navigate("/");
-  }, [user]);
+  const { loading, error } = useAuthStore(); // ← iba čo naozaj potrebuješ
+  const { prefillLogin } = usePrefill();
+  const {
+    handleLogin,
+    email,
+    password,
+    isEmailValid,
+    isPasswordValid,
+    setEmail,
+    setPassword,
+  } = useLogInHandler();
 
   return (
     <div>
       {error && <div className="alert alert-error mb-4">{error}</div>}
-      <form onSubmit={handleSubmit} name="login-form">
+      <form onSubmit={handleLogin} name="login-form">
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <legend className="fieldset-legend">Login</legend>
 
@@ -55,7 +52,7 @@ const LogInPage = () => {
           >
             {loading ? "Signing in..." : "Login"}
           </button>
-          <button className="text-xs btn" type="button" onClick={loginPrefill}>
+          <button className="text-xs btn" type="button" onClick={prefillLogin}>
             prefill
           </button>
         </div>

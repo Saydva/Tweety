@@ -1,27 +1,33 @@
-import { useInputStore } from "../../stores/auth/input.store";
-import { validationRegex } from "../../utilities/validation/regex";
 import { useAuthStore } from "../../stores/auth/auth.store";
 import { useSignUpHandler } from "./onSignUpHandler";
-import { signUpPrefill } from "../../utilities/auth/prefill.actions";
+import { usePrefill } from "./usePrefill";
 
 const SignUpPage = () => {
-  const { loading, error } = useAuthStore();
-  const { setName, setEmail, setPassword, name, email, password } =
-    useInputStore();
-  const isEmailValid = validationRegex.email(email);
-  const isPasswordValid = validationRegex.password(password);
-  const handleSubmit = useSignUpHandler();
+  const { error } = useAuthStore();
+  const { prefillSignUp } = usePrefill();
+  const {
+    handleSignUp,
+    name,
+    email,
+    password,
+    isEmailValid,
+    isPasswordValid,
+    loading,
+    setName,
+    setEmail,
+    setPassword,
+  } = useSignUpHandler();
 
   return (
     <div>
       {error && <div className="alert alert-error mb-4">{error}</div>}
-      <form onSubmit={handleSubmit} name="signup-form">
+      <form onSubmit={handleSignUp} name="signup-form">
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <legend className="fieldset-legend">SignUp</legend>
 
           <label className="label">Your name</label>
-
           <input
+            name="name"
             value={name}
             required
             type="text"
@@ -32,6 +38,7 @@ const SignUpPage = () => {
 
           <label className="label">Email</label>
           <input
+            name="email"
             value={email}
             type="email"
             className={`input ${email && !isEmailValid ? "input-error" : ""}`}
@@ -42,6 +49,7 @@ const SignUpPage = () => {
 
           <label className="label">Password</label>
           <input
+            name="password"
             value={password}
             type="password"
             required
@@ -57,14 +65,16 @@ const SignUpPage = () => {
           <button
             type="submit"
             className={`btn ${loading ? "loading" : ""}`}
-            disabled={loading || !isEmailValid || !isPasswordValid}
+            disabled={
+              loading || !isEmailValid || !isPasswordValid || !name.trim()
+            }
           >
-            {loading ? "Signing in..." : "Login"}
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
           <button
             className="text-xs btn "
             type="button"
-            onClick={signUpPrefill}
+            onClick={prefillSignUp}
           >
             prefill
           </button>

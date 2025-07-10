@@ -2,13 +2,13 @@ import { LogOut, Menu } from "react-feather";
 import { useUIStore } from "../../stores/ui/uiStore";
 import ThemeButton from "./buttons/ThemeButton";
 import { useAuthStore } from "../../stores/auth/auth.store";
-import { authActions } from "../../utilities/auth/auth.actions";
+import { useAuthActions } from "../../utilities/auth/useAuth.actions";
 import { Link } from "react-router";
 
 const NavBar = () => {
   const { navbarOpen, toggleNavbar } = useUIStore();
   const { user } = useAuthStore();
-  const { logoutUser } = authActions;
+  const { logoutUser } = useAuthActions();
 
   return (
     <div>
@@ -28,9 +28,7 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link onClick={() => console.log("clicked")} to="/">
-                  Home
-                </Link>
+                <Link to="/">Home</Link>
               </li>
               <li className={user !== null ? "hidden" : ""}>
                 <Link to="SignUp">SignUp</Link>
