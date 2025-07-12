@@ -16,8 +16,17 @@ type SignupProps = {
 
 export const useAuthActions = () => {
   const navigate = useNavigate();
-  const { setUser, setAccessToken, setLoading, setRefreshToken, setError } =
-    useAuthStore();
+
+  const {
+    setUser,
+    setId,
+    refreshToken,
+    setAccessToken,
+    setRefreshToken,
+    setLoading,
+    setError,
+    clearAuth,
+  } = useAuthStore();
   const { clearInputs } = useInputStore();
 
   const loginUser = async (data: LoginProps) => {
@@ -25,6 +34,7 @@ export const useAuthActions = () => {
       setLoading(true);
       const response = await authAPI.login(data);
       setUser(response.name);
+      setId(response._id);
       setAccessToken(response.tokens.accessToken);
       setRefreshToken(response.tokens.refreshToken);
       clearInputs();
@@ -51,8 +61,7 @@ export const useAuthActions = () => {
     }
   };
 
-  const logoutUser = async () => {
-    const { clearAuth, setLoading, setError } = useAuthStore.getState();
+  const logoutUser = () => {
     try {
       clearAuth();
     } catch (error: any) {
@@ -62,21 +71,11 @@ export const useAuthActions = () => {
     }
   };
 
-  const refreshToken = async () => {
-    const {
-      refreshToken,
-      setAccessToken,
-      setRefreshToken,
-      setLoading,
-      setError,
-      clearAuth,
-    } = useAuthStore.getState();
-
+  const refresh = async () => {
     if (!refreshToken) {
       setError("No refresh token available");
       return;
     }
-
     try {
       setLoading(true);
       setError(null);
@@ -94,6 +93,6 @@ export const useAuthActions = () => {
     loginUser,
     signupUser,
     logoutUser,
-    refreshToken,
+    refresh,
   };
 };

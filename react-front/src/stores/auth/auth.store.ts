@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 type AuthProps = {
   user: string | null;
+  id: string | null;
   refreshToken: string | null;
   accessToken: string | null;
   loading: boolean;
@@ -11,6 +12,7 @@ type AuthProps = {
 
 type AuthActions = {
   setUser: (user: string | null) => void;
+  setId: (id: string | null) => void;
   setRefreshToken: (token: string | null) => void;
   setAccessToken: (token: string | null) => void;
   setLoading: (loading: boolean) => void;
@@ -20,6 +22,7 @@ type AuthActions = {
 
 export const useAuthStore = create<AuthProps & AuthActions>((set) => ({
   user: null,
+  id: null,
   refreshToken: null,
   accessToken: null,
   loading: false,
@@ -27,6 +30,7 @@ export const useAuthStore = create<AuthProps & AuthActions>((set) => ({
   isAuthenticated: false,
 
   setUser: (user) => set({ user, error: null }),
+  setId: (id) => set({ id }),
   setRefreshToken: (refreshToken) =>
     set({ refreshToken: refreshToken, isAuthenticated: !!refreshToken }),
   setAccessToken: (accessToken) =>

@@ -54,6 +54,7 @@ export class AuthService {
       throw new UnauthorizedException('Wrong credentials');
     }
     const name = user?.name;
+    const _id = user?._id;
     //todo: Compare passwords with existing password
 
     const passwordMatch = await bcrypt.compare(password, user.password);
@@ -62,7 +63,7 @@ export class AuthService {
     }
     //todo: generate JWT tokens
     const tokens = await this.generateTokens((user._id as any).toString());
-    return { name, tokens };
+    return { name, _id, tokens };
   }
   // This function refreshes the access token using the refresh token
   // It checks if the refresh token is valid and not expired

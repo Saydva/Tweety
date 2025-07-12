@@ -1,10 +1,6 @@
-import { useAuthStore } from "../../stores/auth/auth.store";
 import { useSignUpHandler } from "./onSignUpHandler";
-import { usePrefill } from "./usePrefill";
 
 const SignUpPage = () => {
-  const { error } = useAuthStore();
-  const { prefillSignUp } = usePrefill();
   const {
     handleSignUp,
     name,
@@ -13,10 +9,17 @@ const SignUpPage = () => {
     isEmailValid,
     isPasswordValid,
     loading,
+    error,
     setName,
     setEmail,
     setPassword,
   } = useSignUpHandler();
+
+  const prefillSignUp = () => {
+    setName("Test User");
+    setEmail("test@gmail.com");
+    setPassword("Test1234");
+  };
 
   return (
     <div>

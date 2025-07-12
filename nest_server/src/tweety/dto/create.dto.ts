@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateTweetyDto {
   @IsOptional()
@@ -18,4 +24,6 @@ export class CreateTweetyDto {
   likes: number;
   @IsString()
   owner: string;
+  @IsBoolean()
+  myLike: boolean;
 }

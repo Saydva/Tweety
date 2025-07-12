@@ -1,10 +1,6 @@
-import { useAuthStore } from "../../stores/auth/auth.store";
 import { useLogInHandler } from "./onLogInHandler";
-import { usePrefill } from "./usePrefill";
 
 const LogInPage = () => {
-  const { loading, error } = useAuthStore(); // ← iba čo naozaj potrebuješ
-  const { prefillLogin } = usePrefill();
   const {
     handleLogin,
     email,
@@ -13,7 +9,14 @@ const LogInPage = () => {
     isPasswordValid,
     setEmail,
     setPassword,
+    loading,
+    error,
   } = useLogInHandler();
+
+  const prefillLogin = () => {
+    setEmail("test@gmail.com");
+    setPassword("Test1234");
+  };
 
   return (
     <div>

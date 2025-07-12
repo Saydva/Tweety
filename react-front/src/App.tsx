@@ -1,12 +1,16 @@
 import { Route, Routes } from "react-router";
-import LogInPage from "./components/authComponents/LogInPage";
-import SignUpPage from "./components/authComponents/SignUpPage";
-import NavBar from "./components/navBar/NavBar";
 import { useUIStore } from "./stores/ui/uiStore";
+
+//components
+import NavBar from "./components/navBar/NavBar";
 import HomePage from "./components/appComponents/HomePage";
+import SignUpPage from "./components/authComponents/SignUpPage";
+import LogInPage from "./components/authComponents/LogInPage";
+import { useTweetyActions } from "./components/appComponents/tweetyComponents/useTweety.Actions";
 
 function App() {
   const { theme } = useUIStore();
+  const { handleGetAll } = useTweetyActions();
 
   return (
     <div data-theme={`${theme}`} className="min-h-screen ">
@@ -17,6 +21,9 @@ function App() {
           <Route path="SignUp" element={<SignUpPage />} />
           <Route path="LogIn" element={<LogInPage />} />
         </Routes>
+        <button className="btn" onClick={handleGetAll}>
+          Test?
+        </button>
       </div>
     </div>
   );
