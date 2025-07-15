@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { TweetyProps } from "./newTweety/add.tweety.store";
+import type { TweetyProps } from "../newTweety/addTweety.store";
 
 const apiTweet = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:4000",
@@ -23,7 +23,17 @@ const getAllTweets = async (accessToken: string) => {
   return response.data;
 };
 
+const deleteTweet = async (tweetId: string, accessToken: string) => {
+  if (!accessToken) {
+    throw new Error("Access token is required for deleting tweets.");
+  }
+  apiTweet.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  const response = await apiTweet.delete(`/tweety/${tweetId}`);
+  return response.data;
+};
+
 export const messageAPI = {
   sendMessage,
   getAllTweets,
+  deleteTweet,
 };

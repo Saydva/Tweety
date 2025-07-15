@@ -1,27 +1,29 @@
 import { create } from "zustand";
+import type { CommentProps } from "../newComment/addComment.sore";
 
 export type TweetyProps = {
-  userId: string;
+  _id?: string;
   content: string;
   date: string;
-  comments: object[];
+  comments: CommentProps[];
   likes: number;
   owner: string;
   myLike: boolean;
 };
 
 type TweetyActions = {
-  setUserId: (userId: string) => void;
+  // setId: (id: string) => void;
   setContent: (content: string) => void;
+  resetContent: () => void;
   setDate: (date: string) => void;
-  setComments: (comments: object[]) => void;
+  setComments: (comments: CommentProps[]) => void;
   setLikes: (likes: number) => void;
   setOwner: (owner: string) => void;
   setMyLike: (myLike: boolean) => void;
 };
 
 export const useTweetStore = create<TweetyActions & TweetyProps>((set) => ({
-  userId: "",
+  _id: "",
   content: "",
   date: "",
   comments: [],
@@ -29,8 +31,9 @@ export const useTweetStore = create<TweetyActions & TweetyProps>((set) => ({
   owner: "",
   myLike: false,
 
-  setUserId: (userId) => set({ userId }),
+  // setId: (id) => set({ id }),
   setContent: (content) => set({ content }),
+  resetContent: () => set({ content: "" }),
   setDate: (date) => set({ date }),
   setComments: (comments) => set({ comments }),
   setLikes: (likes) => set({ likes }),

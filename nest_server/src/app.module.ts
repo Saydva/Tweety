@@ -15,7 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
       useFactory: () => ({
         secret: process.env.secret || undefined,
         signOptions: {
-          expiresIn: '2m', // Access token expires in 5 minute
+          expiresIn: '1h', // Access token expires in 1 hour
         },
       }),
     }),

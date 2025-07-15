@@ -26,9 +26,9 @@ DELETE http://localhost:4000/tweety/68264d1abc7f9d4a501def64
 Content-Type: application/json
 
 ###
-PUT http://localhost:4000/tweety/686437bae878898177aa31a3
+PUT http://localhost:4000/tweety/687544df0e4498eaa79823f6
 Content-Type: application/json
-Authorization: Bearer 356a0d9b-4410-46f7-9a5f-d45c5f850860
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODZmZTE4YWJkOWE2YTliMzg0MTAwYzIiLCJpYXQiOjE3NTI1MjAwMjcsImV4cCI6MTc1MjUyMzYyN30.YcnAk3WK8vVR80qBwY2UNxoCFJo5n_m9lZrPePCLw1M
 
 {
   "content":"This is updated",
@@ -38,11 +38,8 @@ Authorization: Bearer 356a0d9b-4410-46f7-9a5f-d45c5f850860
       "content":"This is a comment",
       "date":"2023-10-01T12:11:00Z",
       "owner": "Dodo"
-    },
-    {"content": "This is first comment",
-     "date": "2023-10-01T12:11:00Z",
-     "owner": "Dodo"
     }
+   
   ],
   "likes":1,
   "owner": "Dodo"
@@ -64,8 +61,8 @@ POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-  "email":"kacurikjozef@gmail.com",
-  "password":"Dodo1234"
+  "email":"test@gmail.com",
+  "password":"Test1234"
 }
 
 ###

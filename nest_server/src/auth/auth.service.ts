@@ -94,7 +94,7 @@ export class AuthService {
   async storeRefreshToken(token: string, userId: string) {
     // Store the refresh token in the database
     const expiryDate = new Date();
-    expiryDate.setMinutes(expiryDate.getMinutes() + 10);
+    expiryDate.setMinutes(expiryDate.getMinutes() + 30);
     // Set the expiry date to 100 minutes from now
     // If the user already has a refresh token, update it; otherwise, create a new one
     // This will ensure that the refresh token is unique per user

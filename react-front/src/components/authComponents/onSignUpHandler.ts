@@ -5,7 +5,7 @@ import { useAuthStore } from "../../stores/auth/auth.store";
 import { useNavigate } from "react-router";
 
 export const useSignUpHandler = () => {
-  const { name, email, password, setName, setEmail, setPassword } =
+  const { name, email, password, setName, setEmail, setPassword, clearInputs } =
     useInputStore();
   const { setLoading, setError, loading, error } = useAuthStore();
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ export const useSignUpHandler = () => {
         setLoading(true);
         setError(null);
         await authAPI.signup({ name, email, password });
+        clearInputs();
         navigate("/login");
       } catch (error: any) {
         setError(error.message || "Signup failed");

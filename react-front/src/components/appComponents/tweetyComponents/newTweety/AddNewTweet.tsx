@@ -1,5 +1,5 @@
-import { useTweetStore } from "./add.tweety.store";
-import { useTweetyActions } from "../useTweety.Actions";
+import { useTweetStore } from "./addTweety.store";
+import { useTweetyActions } from "../utils/useTweety.Actions";
 
 const AddNewTweet = () => {
   const { content, setContent } = useTweetStore();

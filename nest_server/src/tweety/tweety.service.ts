@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CreateTweetyDto } from 'src/tweety/dto/create.dto';
 import { Tweety } from 'src/tweety/schema/tweety.schema';
 import { UpdateTweetyDto } from './dto/updateTweety.dto';
+import { CreateCommentDto } from './dto/create.Comment.dto';
 
 @Injectable()
 export class TweetyService {
@@ -30,6 +31,30 @@ export class TweetyService {
     const tweety = await this.tweetyModel.findByIdAndUpdate(
       id,
       updateTweetyDto,
+      { new: true },
+    );
+    if (!tweety) {
+      throw new Error('Tweety not found');
+    }
+    return tweety;
+  }
+
+  async addCommentToTweety(tweetyId: string, comment: CreateCommentDto) {
+    const tweety = await this.tweetyModel.findByIdAndUpdate(
+      tweetyId,
+      { $push: { comments: comment } },
+      { new: true },
+    );
+    if (!tweety) {
+      throw new Error('Tweety not found');
+    }
+    return tweety;
+  }
+
+  async removeCommentFromTweety(tweetyId: string, commentId: string) {
+    const tweety = await this.tweetyModel.findByIdAndUpdate(
+      tweetyId,
+      { $pull: { comments: { _id: commentId } } },
       { new: true },
     );
     if (!tweety) {

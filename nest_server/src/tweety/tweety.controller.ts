@@ -16,6 +16,7 @@ import { TweetyService } from './tweety.service';
 import mongoose from 'mongoose';
 import { UpdateTweetyDto } from './dto/updateTweety.dto';
 import { AuthGuard } from 'src/guards/auth.guards';
+import { CreateCommentDto } from './dto/create.Comment.dto';
 
 @UseGuards(AuthGuard)
 @Controller('tweety')
@@ -73,6 +74,32 @@ export class TweetyController {
       throw new HttpException('Invalid ID format', 400);
     } else {
       return this.tweetyService.updateTweety(id, updateTweetyDto);
+    }
+  }
+
+  @Post(':id/comments')
+  @UsePipes(new ValidationPipe())
+  async addCommentToTweety(
+    @Param('id') tweetyId: string,
+    @Body() comment: CreateCommentDto,
+  ) {
+    if (!mongoose.Types.ObjectId.isValid(tweetyId)) {
+      throw new HttpException('Invalid ID format', 400);
+    } else {
+      return this.tweetyService.addCommentToTweety(tweetyId, comment);
+    }
+  }
+
+  @Delete(':id/comments/:commentId')
+  @UsePipes(new ValidationPipe())
+  async removeCommentFromTweety(
+    @Param('id') tweetyId: string,
+    @Param('commentId') commentId: string,
+  ) {
+    if (!mongoose.Types.ObjectId.isValid(tweetyId)) {
+      throw new HttpException('Invalid ID format', 400);
+    } else {
+      return this.tweetyService.removeCommentFromTweety(tweetyId, commentId);
     }
   }
 }
