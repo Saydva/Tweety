@@ -1,5 +1,5 @@
-import { useTweetStore } from "../store/tweet.sore";
-import { useDeleteTweet } from "./handlers/handleDeleteTweet";
+import { useTweetStore } from "../store/tweet.store";
+import { useDeleteTweet } from "../listTweet/handleDeleteTweet";
 
 const TweetList = () => {
   const { tweetList } = useTweetStore();

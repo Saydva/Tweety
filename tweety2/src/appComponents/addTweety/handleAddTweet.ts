@@ -1,4 +1,4 @@
-import { useTweetStore } from "../../store/tweet.sore";
+import { useTweetStore } from "../store/tweet.store";
 
 export const useAddTweet = () => {
   const { tweetValue, tweetList, setTweetList, resetValue } = useTweetStore();
