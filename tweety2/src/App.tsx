@@ -4,18 +4,24 @@ import { useTweetStore } from "./appComponents/store/tweet.sore";
 import TweetList from "./appComponents/addTweety/TweetList";
 
 function App() {
-  const { tweetList, setTweetList } = useTweetStore();
+  const { tweetList, setTweetList, isLLSEnabled, setIsLLSEnabled } =
+    useTweetStore();
 
   useEffect(() => {
-    const storedTweets = localStorage.getItem("tweetyList");
+    const storedTweets = localStorage.getItem("tweets");
     if (storedTweets) {
       setTweetList(JSON.parse(storedTweets));
     }
-  }, [setTweetList]);
+    setIsLLSEnabled(true);
+  }, [setTweetList, setIsLLSEnabled]);
 
   useEffect(() => {
-    localStorage.setItem("tweetyList", JSON.stringify(tweetList));
-  }, [tweetList]);
+    if (isLLSEnabled) {
+      localStorage.setItem("tweets", JSON.stringify(tweetList));
+    }
+  }, [tweetList, isLLSEnabled]);
+
+  if (!isLLSEnabled) return null;
 
   return (
     <div className="App flex flex-col h-screen w-xl mx-auto">
