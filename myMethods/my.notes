@@ -1,0 +1,158 @@
+# Návod: Pridávanie a odoberanie "likes" na tweety (NestJS + MongoDB + React)
+
+---
+
+## Backend (NestJS + MongoDB)
+
+### 1. Úprava Tweet schémy
+
+Pridaj pole `likes` do Tweet schémy ako pole userId (stringov):
+
+```typescript
+@Prop({ type: [{ type: 'ObjectId', ref: 'User' }], default: [] })
+likes: string[];
+```
+
+---
+
+### 2. Tweet Service – metódy na like/unlike
+
+```typescript
+async likeTweet(tweetId: string, userId: string) {
+  const tweet = await this.tweetModel.findById(tweetId);
+  if (!tweet) throw new Error('Tweety not found');
+  if (!tweet.likes.includes(userId)) {
+    tweet.likes.push(userId);
+    await tweet.save();
+  }
+  return tweet;
+}
+
+async unlikeTweet(tweetId: string, userId: string) {
+  const tweet = await this.tweetModel.findById(tweetId);
+  if (!tweet) throw new Error('Tweety not found');
+  tweet.likes = tweet.likes.filter((id) => id.toString() !== userId);
+  await tweet.save();
+  return tweet;
+}
+```
+
+---
+
+### 3. Tweet Controller – endpointy
+
+```typescript
+@UseGuards(AuthGuard('jwt'))
+@Post(':id/like')
+async likeTweet(@Param('id') id: string, @Req() req) {
+  const tweet = await this.tweetsService.likeTweet(id, req.user.userId);
+  return { likes: tweet.likes.length };
+}
+
+@UseGuards(AuthGuard('jwt'))
+@Post(':id/unlike')
+async unlikeTweet(@Param('id') id: string, @Req() req) {
+  const tweet = await this.tweetsService.unlikeTweet(id, req.user.userId);
+  return { likes: tweet.likes.length };
+}
+```
+
+---
+
+## Frontend (React)
+
+### 1. API metódy
+
+```typescript
+likeTweet: async (tweetId: string, token: string) => {
+  return fetch(`/api/tweets/${tweetId}/like`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+},
+unlikeTweet: async (tweetId: string, token: string) => {
+  return fetch(`/api/tweets/${tweetId}/unlike`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+},
+```
+
+---
+
+### 2. Hooky na like/unlike (opravené podľa schémy)
+
+```typescript
+const handleLikeTweet = async (tweetId: string) => {
+  if (!accessToken) {
+    alert("You need to be logged in to like tweets.");
+    return;
+  }
+  try {
+    await messageAPI.likeTweet(tweetId, accessToken ?? "");
+    setTweets(
+      tweets.map((tweet) =>
+        tweet._id === tweetId
+          ? { ...tweet, likes: [...tweet.likes, id], myLike: true }
+          : tweet
+      )
+    );
+    console.log("Tweet liked successfully");
+  } catch (error) {
+    console.error("Error liking tweet:", error);
+    alert("Failed to like tweet. Please try again.");
+  }
+};
+
+const handleUnlikeTweet = async (tweetId: string) => {
+  if (!accessToken) {
+    alert("You need to be logged in to unlike tweets.");
+    return;
+  }
+  try {
+    await messageAPI.unlikeTweet(tweetId, accessToken ?? "");
+    setTweets(
+      tweets.map((tweet) =>
+        tweet._id === tweetId
+          ? { ...tweet, likes: tweet.likes.filter((userId) => userId !== id), myLike: false }
+          : tweet
+      )
+    );
+    console.log("Tweet unliked successfully");
+  } catch (error) {
+    console.error("Error unliking tweet:", error);
+    alert("Failed to unlike tweet. Please try again.");
+  }
+};
+```
+
+- `id` je userId z auth store.
+- `likes` je pole userId, nie číslo.
+
+---
+
+### 3. Použitie v komponente
+
+```tsx
+{tweet.myLike ? (
+  <button onClick={() => handleUnlikeTweet(tweet._id!)}>Unlike</button>
+) : (
+  <button onClick={() => handleLikeTweet(tweet._id!)}>Like</button>
+)}
+<span>{tweet.likes.length}</span>
+```
+
+---
+
+## Dôležité postrehy a odporúčania
+
+- **Frontend musí manipulovať s poľom userId, nie s číslom.**
+- Počet lajkov zobrazuj cez `tweet.likes.length`.
+- Neposielaj na backend polia, ktoré neočakáva (`myLike`, `_id`).
+- Ak chceš systém lajkov aj pre komentáre, použi rovnaký princíp: pole userId v komentári.
+- Otestuj, či sa lajky správne aktualizujú po akcii (refresh zoznamu).
+- Pri odosielaní nového tweetu posielaj len polia: `content`, `date`, `owner`, `comments`, `likes`.
+
+---
+
+**Ak budeš postupovať podľa tohto návodu, systém lajkov bude plne funkčný a v súlade s backendovou schémou.**
