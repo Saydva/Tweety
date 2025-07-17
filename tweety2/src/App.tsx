@@ -1,45 +1,45 @@
 import { useEffect, useState } from "react";
-import AddTweety from "./appComponents/AddTweety";
+import AddTweet from "./appComponents/addTweety/AddTweet";
 
 function App() {
   const [value, setValue] = useState("");
-  const [tweetyList, setTweetyList] = useState<string[]>(() => {
-    const storedTweetyList = localStorage.getItem("tweetyList");
-    return storedTweetyList ? JSON.parse(storedTweetyList) : [];
+  const [tweetList, setTweetList] = useState<string[]>(() => {
+    const storedTweetList = localStorage.getItem("tweetyList");
+    return storedTweetList ? JSON.parse(storedTweetList) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem("tweetyList", JSON.stringify(tweetyList));
-  }, [tweetyList]);
+    localStorage.setItem("tweetyList", JSON.stringify(tweetList));
+  }, [tweetList]);
 
-  const addTweety = () => {
+  const addTweet = () => {
     if (value.trim()) {
-      setTweetyList([...tweetyList, value]);
+      setTweetList([...tweetList, value]);
       setValue("");
     }
   };
 
   const tweetyDelete = (index: number) => {
-    setTweetyList(tweetyList.filter((_, i) => i !== index));
+    setTweetList(tweetList.filter((_, i) => i !== index));
   };
 
-  const itemList = tweetyList.map((tweety, index) => (
+  const itemList = tweetList.map((tweet, index) => (
     <div key={index} className="tweety-item flex justify-between items-center ">
-      <span>{tweety}</span>
+      <span>{tweet}</span>
       <button onClick={() => tweetyDelete(index)} className="btn">
         Delete
       </button>
     </div>
   ));
-  console.log("Current Tweety List:", tweetyList);
+  console.log("Current Tweety List:", tweetList);
 
   return (
     <div className="App flex flex-col h-screen w-xl mx-auto">
-      <AddTweety
+      <AddTweet
         value={value}
         setValue={setValue}
-        addTweety={addTweety}
-        deleteTweety={tweetyDelete}
+        addTweet={addTweet}
+        deleteTweet={tweetyDelete}
       />
       <ul className="flex flex-col gap-2 mt-4">{itemList}</ul>
     </div>

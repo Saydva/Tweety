@@ -1,15 +1,15 @@
-type AddTweetyProps = {
+type AddTweetProps = {
   value: string;
   setValue: (value: string) => void;
-  addTweety: () => void;
-  deleteTweety: (index: number) => void;
+  addTweet: () => void;
+  deleteTweet: (index: number) => void;
 };
 
-const AddTweety = ({
+const AddTweet = ({
   value,
   setValue,
-  addTweety,
-}: AddTweetyProps & { addTweety: () => void }) => {
+  addTweet,
+}: AddTweetProps & { addTweet: () => void }) => {
   return (
     <div className="flex flex-row justify-between mt-3">
       <input
@@ -19,11 +19,11 @@ const AddTweety = ({
         placeholder="Type here"
         className="input"
       />
-      <button onClick={addTweety} className="btn">
+      <button onClick={addTweet} className="btn">
         Add
       </button>
     </div>
   );
 };
 
-export default AddTweety;
+export default AddTweet;
