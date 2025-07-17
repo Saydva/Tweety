@@ -1,20 +1,14 @@
-type AddTweetProps = {
-  value: string;
-  setValue: (value: string) => void;
-  addTweet: () => void;
-  deleteTweet: (index: number) => void;
-};
+import { useTweetStore } from "../store/tweet.sore";
+import { useAddTweet } from "./handlers/handleAddTweet";
 
-const AddTweet = ({
-  value,
-  setValue,
-  addTweet,
-}: AddTweetProps & { addTweet: () => void }) => {
+const AddTweet = () => {
+  const { tweetValue, setTweetValue } = useTweetStore();
+  const { addTweet } = useAddTweet();
   return (
     <div className="flex flex-row justify-between mt-3">
       <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={tweetValue}
+        onChange={(e) => setTweetValue(e.target.value)}
         type="text"
         placeholder="Type here"
         className="input"
