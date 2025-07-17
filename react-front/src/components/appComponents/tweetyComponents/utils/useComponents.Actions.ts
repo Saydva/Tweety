@@ -31,7 +31,6 @@ export const useCommentActions = () => {
 
     try {
       const response = await addCommentToTweety(accessToken, tweetyId, comment);
-      console.log("Comment added successfully:", response);
       navigate("/");
       handleGetAll(); // Refresh the tweet list after adding a comment
       resetContent(); // Reset the content after sending the comment
@@ -52,7 +51,7 @@ export const useCommentActions = () => {
         tweetyId,
         commentId
       );
-      console.log("Comment removed successfully:", response);
+
       handleGetAll(); // Refresh the tweet list after removing a comment
       return response;
     } catch (error) {

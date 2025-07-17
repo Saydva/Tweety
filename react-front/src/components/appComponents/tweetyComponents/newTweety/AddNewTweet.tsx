@@ -6,7 +6,7 @@ const AddNewTweet = () => {
   const { handleSendTweet } = useTweetyActions();
 
   return (
-    <div className="flex w-52 flex-col gap-4">
+    <div className="flex w-96 flex-col gap-4">
       <input
         name="New Tweet"
         value={content}

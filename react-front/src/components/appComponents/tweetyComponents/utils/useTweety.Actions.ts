@@ -30,7 +30,6 @@ export const useTweetyActions = () => {
     };
     try {
       await messageAPI.sendMessage(tweetData, accessToken ?? "");
-      console.log("Tweet sent successfully", tweetData);
       handleGetAll(); // Refresh the tweet list after sending a new tweet
       resetContent(); // Reset the content after sending
     } catch (error) {

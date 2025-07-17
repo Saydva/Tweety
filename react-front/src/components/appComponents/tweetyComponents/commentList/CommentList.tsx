@@ -14,15 +14,18 @@ const CommentList = ({
   const list = comments
     .filter((comment) => typeof comment._id === "string")
     .map((comment) => (
-      <div
-        className="comment-item flex justify-between flex-row"
+      <li
+        className="opacity-50 flex flex-row justify-between"
         key={comment._id}
       >
-        {comment.content}
+        <span className="badge badge-xs badge-base-100">
+          {comment.owner}:{" " + comment.content}{" "}
+        </span>
+        <span></span>{" "}
         <MinusSquare
           onClick={() => removeComment(tweetyId, comment._id as string)}
         />
-      </div>
+      </li>
     ));
 
   return <div>{list}</div>;

@@ -24,13 +24,11 @@ const addCommentToTweety = async (
 };
 
 const removeCommentFromTweety = async (
-  accerssToken: string,
+  accersToken: string,
   tweetyId: string,
   commentId: string
 ): Promise<void> => {
-  apiComment.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${accerssToken}`;
+  apiComment.defaults.headers.common["Authorization"] = `Bearer ${accersToken}`;
   await apiComment.delete(`/tweety/${tweetyId}/comments/${commentId}`);
 };
 

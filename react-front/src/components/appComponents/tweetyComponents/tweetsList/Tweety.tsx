@@ -7,34 +7,38 @@ import CommentList from "../commentList/CommentList";
 
 const Tweety = (tweet: TweetyProps) => {
   const { _id, content, owner, date, comments } = tweet;
-  const { setTweetyId, tweetyId } = useAddCommentStore();
+  const { setTweetyId } = useAddCommentStore();
   const { handleDeleteTweet } = useTweetyActions();
 
   return (
-    <div>
-      <li className="list-row" key={_id}>
-        {_id && <span className="text-xs text-gray-400">{_id}</span>}
-        <div className="flex flex-col">
-          <span className="text-sm font-bold">{owner}</span>
-          <span className="text-xs text-gray-500">{date}</span>
-          <p className="text-base">{content}</p>
-          <XSquare
-            onClick={() => {
-              if (_id) handleDeleteTweet(_id);
-            }}
-          />
-          <Link
-            to="AddNewComment"
-            onClick={() => {
-              setTweetyId(_id || "");
-              console.log("Setting ID for comment:", tweetyId);
-            }}
-          >
-            <MessageSquare />
-          </Link>
-          <CommentList comments={comments} tweetyId={tweetyId || ""} />
+    <div key={_id}>
+      <div className="card w-96 bg-base-100 shadow-sm mb-2">
+        <div className="card-body">
+          <span className="badge badge-xs badge-base-100">{owner}</span>
+          <div className="flex justify-between">
+            <h2 className="text-xl font-bold">{content}</h2>
+            <span className="text-xl flex flex-row">
+              <Link
+                to="AddNewComment"
+                onClick={() => {
+                  setTweetyId(_id || "");
+                }}
+              >
+                <MessageSquare />
+              </Link>
+              <XSquare
+                onClick={() => {
+                  if (_id) handleDeleteTweet(_id);
+                }}
+              />
+            </span>
+          </div>
+          <time className="text-xs opacity-50">{date.slice(0, 10)}</time>
+          <ul className="flex flex-col gap-2 text-xs border-t-2 pt-2">
+            <CommentList comments={comments} tweetyId={_id || ""} />
+          </ul>
         </div>
-      </li>
+      </div>
     </div>
   );
 };
