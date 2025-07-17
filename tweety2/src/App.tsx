@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddTweety from "./appComponents/AddTweety";
 
 function App() {
   const [value, setValue] = useState("");
-  const [tweetyList, setTweetyList] = useState<string[]>([]);
+  const [tweetyList, setTweetyList] = useState<string[]>(() => {
+    const storedTweetyList = localStorage.getItem("tweetyList");
+    return storedTweetyList ? JSON.parse(storedTweetyList) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("tweetyList", JSON.stringify(tweetyList));
+  }, [tweetyList]);
 
   const addTweety = () => {
     if (value.trim()) {
