@@ -16,16 +16,25 @@ function App() {
     setTweetyList(tweetyList.filter((_, i) => i !== index));
   };
 
+  const itemList = tweetyList.map((tweety, index) => (
+    <div key={index} className="tweety-item flex justify-between items-center ">
+      <span>{tweety}</span>
+      <button onClick={() => tweetyDelete(index)} className="btn">
+        Delete
+      </button>
+    </div>
+  ));
   console.log("Current Tweety List:", tweetyList);
 
   return (
-    <div className="App flex flex-col justify-center h-screen w-xl mx-auto">
+    <div className="App flex flex-col h-screen w-xl mx-auto">
       <AddTweety
         value={value}
         setValue={setValue}
         addTweety={addTweety}
         deleteTweety={tweetyDelete}
       />
+      <ul className="flex flex-col gap-2 mt-4">{itemList}</ul>
     </div>
   );
 }

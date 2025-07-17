@@ -11,7 +11,7 @@ const AddTweety = ({
   addTweety,
 }: AddTweetyProps & { addTweety: () => void }) => {
   return (
-    <div className="flex flex-row justify-between h-screen mt-3">
+    <div className="flex flex-row justify-between mt-3">
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
