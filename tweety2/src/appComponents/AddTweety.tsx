@@ -1,6 +1,8 @@
 type AddTweetyProps = {
   value: string;
   setValue: (value: string) => void;
+  addTweety: () => void;
+  deleteTweety: (index: number) => void;
 };
 
 const AddTweety = ({

@@ -12,11 +12,20 @@ function App() {
     }
   };
 
+  const tweetyDelete = (index: number) => {
+    setTweetyList(tweetyList.filter((_, i) => i !== index));
+  };
+
   console.log("Current Tweety List:", tweetyList);
 
   return (
     <div className="App flex flex-col justify-center h-screen w-xl mx-auto">
-      <AddTweety value={value} setValue={setValue} addTweety={addTweety} />
+      <AddTweety
+        value={value}
+        setValue={setValue}
+        addTweety={addTweety}
+        deleteTweety={tweetyDelete}
+      />
     </div>
   );
 }
