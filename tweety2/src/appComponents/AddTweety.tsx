@@ -3,7 +3,11 @@ type AddTweetyProps = {
   setValue: (value: string) => void;
 };
 
-const AddTweety = ({ value, setValue }: AddTweetyProps) => {
+const AddTweety = ({
+  value,
+  setValue,
+  addTweety,
+}: AddTweetyProps & { addTweety: () => void }) => {
   return (
     <div className="flex flex-row justify-between h-screen mt-3">
       <input
@@ -13,7 +17,9 @@ const AddTweety = ({ value, setValue }: AddTweetyProps) => {
         placeholder="Type here"
         className="input"
       />
-      <button className="btn">Add</button>
+      <button onClick={addTweety} className="btn">
+        Add
+      </button>
     </div>
   );
 };
