@@ -1,5 +1,5 @@
 import AddTweet from "../addTweety/AddTweet";
-import TweetList from "../listTweet/TweetList";
+import TweetList from "../tweetList/TweetList";
 
 const HomeComp = () => {
   return (

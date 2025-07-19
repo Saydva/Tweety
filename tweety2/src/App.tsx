@@ -1,10 +1,13 @@
-import HomeComp from "./appComponents/home/HomeComp";
-import { useLocalStorageHandler } from "./appComponents/home/useLocalStorageHandler";
+import { useEffect } from "react";
+import HomeComp from "./home/HomeComp";
+import { useLocalStorage } from "./store/tweetStorageUtils";
 
 function App() {
-  const { isLLSEnabled } = useLocalStorageHandler();
+  const { loadTweetsFromLS } = useLocalStorage();
 
-  if (!isLLSEnabled) return null;
+  useEffect(() => {
+    loadTweetsFromLS();
+  }, []);
 
   return (
     <div className="App flex flex-col h-screen w-xl mx-auto">

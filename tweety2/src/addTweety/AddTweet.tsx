@@ -1,20 +1,26 @@
-import { useTweetStore } from "../store/tweet.store";
+import { useState } from "react";
 import { useAddTweet } from "./handleAddTweet";
 
 const AddTweet = () => {
-  const { tweetValue, setTweetValue } = useTweetStore();
+  const [value, setValue] = useState("");
   const { addTweet } = useAddTweet();
 
   return (
     <div className="flex flex-row justify-between mt-3">
       <input
-        value={tweetValue}
-        onChange={(e) => setTweetValue(e.target.value)}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         type="text"
         placeholder="Type here"
         className="input"
       />
-      <button onClick={addTweet} className="btn">
+      <button
+        onClick={() => {
+          addTweet(value);
+          setValue("");
+        }}
+        className="btn"
+      >
         Add
       </button>
     </div>
