@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import HomeComp from "./home/HomeComp";
-import { useLocalStorage } from "./store/tweetStorageUtils";
+import { useLocalStorage } from "./tweets/store/tweetStorageUtils";
 
 function App() {
   const { loadTweetsFromLS } = useLocalStorage();

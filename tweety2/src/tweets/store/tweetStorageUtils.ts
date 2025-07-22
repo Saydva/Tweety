@@ -1,4 +1,4 @@
-import { useTweetStore } from "../store/tweet.store";
+import { useTweetStore } from "./tweet.store";
 
 export const useLocalStorage = () => {
   const { setTweetList } = useTweetStore();
