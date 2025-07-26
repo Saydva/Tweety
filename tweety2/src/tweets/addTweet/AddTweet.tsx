@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useAddTweet } from "./handleAddTweet";
+import { useUserStore } from "../../user/user.store/user.store";
 
 const AddTweet = () => {
   const [value, setValue] = useState("");
   const { addTweet } = useAddTweet();
+  const { isLoggedIn } = useUserStore();
 
   return (
     <div className="flex flex-row justify-between mt-3">
@@ -19,7 +21,10 @@ const AddTweet = () => {
           addTweet(value);
           setValue("");
         }}
-        className="btn"
+        className={`${isLoggedIn ? "" : " hidden"} btn + ${
+          value ? " btn-primary" : " btn-disabled"
+        }`}
+        disabled={!value}
       >
         Add
       </button>
