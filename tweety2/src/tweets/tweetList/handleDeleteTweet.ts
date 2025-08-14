@@ -1,5 +1,5 @@
-import { useTweetStore } from "../store/tweet.store";
-import { useLocalStorage } from "../store/tweetStorageUtils";
+import { useTweetStore } from '../store/tweet.store';
+import { useLocalStorage } from '../store/tweetStorageUtils';
 
 export const useDeleteTweet = () => {
   const { tweetList, setTweetList } = useTweetStore();

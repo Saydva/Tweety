@@ -1,6 +1,6 @@
-import { useUserInputStore } from "../user.store/user.add.store";
-import { useAuthAxios } from "../utils/axios.auth";
-import { useNavigateTo } from "../utils/navigate";
+import { useUserInputStore } from '../userStore/user.add.store';
+import { useAuthAxios } from '../utils/axios.auth';
+import { useNavigateTo } from '../utils/navigate';
 
 export const useSignUp = () => {
   const { name, email, password, resetInput } = useUserInputStore();
@@ -9,7 +9,7 @@ export const useSignUp = () => {
 
   const signUp = (e: React.FormEvent) => {
     e.preventDefault(); // Prevent default form submission
-    console.log("Logging in user with details:", { name, email, password });
+    console.log('Logging in user with details:', { name, email, password });
     // Here you would typically call an API to log in the user
     signupAxios({
       name,
@@ -17,7 +17,7 @@ export const useSignUp = () => {
       password,
     });
     resetInput(); // Reset input fields after login
-    navigateTo("/login"); // Navigate to home page after successful login
+    navigateTo('/login'); // Navigate to home page after successful login
   };
 
   return {

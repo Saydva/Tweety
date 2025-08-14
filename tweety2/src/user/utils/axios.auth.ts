@@ -1,27 +1,27 @@
-import axios from "axios";
-import type { UserInputProps } from "../user.store/user.add.store";
+import axios from 'axios';
+import type { UserInputProps } from '../userStore/user.add.store';
 
 export const useAuthAxios = () => {
   const authAxios = () => {
     return axios.create({
-      baseURL: "http://localhost:4000/auth/",
+      baseURL: 'http://localhost:4000/auth/',
       timeout: 10000,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
   };
 
   const signupAxios = async (credentials: UserInputProps) => {
     try {
-      const response = await authAxios().post("signup", credentials);
-      alert("Registration successful!");
+      const response = await authAxios().post('signup', credentials);
+      alert('Registration successful!');
       return response.data;
     } catch (error: Error | any) {
-      console.error("Error during registration:", error);
+      console.error('Error during registration:', error);
       alert(
-        "Registration failed. Please try again." +
-          " " +
+        'Registration failed. Please try again.' +
+          ' ' +
           error.response?.data?.message
       );
       throw error;
@@ -30,11 +30,11 @@ export const useAuthAxios = () => {
 
   const loginAxios = async (credentials: UserInputProps) => {
     try {
-      const response = await authAxios().post("login", credentials);
-      alert("Login successful!");
+      const response = await authAxios().post('login', credentials);
+      alert('Login successful!');
       return response.data;
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error('Error during login:', error);
       throw error;
     }
   };

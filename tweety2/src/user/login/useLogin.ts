@@ -1,9 +1,9 @@
-import { useUserInputStore } from "../user.store/user.add.store";
-import { useUserStore } from "../user.store/user.store";
-import { useNavigateTo } from "../utils/navigate";
-import { useAuthAxios } from "../utils/axios.auth";
+import { useUserInputStore } from '../userStore/user.add.store';
+import { useUserStore } from '../userStore/user.store';
+import { useNavigateTo } from '../utils/navigate';
+import { useAuthAxios } from '../utils/axios.auth';
 
-export const userLogin = () => {
+export const useLogin = () => {
   const { email, password, resetInput } = useUserInputStore();
   const { setId, setName, setAccessToken, setRefreshToken, setIsLoggedIn } =
     useUserStore();
@@ -20,10 +20,10 @@ export const userLogin = () => {
       setAccessToken(response.accessToken);
       setRefreshToken(response.refreshToken);
       setIsLoggedIn(true);
-      navigateTo("/");
+      navigateTo('/');
     } catch (error) {
-      console.error("Login failed:", error);
-      alert("Login failed. Please check your credentials and try again.");
+      console.error('Login failed:', error);
+      alert('Login failed. Please check your credentials and try again.');
     }
   };
   return { login };

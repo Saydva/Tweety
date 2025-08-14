@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export type UserProps = {
   _id: string;
@@ -18,10 +18,10 @@ type UserActions = {
 };
 
 export const useUserStore = create<UserProps & UserActions>((set) => ({
-  _id: "",
-  accessToken: "",
-  refreshToken: "",
-  name: "",
+  _id: '',
+  accessToken: '',
+  refreshToken: '',
+  name: '',
   isLoggedIn: false,
 
   setId: (id) => set({ _id: id }),
@@ -32,9 +32,9 @@ export const useUserStore = create<UserProps & UserActions>((set) => ({
 
   resetUser: () =>
     set({
-      _id: "",
-      accessToken: "",
-      refreshToken: "",
-      name: "",
+      _id: '',
+      accessToken: '',
+      refreshToken: '',
+      name: '',
     }),
 }));

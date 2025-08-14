@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export type UserInputProps = {
   name?: string;
@@ -15,9 +15,9 @@ type UserInputActions = {
 
 export const useUserInputStore = create<UserInputProps & UserInputActions>(
   (set) => ({
-    name: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
 
     setName: (name) => set({ name }),
     setEmail: (email) => set({ email }),
@@ -25,9 +25,9 @@ export const useUserInputStore = create<UserInputProps & UserInputActions>(
 
     resetInput: () =>
       set({
-        name: "",
-        email: "",
-        password: "",
+        name: '',
+        email: '',
+        password: '',
       }),
   })
 );
