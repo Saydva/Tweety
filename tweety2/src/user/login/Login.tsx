@@ -1,13 +1,13 @@
-import { useUserInputStore } from '@/user/userStore/user.add.store';
-import { useLogin } from './useLogin';
+import { useUserInputStore } from '@/user/userStore/user.add.store'
+import { useLogin } from './useLogin'
 
 const Login = () => {
-  const { email, password, setEmail, setPassword } = useUserInputStore();
-  const { login } = useLogin();
+  const { email, password, setEmail, setPassword } = useUserInputStore()
+  const { login } = useLogin()
   const prefillUser = () => {
-    setEmail('test@gmail.com');
-    setPassword('Test1234');
-  };
+    setEmail('test@gmail.com')
+    setPassword('Test1234')
+  }
 
   return (
     <div className='hero bg-base-200 min-h-screen'>
@@ -60,7 +60,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

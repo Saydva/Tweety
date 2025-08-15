@@ -1,5 +1,5 @@
-import AddTweet from '@/tweets/addTweet/AddTweet';
-import TweetList from '@/tweets/tweetList/TweetList';
+import AddTweet from '@/tweets/addTweet/AddTweet'
+import TweetList from '@/tweets/tweetList/TweetList'
 
 const HomeComp = () => {
   return (
@@ -7,7 +7,7 @@ const HomeComp = () => {
       <AddTweet />
       <TweetList />
     </>
-  );
-};
+  )
+}
 
-export default HomeComp;
+export default HomeComp

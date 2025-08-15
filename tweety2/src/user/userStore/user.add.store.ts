@@ -1,17 +1,17 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
 export type UserInputProps = {
-  name?: string;
-  email: string;
-  password: string;
-};
+  name?: string
+  email: string
+  password: string
+}
 
 type UserInputActions = {
-  setName: (name: string) => void;
-  setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-  resetInput: () => void;
-};
+  setName: (name: string) => void
+  setEmail: (email: string) => void
+  setPassword: (password: string) => void
+  resetInput: () => void
+}
 
 export const useUserInputStore = create<UserInputProps & UserInputActions>(
   (set) => ({
@@ -30,4 +30,4 @@ export const useUserInputStore = create<UserInputProps & UserInputActions>(
         password: '',
       }),
   })
-);
+)

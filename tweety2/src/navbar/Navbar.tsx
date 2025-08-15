@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Menu } from 'react-feather';
-import { Link } from 'react-router-dom';
-import { useUserStore } from '@/user/userStore/user.store';
+import { useState } from 'react'
+import { Menu } from 'react-feather'
+import { Link } from 'react-router-dom'
+import { useUserStore } from '@/user/userStore/user.store'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { name } = useUserStore();
+  const [isOpen, setIsOpen] = useState(false)
+  const { name } = useUserStore()
   return (
     <div className='navbar bg-base-100 shadow-sm'>
       <div className='flex-1'>
@@ -43,7 +43,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

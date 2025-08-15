@@ -1,18 +1,18 @@
-import { useTweetStore } from './tweet.store';
+import { useTweetStore } from './tweet.store'
 
 export const useLocalStorage = () => {
-  const { setTweetList } = useTweetStore();
+  const { setTweetList } = useTweetStore()
 
   const loadTweetsFromLS = () => {
-    const storedTweets = localStorage.getItem('tweets');
+    const storedTweets = localStorage.getItem('tweets')
     if (storedTweets) {
-      setTweetList(JSON.parse(storedTweets));
+      setTweetList(JSON.parse(storedTweets))
     }
-  };
+  }
 
   const saveTweetsToLS = (tweets: string[]) => {
-    localStorage.setItem('tweets', JSON.stringify(tweets));
-  };
+    localStorage.setItem('tweets', JSON.stringify(tweets))
+  }
 
-  return { loadTweetsFromLS, saveTweetsToLS };
-};
+  return { loadTweetsFromLS, saveTweetsToLS }
+}

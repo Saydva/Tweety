@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useAddTweet } from './handleAddTweet';
-import { useUserStore } from '@/user/userStore/user.store';
+import { useState } from 'react'
+import { useAddTweet } from './handleAddTweet'
+import { useUserStore } from '@/user/userStore/user.store'
 
 const AddTweet = () => {
-  const [value, setValue] = useState('');
-  const { addTweet } = useAddTweet();
-  const { isLoggedIn } = useUserStore();
+  const [value, setValue] = useState('')
+  const { addTweet } = useAddTweet()
+  const { isLoggedIn } = useUserStore()
 
   return (
     <div className='flex flex-row justify-between mt-3'>
@@ -18,8 +18,8 @@ const AddTweet = () => {
       />
       <button
         onClick={() => {
-          addTweet(value);
-          setValue('');
+          addTweet(value)
+          setValue('')
         }}
         className={`${isLoggedIn ? '' : ' hidden'} btn + ${
           value ? ' btn-primary' : ' btn-disabled'
@@ -29,7 +29,7 @@ const AddTweet = () => {
         Add
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default AddTweet;
+export default AddTweet

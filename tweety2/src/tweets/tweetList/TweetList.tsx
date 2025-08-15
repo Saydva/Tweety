@@ -1,11 +1,11 @@
-import { useTweetStore } from '@/tweets/store/tweet.store';
-import { useDeleteTweet } from './handleDeleteTweet';
-import { useUserStore } from '@/user/userStore/user.store';
+import { useTweetStore } from '@/tweets/store/tweet.store'
+import { useDeleteTweet } from './handleDeleteTweet'
+import { useUserStore } from '@/user/userStore/user.store'
 
 const TweetList = () => {
-  const { tweetList } = useTweetStore();
-  const { deleteTweet } = useDeleteTweet();
-  const { isLoggedIn } = useUserStore();
+  const { tweetList } = useTweetStore()
+  const { deleteTweet } = useDeleteTweet()
+  const { isLoggedIn } = useUserStore()
 
   const itemList = tweetList.map((tweet: string, index: number) => (
     <div
@@ -19,9 +19,9 @@ const TweetList = () => {
         </button>
       )}
     </div>
-  ));
+  ))
 
-  return <div>{itemList}</div>;
-};
+  return <div>{itemList}</div>
+}
 
-export default TweetList;
+export default TweetList

@@ -1,21 +1,21 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
 export type UserProps = {
-  _id: string;
-  accessToken: string;
-  refreshToken: string;
-  name: string;
-  isLoggedIn: boolean;
-};
+  _id: string
+  accessToken: string
+  refreshToken: string
+  name: string
+  isLoggedIn: boolean
+}
 
 type UserActions = {
-  setId: (id: string) => void;
-  setAccessToken: (token: string) => void;
-  setRefreshToken: (token: string) => void;
-  setName: (name: string) => void;
-  resetUser: () => void;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
-};
+  setId: (id: string) => void
+  setAccessToken: (token: string) => void
+  setRefreshToken: (token: string) => void
+  setName: (name: string) => void
+  resetUser: () => void
+  setIsLoggedIn: (isLoggedIn: boolean) => void
+}
 
 export const useUserStore = create<UserProps & UserActions>((set) => ({
   _id: '',
@@ -37,4 +37,4 @@ export const useUserStore = create<UserProps & UserActions>((set) => ({
       refreshToken: '',
       name: '',
     }),
-}));
+}))
