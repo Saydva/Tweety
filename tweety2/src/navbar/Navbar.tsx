@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Menu } from 'react-feather';
 import { Link } from 'react-router-dom';
-import { useUserStore } from '../user/userStore/user.store';
+import { useUserStore } from '@/user/userStore/user.store';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

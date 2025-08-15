@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAddTweet } from './handleAddTweet';
-import { useUserStore } from '../../user/userStore/user.store';
+import { useUserStore } from '@/user/userStore/user.store';
 
 const AddTweet = () => {
   const [value, setValue] = useState('');

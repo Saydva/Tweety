@@ -1,4 +1,4 @@
-import { useUserInputStore } from '../userStore/user.add.store';
+import { useUserInputStore } from '@/user/userStore/user.add.store';
 import { useSignUp } from './useSignUp';
 const SignUp = () => {
   const { name, email, password, setName, setEmail, setPassword } =

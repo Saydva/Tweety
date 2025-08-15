@@ -1,6 +1,6 @@
-import { useTweetStore } from '../store/tweet.store';
+import { useTweetStore } from '@/tweets/store/tweet.store';
 import { useDeleteTweet } from './handleDeleteTweet';
-import { useUserStore } from '../../user/userStore/user.store';
+import { useUserStore } from '@/user/userStore/user.store';
 
 const TweetList = () => {
   const { tweetList } = useTweetStore();

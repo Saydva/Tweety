@@ -1,7 +1,7 @@
-import { useUserInputStore } from '../userStore/user.add.store';
-import { useUserStore } from '../userStore/user.store';
-import { useNavigateTo } from '../utils/navigate';
-import { useAuthAxios } from '../utils/axios.auth';
+import { useUserInputStore } from '@/user/userStore/user.add.store';
+import { useUserStore } from '@/user/userStore/user.store';
+import { useNavigateTo } from '@/user/utils/navigate';
+import { useAuthAxios } from '@/user/utils/axios.auth';
 
 export const useLogin = () => {
   const { email, password, resetInput } = useUserInputStore();

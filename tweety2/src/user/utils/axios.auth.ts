@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { UserInputProps } from '../userStore/user.add.store';
+import type { UserInputProps } from '@/user/userStore/user.add.store';
 
 export const useAuthAxios = () => {
   const authAxios = () => {
