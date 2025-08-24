@@ -65,6 +65,12 @@ export class AuthService {
     const tokens = await this.generateTokens((user._id as any).toString());
     return { name, _id, tokens };
   }
+
+  async logout(userId: string) {
+    // Zmaž refresh token pre daného používateľa
+    await this.RefreshTokenModel.deleteOne({ userId });
+    return { message: 'Logged out successfully' };
+  }
   // This function refreshes the access token using the refresh token
   // It checks if the refresh token is valid and not expired
   // if valid, it generates a new access token

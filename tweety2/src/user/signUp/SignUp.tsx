@@ -1,9 +1,12 @@
-import { useUserInputStore } from '@/user/userStore/user.add.store'
 import { useSignUp } from './useSignUp'
+import { useState } from 'react'
+
 const SignUp = () => {
-  const { name, email, password, setName, setEmail, setPassword } =
-    useUserInputStore()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const { signUp } = useSignUp()
+
   const prefillUser = () => {
     setName('Test User')
     setEmail('test@gmail.com')
@@ -16,7 +19,7 @@ const SignUp = () => {
         <div className='max-w-md'>
           <h1 className=' font-bold'>Register</h1>
           <form
-            onSubmit={(e) => signUp(e)}
+            onSubmit={(e) => signUp(e, name, email, password)}
             action='OnSubmit'
             className='form-control w-full max-w-xs'
           >
@@ -66,8 +69,12 @@ const SignUp = () => {
               <button className='btn border-base-content' type='submit'>
                 SignUp
               </button>
-              <button className='btn border-base-content' onClick={prefillUser}>
-                Prefill
+              <button
+                className='btn border-base-content'
+                type='button'
+                onClick={prefillUser}
+              >
+                <span className='text-error'>Prefill</span>
               </button>
             </div>
           </form>

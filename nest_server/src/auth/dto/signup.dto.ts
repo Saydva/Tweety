@@ -3,8 +3,10 @@ import { IsEmail, IsString, Matches, MinLength } from 'class-validator';
 export class SignUpDto {
   @IsString()
   name: string;
+
   @IsEmail()
   email: string;
+
   @IsString()
   @MinLength(6)
   // Password validation: at least 6 characters, one uppercase letter, one lowercase letter, and one number

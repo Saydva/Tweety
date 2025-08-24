@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 
 type TweetProps = {
-  tweetList: string[]
+  tweetList: object[]
 }
 
 type TweetActions = {
-  setTweetList: (tweets: string[]) => void
+  setTweetList: (tweets: object[]) => void
 }
 
 export const useTweetStore = create<TweetProps & TweetActions>((set) => ({

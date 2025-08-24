@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAddTweet } from './handleAddTweet'
+import { useAddTweet } from './useAddTweet'
 import { useUserStore } from '@/user/userStore/user.store'
 
 const AddTweet = () => {
@@ -13,8 +13,8 @@ const AddTweet = () => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         type='text'
-        placeholder='Type here'
-        className='input'
+        placeholder='. . .'
+        className={`${isLoggedIn ? '' : 'hidden '}input`}
       />
       <button
         onClick={() => {

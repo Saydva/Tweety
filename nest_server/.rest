@@ -4,18 +4,18 @@
 ###
 POST http://localhost:4000/tweety
 Content-Type: application/json
-Authorization: Bearer 1
+
 
 {
   "content":"next one",
   "date":"2023-10-01T12:11:00Z",
-  "owner":"Dodo"
+  "owner":"Dodo",
+  "myLike":"false"
 }
 
 ###
 GET  http://localhost:4000/tweety
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODY4MGUyZTQ1N2Y5NzQ3YWQ0ZTljMGMiLCJpYXQiOjE3NTE2NjA4NDEsImV4cCI6MTc1MTY2MTE0MX0.UNE9P8V22fb3l3elJX7JKaCa0wj_9ThUZjLoYfBqB9E
 
 ###
 GET http://localhost:4000/tweety/6826569a575c638ceefb9275
@@ -70,8 +70,18 @@ POST  http://localhost:4000/auth/refresh
 Content-Type: application/json
 
 
+
 {
   "refreshToken": "4a0136ab-925d-4dfb-9e9d-dc3a7a25eeae"
+}
+
+###
+POST  http://localhost:4000/auth/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODg0N2JhMGE5MTViNjM2NmFkNmI2MzAiLCJpYXQiOjE3NTYwNDMyMTcsImV4cCI6MTc1NjA0NjgxN30.rKXHeHVn6l5uFxj99wwHwdwPJNmdioCdP54m5n6Zfng
+
+{
+  "userId": "68847ba0a915b6366ad6b630"
 }
 
 ###

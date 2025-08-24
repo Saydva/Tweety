@@ -1,43 +1,39 @@
-import { useState } from 'react'
-import { Menu } from 'react-feather'
-import { Link } from 'react-router-dom'
 import { useUserStore } from '@/user/userStore/user.store'
+import { useLogOut } from '@/user/logout/useLogout'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const { name } = useUserStore()
+  const { name, isLoggedIn } = useUserStore()
+  const { logout } = useLogOut()
+
   return (
-    <div className='navbar bg-base-100 shadow-sm'>
+    <div className='static navbar bg-base-100 shadow-sm'>
       <div className='flex-1'>
         <div className='dropdown dropdown-open flex flex-row justify-between'>
-          <div onClick={() => setIsOpen(!isOpen)}>
-            <Menu />
-            <ul
-              className={`dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm 
-            ${isOpen ? '' : 'hidden'}`}
-            >
-              <li>
-                <Link to='/' onClick={() => setIsOpen(!isOpen)}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to='/signup' onClick={() => setIsOpen(!isOpen)}>
-                  Sign Up
-                </Link>
-              </li>
-              <li>
-                <Link to='/login' onClick={() => setIsOpen(!isOpen)}>
-                  Login
-                </Link>
-              </li>
-            </ul>
+          <div>
+            <button className='btn btn-primary'>
+              <Link to='/'>Home</Link>
+            </button>
+            {name !== '' ? (
+              <span className='text-sm font-bold pl-2'>Welcome, {name}!</span>
+            ) : (
+              <span className='text-sm font-bold pl-2'>Not Logged in</span>
+            )}
           </div>
           <div>
-            {name !== '' ? (
-              <span className='text-lg font-bold'>Welcome, {name}!</span>
+            {isLoggedIn ? (
+              <button className='btn rounded-4xl' onClick={() => logout()}>
+                Log out
+              </button>
             ) : (
-              <span className='text-lg font-bold'>Welcome!</span>
+              <>
+                <button className='btn rounded-4xl'>
+                  <Link to='/login '>Login</Link>
+                </button>
+                <button className='btn rounded-4xl'>
+                  <Link to='/signup'>Sign Up</Link>
+                </button>
+              </>
             )}
           </div>
         </div>

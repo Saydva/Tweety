@@ -6,6 +6,7 @@ export type UserProps = {
   refreshToken: string
   name: string
   isLoggedIn: boolean
+  message: string
 }
 
 type UserActions = {
@@ -15,6 +16,7 @@ type UserActions = {
   setName: (name: string) => void
   resetUser: () => void
   setIsLoggedIn: (isLoggedIn: boolean) => void
+  setMessage: (message: string) => void
 }
 
 export const useUserStore = create<UserProps & UserActions>((set) => ({
@@ -23,12 +25,16 @@ export const useUserStore = create<UserProps & UserActions>((set) => ({
   refreshToken: '',
   name: '',
   isLoggedIn: false,
+  message: 'Login in',
 
   setId: (id) => set({ _id: id }),
   setAccessToken: (token) => set({ accessToken: token }),
   setRefreshToken: (token) => set({ refreshToken: token }),
   setName: (name) => set({ name }),
   setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
+  setMessage(message) {
+    set({ message })
+  },
 
   resetUser: () =>
     set({

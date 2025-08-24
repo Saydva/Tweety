@@ -15,10 +15,9 @@ import { CreateTweetyDto } from './dto/create.dto';
 import { TweetyService } from './tweety.service';
 import mongoose from 'mongoose';
 import { UpdateTweetyDto } from './dto/updateTweety.dto';
-import { AuthGuard } from 'src/guards/auth.guards';
+import { AuthGuard } from 'src/_guards/auth.guards';
 import { CreateCommentDto } from './dto/create.Comment.dto';
 
-@UseGuards(AuthGuard)
 @Controller('tweety')
 export class TweetyController {
   userService: any;
@@ -27,6 +26,7 @@ export class TweetyController {
   // For example, you can define routes and handle requests
   // using decorators like @Get(), @Post(), etc.
   @Post()
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async createTweet(@Body() createTweetDto: CreateTweetyDto) {
     // Handle the creation of a tweet here
@@ -35,13 +35,16 @@ export class TweetyController {
   }
 
   @Get()
+  @UseGuards()
   @UsePipes(new ValidationPipe())
   async getAllTweeties() {
     // Handle the retrieval of all tweets here
     // You can use a service to interact with the database or perform other operations
     return this.tweetyService.getAllTweeties();
   }
+
   @Get(':id')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async getTweetyById(@Param('id') id: string) {
     // Handle the retrieval of a tweet by ID here
@@ -55,6 +58,7 @@ export class TweetyController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async deleteTweety(@Param('id') id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -65,6 +69,7 @@ export class TweetyController {
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async updateTweety(
     @Param('id') id: string,
@@ -78,6 +83,7 @@ export class TweetyController {
   }
 
   @Post(':id/comments')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async addCommentToTweety(
     @Param('id') tweetyId: string,
@@ -91,6 +97,7 @@ export class TweetyController {
   }
 
   @Delete(':id/comments/:commentId')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async removeCommentFromTweety(
     @Param('id') tweetyId: string,
