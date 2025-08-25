@@ -1,18 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Tweety {
   @Prop({ required: false })
   userId: string;
   @Prop({ required: true })
   content: string;
-  @Prop({ required: true })
-  date: string;
-  @Prop({ required: false })
-  comments: object[];
-  @Prop({ required: false })
-  likes: number;
-  @Prop({ required: true })
-  owner: string;
 }
 export const TweetySchema = SchemaFactory.createForClass(Tweety);

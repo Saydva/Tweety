@@ -1,5 +1,5 @@
 import { useUserStore } from '@/user/userStore/user.store'
-import { useLogOut } from '@/user/logout/useLogout'
+import { useLogOut } from '@/user/logout/useLogOut'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {

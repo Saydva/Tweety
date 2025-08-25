@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { useUserStore } from '@/user/userStore/user.store'
-import { useLocalStorage } from './useLocalStorage'
+import { handleLocalStorage } from './handleLocalStorage'
 import { useTweetStore } from './useTweetStore'
 
 export const useTweetAxios = () => {
   const { accessToken } = useUserStore()
-  const { loadTweetsFromLS, saveTweetsToLS } = useLocalStorage()
+  const { loadTweetsFromLS, saveTweetsToLS } = handleLocalStorage()
   const { setTweetList } = useTweetStore()
 
   const tweetAxios = () => {

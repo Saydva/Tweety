@@ -1,4 +1,4 @@
-export const useLocalStorage = () => {
+export const handleLocalStorage = () => {
   const loadTweetsFromLS = () => {
     const storedTweets = localStorage.getItem('tweets')
     if (storedTweets) {
