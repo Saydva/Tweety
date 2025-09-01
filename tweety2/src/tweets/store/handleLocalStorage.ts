@@ -12,6 +12,7 @@ export const handleLocalStorage = () => {
 
   const deleteTweetsFromLS = () => {
     localStorage.removeItem('tweets')
+    loadTweetsFromLS()
   }
 
   return { loadTweetsFromLS, saveTweetsToLS, deleteTweetsFromLS }

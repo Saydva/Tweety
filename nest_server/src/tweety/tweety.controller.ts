@@ -14,7 +14,6 @@ import {
 import { CreateTweetyDto } from './dto/CreateTweetyDto';
 import { TweetyService } from './tweety.service';
 import mongoose from 'mongoose';
-import { UpdateTweetyDto } from './dto/updateTweety.dto';
 import { AuthGuard } from 'src/_guards/authGuard';
 
 @Controller('tweety')
@@ -64,20 +63,6 @@ export class TweetyController {
       throw new HttpException('Invalid ID format', 400);
     } else {
       return this.tweetyService.deleteTweety(id);
-    }
-  }
-
-  @Put(':id')
-  @UseGuards(AuthGuard)
-  @UsePipes(new ValidationPipe())
-  async updateTweety(
-    @Param('id') id: string,
-    @Body() updateTweetyDto: UpdateTweetyDto,
-  ) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new HttpException('Invalid ID format', 400);
-    } else {
-      return this.tweetyService.updateTweety(id, updateTweetyDto);
     }
   }
 }

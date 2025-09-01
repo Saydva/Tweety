@@ -1,18 +1,16 @@
 import { useTweetStore } from '@/tweets/store/useTweetStore'
-import { useLocalStorage } from '@/tweets/store/handleLocalStorage'
+import { handleLocalStorage } from '@/tweets/store/handleLocalStorage'
 import { useTweetAxios } from '../store/axios.tweet'
-import { useUserStore } from '@/user/userStore/user.store'
 
 export const useAddTweet = () => {
   const { tweetList, setTweetList } = useTweetStore()
-  const { saveTweetsToLS } = useLocalStorage()
+  const { saveTweetsToLS } = handleLocalStorage()
   const { addTweetAxios } = useTweetAxios()
-  const { name } = useUserStore()
 
-  const addTweet = async (value: string) => {
-    if (value.trim() === '') return
+  const addTweet = async (value: string, _id: string) => {
+    if (value.trim() === '' || !_id) return
     try {
-      const newTweet = await addTweetAxios(value, name, false)
+      const newTweet = await addTweetAxios(value, _id)
       const updatedList = [...tweetList, newTweet]
       setTweetList(updatedList)
       saveTweetsToLS(updatedList)

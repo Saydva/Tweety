@@ -5,7 +5,7 @@ import { useUserStore } from '@/user/userStore/user.store'
 const AddTweet = () => {
   const [value, setValue] = useState('')
   const { addTweet } = useAddTweet()
-  const { isLoggedIn } = useUserStore()
+  const { isLoggedIn, _id } = useUserStore()
 
   return (
     <div className='flex flex-row justify-between mt-3'>
@@ -18,7 +18,7 @@ const AddTweet = () => {
       />
       <button
         onClick={() => {
-          addTweet(value)
+          addTweet(value, _id)
           setValue('')
         }}
         className={`${isLoggedIn ? '' : ' hidden'} btn + ${

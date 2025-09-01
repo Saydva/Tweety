@@ -3,16 +3,23 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTweetyDto } from 'src/tweety/dto/CreateTweetyDto';
 import { Tweety } from 'src/tweety/schema/tweety.schema';
-import { UpdateTweetyDto } from './dto/updateTweety.dto';
-
+import { User } from 'src/auth/schema/user.schema'; // uprav cestu podľa projektu;
 @Injectable()
 export class TweetyService {
   constructor(
     @InjectModel('Tweety') private readonly tweetyModel: Model<Tweety>,
+    @InjectModel('User') private readonly userModel: Model<User>,
   ) {}
 
   async createTweety(createTweetyDto: CreateTweetyDto) {
-    const newTweety = new this.tweetyModel(createTweetyDto);
+    const user = await this.userModel.findById(createTweetyDto.userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const newTweety = new this.tweetyModel({
+      content: createTweetyDto.content,
+      owner: user.name,
+    });
     await newTweety.save();
     return newTweety;
   }
@@ -28,18 +35,6 @@ export class TweetyService {
 
   async deleteTweety(id: string) {
     const tweety = await this.tweetyModel.findByIdAndDelete(id);
-    return tweety;
-  }
-
-  async updateTweety(id: string, updateTweetyDto: UpdateTweetyDto) {
-    const tweety = await this.tweetyModel.findByIdAndUpdate(
-      id,
-      updateTweetyDto,
-      { new: true },
-    );
-    if (!tweety) {
-      throw new Error('Tweety not found');
-    }
     return tweety;
   }
 }

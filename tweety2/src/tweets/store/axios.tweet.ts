@@ -19,17 +19,11 @@ export const useTweetAxios = () => {
     })
   }
 
-  const addTweetAxios = async (
-    content: string,
-    owner: string,
-    myLike: boolean
-  ) => {
+  const addTweetAxios = async (content: string, _id: string) => {
     try {
       const response = await tweetAxios().post('tweety', {
         content,
-        owner,
-        date: new Date().toISOString(),
-        myLike,
+        userId: _id,
       })
       saveTweetsToLS([...loadTweetsFromLS(), response.data])
       return response.data

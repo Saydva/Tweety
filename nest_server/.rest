@@ -4,7 +4,7 @@
 ###
 POST http://localhost:4000/tweety
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODg0N2JhMGE5MTViNjM2NmFkNmI2MzAiLCJpYXQiOjE3NTYxNDY1MjAsImV4cCI6MTc1NjE1MDEyMH0.4cWIWYH4P_kOyJVcI6pOI9U7rv2dpPuLtMQT3z19Br0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODg0N2JhMGE5MTViNjM2NmFkNmI2MzAiLCJpYXQiOjE3NTY2NTc1MDYsImV4cCI6MTc1NjY2MTEwNn0.r_8n3eEGThO4VCfxzM2DtkCWdHF9hgZjDiJYLo9iid8
 
 {
   "content":"next one",

@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema({ timestamps: true })
 export class Tweety {
   @Prop({ required: false })
-  userId: string;
+  owner: string;
   @Prop({ required: true })
   content: string;
 }
