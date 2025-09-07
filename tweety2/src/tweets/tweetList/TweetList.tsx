@@ -2,13 +2,6 @@ import { useTweetStore } from '@/tweets/store/useTweetStore'
 import { useTweetAxios } from '../store/axios.tweet'
 import { useUserStore } from '@/user/userStore/user.store'
 
-type Tweet = {
-  _id: string
-  owner: string
-  content: string
-  // pridaj ďalšie polia podľa potreby (napr. date, comments, ...)
-}
-
 const TweetList = () => {
   const { tweetList } = useTweetStore()
   const { deleteTweet, getTweetsAxios } = useTweetAxios()
@@ -38,7 +31,12 @@ const TweetList = () => {
     ))
     .reverse()
 
-  return <div>{itemList}</div>
+  return (
+    <div>
+      <span className='text-sm font-bold pl-2'></span>
+      {itemList}
+    </div>
+  )
 }
 
 export default TweetList

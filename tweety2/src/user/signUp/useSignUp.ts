@@ -13,12 +13,11 @@ export const useSignUp = () => {
     email: string,
     password: string
   ) => {
-    e.preventDefault() // Prevent default form submission
+    e.preventDefault()
     console.log('Logging in user with details:', {})
-    // Here you would typically call an API to log in the user
     signupAxios(name, email, password)
     setMessage('Sign up successful! Please log in.')
-    navigateTo('/login') // Navigate to home page after successful login
+    navigateTo('/login')
   }
 
   return {

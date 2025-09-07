@@ -7,10 +7,10 @@ export const useAddTweet = () => {
   const { saveTweetsToLS } = handleLocalStorage()
   const { addTweetAxios } = useTweetAxios()
 
-  const addTweet = async (value: string, _id: string) => {
-    if (value.trim() === '' || !_id) return
+  const addTweet = async (value: string, userId: string) => {
+    if (value.trim() === '' || !userId) return
     try {
-      const newTweet = await addTweetAxios(value, _id)
+      const newTweet = await addTweetAxios(value, userId)
       const updatedList = [...tweetList, newTweet]
       setTweetList(updatedList)
       saveTweetsToLS(updatedList)

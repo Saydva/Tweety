@@ -1,6 +1,7 @@
 import {
   Injectable,
   UnauthorizedException,
+  BadRequestException,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -32,7 +33,7 @@ export class AuthService {
       email: email,
     });
     if (emailExists) {
-      throw new UnauthorizedException('Email already exists');
+      throw new BadRequestException('Email already exists');
     }
     //Todo: Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -51,7 +52,7 @@ export class AuthService {
     const user = await this.UserModel.findOne({ email });
 
     if (!user) {
-      throw new UnauthorizedException('Wrong credentials');
+      throw new BadRequestException('Wrong credentials');
     }
     const name = user?.name;
     const _id = user?._id;
@@ -59,7 +60,7 @@ export class AuthService {
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      throw new UnauthorizedException('Wrong credentials');
+      throw new BadRequestException('Wrong credentials');
     }
     //todo: generate JWT tokens
     const tokens = await this.generateTokens((user._id as any).toString());
@@ -71,10 +72,7 @@ export class AuthService {
     await this.RefreshTokenModel.deleteOne({ userId });
     return { message: 'Logged out successfully' };
   }
-  // This function refreshes the access token using the refresh token
-  // It checks if the refresh token is valid and not expired
-  // if valid, it generates a new access token
-  // If the refresh token is invalid or expired, it throws an UnauthorizedException
+
   async refreshToken(refreshToken: string) {
     const token = await this.RefreshTokenModel.findOne({
       token: refreshToken,

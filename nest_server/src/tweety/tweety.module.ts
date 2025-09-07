@@ -12,11 +12,8 @@ import { TweetyController } from './tweety.controller';
       { name: User.name, schema: UserSchema },
     ]),
   ],
-  controllers: [TweetyController], // You can add your controllers here if needed
-  providers: [TweetyService], // You can add your services here if needed
+  controllers: [TweetyController],
+  providers: [TweetyService],
   exports: [MongooseModule],
 })
 export class TweetyModule {}
-// This module imports the MongooseModule and registers the Tweety schema with it.
-// It also exports the MongooseModule so that it can be used in other modules.
-// The MongooseModule is a NestJS module that provides integration with Mongoose,

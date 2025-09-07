@@ -20,11 +20,9 @@ This is the backend part of the Tweety project, built with NestJS and MongoDB.
 3. **Set up environment variables**  
    Create a `.env` file in the `nest_server` folder with the following content (edit as needed):
    ```
-   MONGODB_URI=mongodb://localhost:27017/tweety
-   JWT_SECRET=your_jwt_secret
-   JWT_EXPIRES_IN=1h
-   REFRESH_TOKEN_EXPIRES_IN=7d
-   PORT=4000
+   PORT = 4000
+   MONGO_URI= "mongodb://localhost:27017/tweety"
+   secret = "mysecretkey"
    ```
 
 4. **API will be available at**  

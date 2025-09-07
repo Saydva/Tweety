@@ -19,11 +19,11 @@ export const useTweetAxios = () => {
     })
   }
 
-  const addTweetAxios = async (content: string, _id: string) => {
+  const addTweetAxios = async (content: string, userId: string) => {
     try {
       const response = await tweetAxios().post('tweety', {
         content,
-        userId: _id,
+        userId,
       })
       saveTweetsToLS([...loadTweetsFromLS(), response.data])
       return response.data
@@ -37,8 +37,8 @@ export const useTweetAxios = () => {
   const getTweetsAxios = async () => {
     try {
       const response = await tweetAxios().get('tweety')
-      loadTweetsFromLS()
       setTweetList(response.data)
+      saveTweetsToLS(response.data)
       return response.data
     } catch (error) {
       console.error('Error fetching tweets:', error)
@@ -50,10 +50,11 @@ export const useTweetAxios = () => {
   const deleteTweet = async (tweetId: string) => {
     try {
       const response = await tweetAxios().delete(`tweety/${tweetId}`)
-      saveTweetsToLS(
-        loadTweetsFromLS().filter((tweet: any) => tweet.id !== tweetId)
+      const updated = loadTweetsFromLS().filter(
+        (tweet: any) => tweet._id !== tweetId
       )
-
+      saveTweetsToLS(updated)
+      setTweetList(updated)
       return response.data
     } catch (error) {
       console.error('Error deleting tweet:', error)
