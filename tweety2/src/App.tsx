@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { useTweetAxios } from './tweets/store/axios.tweet'
+import { useTweetAxios } from './tweets/_store/axios.tweet'
 import { BrowserRouter } from 'react-router-dom'
 
 import HomeComp from './home/HomeComp'

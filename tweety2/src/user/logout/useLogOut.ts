@@ -1,13 +1,13 @@
-import { useUserStore } from '../userStore/user.store'
-import { useAuthAxios } from '../utils/axios.auth'
+import { useUserStore } from '../_store/user.store'
+import { useAuthAxios } from '../_utils/axios.auth'
 
 export const useLogOut = () => {
   const { _id, resetUser, setIsLoggedIn, setMessage } = useUserStore()
-  const { logoutAxios } = useAuthAxios()
+  const { logout } = useAuthAxios()
 
-  const logout = async () => {
+  const logOutHandler = async () => {
     try {
-      await logoutAxios(_id)
+      await logout(_id)
       setMessage('Logout successful!')
       resetUser()
       setIsLoggedIn(false)
@@ -17,5 +17,5 @@ export const useLogOut = () => {
     }
   }
 
-  return { logout }
+  return { logOutHandler }
 }

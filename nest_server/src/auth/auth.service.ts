@@ -10,7 +10,7 @@ import { User } from './schema/user.schema';
 import { Model } from 'mongoose';
 import { RefreshToken } from './schema/refreshtoken.schema';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDto } from './dto/signup.dtoto';
+import { SignUpDto } from './dto/signup.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { v4 as uuidv4 } from 'uuid';

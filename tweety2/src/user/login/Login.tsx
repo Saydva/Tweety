@@ -4,7 +4,7 @@ import { useState } from 'react'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { login } = useLogin()
+  const { loginHandler } = useLogin()
 
   const prefillUser = () => {
     setEmail('test@gmail.com')
@@ -17,7 +17,7 @@ const Login = () => {
         <div className='max-w-md'>
           <h1 className=' font-bold'>Login</h1>
           <form
-            onSubmit={(e) => login(e, email, password)}
+            onSubmit={(e) => loginHandler(e, email, password)}
             action='OnSubmit'
             className='form-control w-full max-w-xs'
           >
@@ -45,8 +45,8 @@ const Login = () => {
                 className='input validator'
                 required
                 placeholder='Password'
-                pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
-                title='Must be more than 8 characters, including number, lowercase letter, uppercase letter'
+                pattern='.{6,}'
+                title='Must be more than 6 characters long'
                 onChange={(e) => setPassword(e.target.value)}
               />
             </fieldset>

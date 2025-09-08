@@ -1,6 +1,6 @@
-import { useUserStore } from '@/user/userStore/user.store'
-import { useNavigateTo } from '@/user/utils/navigate'
-import { useAuthAxios } from '@/user/utils/axios.auth'
+import { useUserStore } from '@/user/_store/user.store'
+import { useNavigateTo } from '@/user/_utils/navigate'
+import { useAuthAxios } from '@/user/_utils/axios.auth'
 
 export const useLogin = () => {
   const {
@@ -12,9 +12,9 @@ export const useLogin = () => {
     setMessage,
   } = useUserStore()
   const { navigateTo } = useNavigateTo()
-  const { loginAxios } = useAuthAxios()
+  const { login } = useAuthAxios()
 
-  const login = async (
+  const loginHandler = async (
     e: React.FormEvent<HTMLFormElement>,
     email: string,
     password: string
@@ -22,7 +22,7 @@ export const useLogin = () => {
     e.preventDefault()
 
     try {
-      const response = await loginAxios(email, password)
+      const response = await login(email, password)
       setId(response._id)
       setName(response.name)
       setAccessToken(response.tokens.accessToken)
@@ -35,5 +35,5 @@ export const useLogin = () => {
       alert('Login failed. Please check your credentials and try again.')
     }
   }
-  return { login }
+  return { loginHandler }
 }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useUserStore } from '@/user/userStore/user.store'
+import { useUserStore } from '@/user/_store/user.store'
 import { handleLocalStorage } from './handleLocalStorage'
 import { useTweetStore } from './useTweetStore'
 

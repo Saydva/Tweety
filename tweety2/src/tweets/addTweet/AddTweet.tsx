@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAddTweet } from './useAddTweet'
-import { useUserStore } from '@/user/userStore/user.store'
+import { useUserStore } from '@/user/_store/user.store'
 const AddTweet = () => {
   const [value, setValue] = useState('')
   const { addTweet } = useAddTweet()
@@ -8,6 +8,7 @@ const AddTweet = () => {
 
   return isLoggedIn ? (
     <div className='flex flex-row justify-between mt-3'>
+      <label htmlFor='tweet'>New tweet :</label>
       <input
         id='tweet'
         value={value}

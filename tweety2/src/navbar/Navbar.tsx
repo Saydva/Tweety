@@ -1,19 +1,19 @@
-import { useUserStore } from '@/user/userStore/user.store'
+import { useUserStore } from '@/user/_store/user.store'
 import { useLogOut } from '@/user/logout/useLogOut'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const { name, isLoggedIn } = useUserStore()
-  const { logout } = useLogOut()
+  const { logOutHandler } = useLogOut()
 
   return (
-    <div className='static navbar bg-base-100 shadow-sm'>
+    <div className='static rounded-md navbar bg-base-100 shadow-sm mt-3'>
       <div className='flex-1'>
         <div className='dropdown dropdown-open flex flex-row justify-between'>
+          <div className='text-2xl font-bold pl-2 hover:text-shadow-lg'>
+            <Link to='/'>Tweety</Link>
+          </div>
           <div>
-            <button className='btn btn-primary'>
-              <Link to='/'>Home</Link>
-            </button>
             {name !== '' ? (
               <span className='text-sm font-bold pl-2'>Welcome, {name}!</span>
             ) : (
@@ -22,7 +22,10 @@ const Navbar = () => {
           </div>
           <div>
             {isLoggedIn ? (
-              <button className='btn rounded-4xl' onClick={() => logout()}>
+              <button
+                className='btn rounded-4xl'
+                onClick={() => logOutHandler()}
+              >
                 Log out
               </button>
             ) : (

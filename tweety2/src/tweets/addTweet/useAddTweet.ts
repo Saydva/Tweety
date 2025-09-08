@@ -1,6 +1,6 @@
-import { useTweetStore } from '@/tweets/store/useTweetStore'
-import { handleLocalStorage } from '@/tweets/store/handleLocalStorage'
-import { useTweetAxios } from '../store/axios.tweet'
+import { useTweetStore } from '@/tweets/_store/useTweetStore'
+import { handleLocalStorage } from '@/tweets/_store/handleLocalStorage'
+import { useTweetAxios } from '../_store/axios.tweet'
 
 export const useAddTweet = () => {
   const { tweetList, setTweetList } = useTweetStore()

@@ -5,7 +5,7 @@ const SignUp = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { signUp } = useSignUp()
+  const { signUpHandler } = useSignUp()
 
   const prefillUser = () => {
     setName('Test User')
@@ -19,7 +19,7 @@ const SignUp = () => {
         <div className='max-w-md'>
           <h1 className=' font-bold'>Register</h1>
           <form
-            onSubmit={(e) => signUp(e, name, email, password)}
+            onSubmit={(e) => signUpHandler(e, name, email, password)}
             action='OnSubmit'
             className='form-control w-full max-w-xs'
           >
@@ -60,8 +60,8 @@ const SignUp = () => {
                 className='input validator'
                 required
                 placeholder='Password'
-                pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
-                title='Must be more than 8 characters, including number, lowercase letter, uppercase letter'
+                pattern='.{6,}'
+                title='Must be more than 6 characters long'
                 onChange={(e) => setPassword(e.target.value)}
               />
             </fieldset>
