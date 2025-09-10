@@ -18,17 +18,17 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
-      throw new UnauthorizedException('token invalid'); // No token provided
+      throw new UnauthorizedException('token invalid');
     }
     try {
       const payload = this.jwtService.verify(token);
-      request.user = payload; // Attach user information to the request
+      request.user = payload;
     } catch (error) {
       console.log('error', error.message);
-      throw new UnauthorizedException('token invalid'); // Token verification failed
+      throw new UnauthorizedException('token invalid');
     }
 
-    return true; // Implement your authentication logic here
+    return true;
   }
   private extractTokenFromHeader(request: Request): string | null {
     return request.headers.authorization?.split(' ')[1] || null;

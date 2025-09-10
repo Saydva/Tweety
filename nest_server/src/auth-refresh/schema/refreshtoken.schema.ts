@@ -9,7 +9,7 @@ export class RefreshToken extends Document {
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId })
   userId: mongoose.Schema.Types.ObjectId;
 
-  @Prop({ required: true }) // Token expires after 7 days
+  @Prop({ required: true })
   expiryDate: Date;
 }
 

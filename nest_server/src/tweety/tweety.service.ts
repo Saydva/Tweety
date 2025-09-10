@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { CreateTweetyDto } from 'src/tweety/dto/CreateTweetyDto';
 import { Tweety } from 'src/tweety/schema/tweety.schema';
-import { User } from 'src/auth/schema/user.schema'; // uprav cestu podľa projektu;
+import { User } from 'src/auth/schema/user.schema';
 @Injectable()
 export class TweetyService {
   constructor(
