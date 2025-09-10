@@ -24,6 +24,7 @@ export class AuthService {
     private RefreshTokenModel: Model<RefreshToken>,
     private jwtService: JwtService,
   ) {}
+
   async signup(signUpData: SignUpDto) {
     const { name, email, password } = signUpData;
     const emailExists = await this.UserModel.findOne({
@@ -39,6 +40,7 @@ export class AuthService {
       password: hashedPassword,
     });
   }
+
   async login(loginData: LoginDto) {
     const { email, password } = loginData;
     const user = await this.UserModel.findOne({ email });
@@ -53,7 +55,7 @@ export class AuthService {
     if (!passwordMatch) {
       throw new BadRequestException('Wrong credentials');
     }
-    const tokens = await this.generateTokens((user._id as any).toString());
+    const tokens = await this._generateTokens((user._id as any).toString());
     return { name, _id, tokens };
   }
 
@@ -70,19 +72,20 @@ export class AuthService {
     if (!token) {
       throw new UnauthorizedException('Invalid refresh token');
     }
-    return this.generateTokens(token.userId.toString());
+    return this._generateTokens(token.userId.toString());
   }
 
-  async generateTokens(userId: string) {
+  async _generateTokens(userId: string) {
     const accessToken = this.jwtService.sign({ userId });
     const refreshToken = uuidv4();
-    await this.storeRefreshToken(refreshToken, userId);
+    await this._storeRefreshToken(refreshToken, userId);
     return {
       accessToken,
       refreshToken,
     };
   }
-  async storeRefreshToken(token: string, userId: string) {
+
+  async _storeRefreshToken(token: string, userId: string) {
     const expiryDate = new Date();
     expiryDate.setMinutes(expiryDate.getMinutes() + 30);
     await this.RefreshTokenModel.updateOne(
@@ -101,9 +104,5 @@ export class AuthService {
     if (!user) return null;
     const { password, ...safeUser } = user.toObject();
     return safeUser;
-  }
-
-  async getUserById(id: string) {
-    return this.UserModel.findOne({ _id: id });
   }
 }

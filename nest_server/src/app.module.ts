@@ -15,14 +15,13 @@ import { JwtModule } from '@nestjs/jwt';
       useFactory: () => ({
         secret: process.env.secret || undefined,
         signOptions: {
-          expiresIn: '1h', // Access token expires in 1 hour
+          expiresIn: '1h',
         },
       }),
     }),
     MongooseModule.forRoot(
       process.env.MONGO_URI ?? 'mongodb://localhost:27017/tweety',
     ),
-    ConfigModule.forRoot(),
     TweetyModule,
     AuthModule,
   ],
