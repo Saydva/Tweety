@@ -11,7 +11,6 @@ import {
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
-import { RefreshTokenDto } from './dto/refreshToken.dto';
 import { AuthGuard } from 'src/_guards/authGuard';
 
 @Controller('auth')
@@ -27,12 +26,6 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginData: LoginDto) {
     return this.authService.login(loginData);
-  }
-
-  @Post('refresh')
-  @UsePipes(new ValidationPipe())
-  async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    return this.authService.refreshToken(refreshTokenDto.refreshToken);
   }
 
   @Post('logout')

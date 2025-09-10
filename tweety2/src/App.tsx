@@ -14,7 +14,7 @@ import { useUserStore } from './user/_store/user.store'
 import { useTweetStore } from './tweets/_store/useTweetStore'
 
 function App() {
-  const { accessToken } = useAuthStore()
+  const { accessToken, refreshToken } = useAuthStore()
   const { setTweetList } = useTweetStore()
 
   const { getUserInfo } = useAuthAxios()
@@ -26,7 +26,7 @@ function App() {
       setTweetList(data)
     }
     fetchTweets()
-  }, [accessToken, setTweetList])
+  }, [setTweetList])
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -36,6 +36,10 @@ function App() {
           setId(data._id)
           setName(data.name)
           setIsLoggedIn(true)
+          console.log(
+            'acesToken :' + accessToken,
+            'refreshToken :' + refreshToken
+          )
         } catch (error) {
           console.error('Failed to fetch user info:', error)
         }

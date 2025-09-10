@@ -1,0 +1,47 @@
+// TODO: Oddelenie refresh logiky od auth v NestJS
+
+// 1. Auth modul
+[√] - V auth.service.ts nechaj len login, signup, logout, generovanie access tokenu.
+[√] - Odstráň všetku logiku okolo refresh tokenov z AuthService.
+[√] - V auth.controller.ts endpointy len pre login, signup, logout.
+[√] - V auth.module.ts zaregistruj len User model a JwtModule.
+
+// 2. AuthRefresh modul
+[√] - Vytvor auth-refresh.service.ts – len logika pre refresh token (overenie, generovanie, uloženie).
+[√] - Vytvor auth-refresh.controller.ts – endpoint /auth-refresh/refresh.
+[√] - V auth-refresh.module.ts zaregistruj RefreshToken model a JwtModule.
+[√] - Nepoužívaj žiadne metódy ani modely z AuthService.
+
+// 3. AppModule
+[√] - Importuj oba moduly: AuthModule, AuthRefreshModule.
+
+// 4. Frontend
+- Pri login-e ulož access aj refresh token.
+- Pri expirácii access tokenu volaj /auth-refresh/refresh s refresh tokenom.
+
+// 5. Testovanie
+- Otestuj login – dostaneš access + refresh token.
+- Otestuj refresh – dostaneš nové tokeny.
+- Otestuj, že endpointy fungujú nezávisle.
+
+// 4a. Vrátenie generovania a ukladania refresh tokenu pri login-e
+- [ ] Pridaj RefreshTokenModel do constructoru AuthService:
+      @InjectModel('RefreshToken') private RefreshTokenModel: Model<any>,
+- [ ] Zaregistruj RefreshToken model v auth.module.ts:
+      MongooseModule.forFeature([
+        { name: User.name, schema: UserSchema },
+        { name: 'RefreshToken', schema: RefreshTokenSchema },
+      ])
+- [ ] Pri login-e generuj refresh token:
+      const refreshToken = this.jwtService.sign({ userId }, { expiresIn: '30m' });
+- [ ] Pri login-e ulož refresh token do DB:
+      const expiryDate = new Date();
+      expiryDate.setMinutes(expiryDate.getMinutes() + 30);
+      await this.RefreshTokenModel.updateOne(
+        { userId },
+        { $set: { expiryDate, token: refreshToken } },
+        { upsert: true },
+      );
+- [ ] Pri login-e vráť refresh token v odpovedi:
+      return { accessToken, refreshToken, ... };
+- [ ] Otestuj login endpoint – dostávaš access aj refresh token, refresh token

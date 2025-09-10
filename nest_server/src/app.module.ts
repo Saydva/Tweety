@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TweetyModule } from './tweety/tweety.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthRefreshModule } from './auth-refresh/auth-refresh.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { JwtModule } from '@nestjs/jwt';
     ),
     TweetyModule,
     AuthModule,
+    AuthRefreshModule,
   ],
   controllers: [AppController],
   providers: [AppService],
