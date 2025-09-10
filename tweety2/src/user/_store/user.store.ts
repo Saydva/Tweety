@@ -1,10 +1,7 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 export type UserProps = {
   _id: string
-  accessToken: string
-  refreshToken: string
   name: string
   isLoggedIn: boolean
   message: string
@@ -12,57 +9,29 @@ export type UserProps = {
 
 type UserActions = {
   setId: (id: string) => void
-  setAccessToken: (token: string) => void
-  setRefreshToken: (token: string) => void
   setName: (name: string) => void
   resetUser: () => void
   setIsLoggedIn: (isLoggedIn: boolean) => void
   setMessage: (message: string) => void
 }
 
-export const useUserStore = create<UserProps & UserActions>()(
-  persist(
-    (set) => ({
+export const useUserStore = create<UserProps & UserActions>()((set) => ({
+  _id: '',
+  name: '',
+  isLoggedIn: false,
+  message: 'Login in',
+  setId: (id) => set({ _id: id }),
+  setName: (name) => set({ name }),
+  setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
+  setMessage(message) {
+    set({ message })
+  },
+
+  resetUser: () =>
+    set({
       _id: '',
-      accessToken: '',
-      refreshToken: '',
       name: '',
       isLoggedIn: false,
       message: 'Login in',
-
-      setId: (id) => set({ _id: id }),
-      setAccessToken: (token) => set({ accessToken: token }),
-      setRefreshToken: (token) => set({ refreshToken: token }),
-      setName: (name) => set({ name }),
-      setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
-      setMessage(message) {
-        set({ message })
-      },
-
-      resetUser: () =>
-        set({
-          _id: '',
-          accessToken: '',
-          refreshToken: '',
-          name: '',
-          isLoggedIn: false,
-          message: 'Login in',
-        }),
     }),
-    {
-      name: 'user-storage',
-      storage: {
-        getItem: (name) => {
-          const item = sessionStorage.getItem(name)
-          return item ? JSON.parse(item) : null
-        },
-        setItem: (name, value) => {
-          sessionStorage.setItem(name, JSON.stringify(value))
-        },
-        removeItem: (name) => {
-          sessionStorage.removeItem(name)
-        },
-      },
-    }
-  )
-)
+}))

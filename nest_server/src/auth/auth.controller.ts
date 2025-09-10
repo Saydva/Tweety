@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -17,29 +18,21 @@ import { AuthGuard } from 'src/_guards/authGuard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  //TODO: Post SignUp
   @Post('signup')
   @UsePipes(new ValidationPipe())
-
-  //auth/signup'
   async signUp(@Body() SignUpData: SignUpDto) {
     return this.authService.signup(SignUpData);
-
-    // Implement sign-up logic here
   }
-  //TODO: Post Login
 
   @Post('login')
   async login(@Body() loginData: LoginDto) {
     return this.authService.login(loginData);
-    // Implement login logic here
   }
 
   @Post('refresh')
+  @UsePipes(new ValidationPipe())
   async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    //TODO: Refresh Token
     return this.authService.refreshToken(refreshTokenDto.refreshToken);
-    // Implement refresh token logic here
   }
 
   @Post('logout')
@@ -47,12 +40,11 @@ export class AuthController {
   async logout(@Body() body: any) {
     const { userId } = body;
     return this.authService.logout(userId);
-    // Implement logout logic here
   }
 
-  @Get(`/users`)
-  async findUsers(@Body() body: any) {
-    return this.authService.findUser();
-    // Implement test logic here
+  @Get('/user/me')
+  @UseGuards(AuthGuard)
+  async getMe(@Req() req) {
+    return this.authService.getSafeUserById(req.user.userId);
   }
 }

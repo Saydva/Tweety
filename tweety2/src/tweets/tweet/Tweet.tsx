@@ -1,5 +1,5 @@
 import { useUserStore } from '@/user/_store/user.store'
-import { useTweetAxios } from '../_store/axios.tweet'
+import { useDeleteTweet } from './useDeleteTweet'
 
 type TweetProps = {
   tweet: { _id: string; owner: string; content: string }
@@ -7,7 +7,8 @@ type TweetProps = {
 
 const Tweet = ({ tweet }: TweetProps) => {
   const { isLoggedIn, name } = useUserStore()
-  const { deleteTweet, getTweetsAxios } = useTweetAxios()
+  const { deleteTweet } = useDeleteTweet()
+
   return (
     <div className=' bg-base-100 border-primary-content border rounded-md shadow-sm  my-4'>
       <div className='flex flex-row justify-between items-baseline m-2'>
@@ -17,9 +18,8 @@ const Tweet = ({ tweet }: TweetProps) => {
         </p>
         {isLoggedIn && tweet.owner === name && (
           <button
-            onClick={() => {
-              deleteTweet(tweet._id)
-              getTweetsAxios()
+            onClick={async () => {
+              await deleteTweet(tweet._id)
             }}
             className='btn btn-secondary btn-sm'
           >

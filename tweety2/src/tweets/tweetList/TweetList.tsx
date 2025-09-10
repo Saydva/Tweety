@@ -1,5 +1,5 @@
 import { useTweetStore } from '@/tweets/_store/useTweetStore'
-import Tweet from '../tweet/tweet'
+import Tweet from '../tweet/Tweet'
 
 const TweetList = () => {
   const { tweetList } = useTweetStore()

@@ -24,31 +24,23 @@ export class AuthService {
     private RefreshTokenModel: Model<RefreshToken>,
     private jwtService: JwtService,
   ) {}
-  // This function signs up a new user
-  // It checks if the email already exists, hashes the password, and saves the user to
   async signup(signUpData: SignUpDto) {
     const { name, email, password } = signUpData;
-    //Todo: Check if email already exists
     const emailExists = await this.UserModel.findOne({
       email: email,
     });
     if (emailExists) {
       throw new BadRequestException('Email already exists');
     }
-    //Todo: Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    //Todo:Crate and save user to database
     await this.UserModel.create({
       name,
       email,
       password: hashedPassword,
     });
   }
-  // This function logs in a user
-  // It checks if the user exists by email, compares the password,
   async login(loginData: LoginDto) {
     const { email, password } = loginData;
-    //todo: Check if user exists
     const user = await this.UserModel.findOne({ email });
 
     if (!user) {
@@ -56,19 +48,16 @@ export class AuthService {
     }
     const name = user?.name;
     const _id = user?._id;
-    //todo: Compare passwords with existing password
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       throw new BadRequestException('Wrong credentials');
     }
-    //todo: generate JWT tokens
     const tokens = await this.generateTokens((user._id as any).toString());
     return { name, _id, tokens };
   }
 
   async logout(userId: string) {
-    // Zmaž refresh token pre daného používateľa
     await this.RefreshTokenModel.deleteOne({ userId });
     return { message: 'Logged out successfully' };
   }
@@ -93,27 +82,28 @@ export class AuthService {
       refreshToken,
     };
   }
-  // This function stores the refresh token in the database
-  // It will create a new refresh token if it doesn't exist for the user, or update
   async storeRefreshToken(token: string, userId: string) {
-    // Store the refresh token in the database
     const expiryDate = new Date();
     expiryDate.setMinutes(expiryDate.getMinutes() + 30);
-    // Set the expiry date to 100 minutes from now
-    // If the user already has a refresh token, update it; otherwise, create a new one
-    // This will ensure that the refresh token is unique per user
     await this.RefreshTokenModel.updateOne(
       { userId },
       {
         $set: { expiryDate, token },
       },
       {
-        upsert: true, // Create a new document if it doesn't exist
+        upsert: true,
       },
     );
   }
-  async findUser() {
-    // Find user by ID
-    return this.UserModel.find({});
+
+  async getSafeUserById(id: string) {
+    const user = await this.UserModel.findOne({ _id: id });
+    if (!user) return null;
+    const { password, ...safeUser } = user.toObject();
+    return safeUser;
+  }
+
+  async getUserById(id: string) {
+    return this.UserModel.findOne({ _id: id });
   }
 }

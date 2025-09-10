@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { useUserStore } from '@/user/_store/user.store'
 import { useNavigateTo } from './navigate'
+import { useAuthStore } from '../_store/auth.store'
 
 export const useAuthAxios = () => {
-  const { accessToken } = useUserStore()
+  const { accessToken } = useAuthStore()
+
   const authAxios = () => {
     return axios.create({
       baseURL: 'http://localhost:4000/auth/',
@@ -15,7 +16,6 @@ export const useAuthAxios = () => {
     })
   }
 
-  const { navigateTo } = useNavigateTo()
   const signup = async (name: string, email: string, password: string) => {
     try {
       const response = await authAxios().post('signup', {
@@ -23,7 +23,6 @@ export const useAuthAxios = () => {
         email,
         password,
       })
-      navigateTo('/login')
 
       return response.data
     } catch (error: Error | any) {
@@ -47,6 +46,16 @@ export const useAuthAxios = () => {
     }
   }
 
+  const getUserInfo = async () => {
+    try {
+      const response = await authAxios().get('user/me')
+      return response.data
+    } catch (error) {
+      console.error('Error fetching user info:', error)
+      throw error
+    }
+  }
+
   const logout = async (userId: string) => {
     try {
       const response = await authAxios().post('logout', { userId })
@@ -60,6 +69,7 @@ export const useAuthAxios = () => {
   return {
     signup,
     login,
+    getUserInfo,
     logout,
   }
 }

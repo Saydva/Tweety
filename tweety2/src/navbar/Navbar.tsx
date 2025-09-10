@@ -23,17 +23,17 @@ const Navbar = () => {
           <div>
             {isLoggedIn ? (
               <button
-                className='btn rounded-4xl'
+                className='btn hover:btn-error rounded-4xl'
                 onClick={() => logOutHandler()}
               >
                 Log out
               </button>
             ) : (
               <>
-                <button className='btn rounded-4xl'>
+                <button className='btn hover:btn-accent rounded-4xl mr-2'>
                   <Link to='/login '>Login</Link>
                 </button>
-                <button className='btn rounded-4xl'>
+                <button className='btn hover:btn-success rounded-4xl'>
                   <Link to='/signup'>Sign Up</Link>
                 </button>
               </>
