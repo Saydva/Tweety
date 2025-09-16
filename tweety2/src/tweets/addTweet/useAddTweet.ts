@@ -1,6 +1,6 @@
 import { useTweetStore } from '@/tweets/_store/useTweetStore'
 import { useAuthStore } from '@/user/_store/auth.store'
-import { _tweetsAxios } from '../utils/_tweetsAxios'
+import { axiosInstance } from '@/utils/axios'
 
 export const useAddTweet = () => {
   const { tweetList, setTweetList } = useTweetStore()
@@ -8,7 +8,7 @@ export const useAddTweet = () => {
   const addTweet = async (value: string, userId: string): Promise<boolean> => {
     if (value.trim() === '' || !userId || !accessToken) return false
     try {
-      const response = await _tweetsAxios(accessToken as string).post(
+      const response = await axiosInstance(accessToken as string).post(
         'tweety',
         {
           content: value,

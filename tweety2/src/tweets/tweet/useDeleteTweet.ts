@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/user/_store/auth.store'
 import { useTweetStore } from '../_store/useTweetStore'
-import { _tweetsAxios } from '../utils/_tweetsAxios'
+import { axiosInstance } from '@/utils/axios'
 
 export const useDeleteTweet = () => {
   const { tweetList, setTweetList } = useTweetStore()
@@ -8,7 +8,7 @@ export const useDeleteTweet = () => {
   const deleteTweet = async (tweetId: string) => {
     if (!tweetId || !accessToken) return
     try {
-      await _tweetsAxios(accessToken as string).delete(`tweety/${tweetId}`)
+      await axiosInstance(accessToken as string).delete(`tweety/${tweetId}`)
       const updatedTweetList = tweetList.filter(
         (tweet) => tweet._id !== tweetId
       )

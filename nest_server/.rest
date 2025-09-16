@@ -68,7 +68,7 @@ POST  http://localhost:4000/auth-refresh/refresh
 Content-Type: application/json
 
 {
-  "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGMxYjQ3YjY4NTQ5ZmM5MjRiMjQyYjUiLCJpYXQiOjE3NTc1MzYyOTcsImV4cCI6MTc1NzUzODA5N30.33VKggxUunUm6aqXOdoAEcaFfQYbwJk0tpZyFLu-SXI"
+  "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGMxYjQ3YjY4NTQ5ZmM5MjRiMjQyYjUiLCJpYXQiOjE3NTc1MzYzNDcsImV4cCI6MTc1NzUzODE0N30.VgeIdH0joSttEGSGHeEOVSZk8AsuioOOVMGtUB35llQ"
 }
 ###
 POST  http://localhost:4000/auth/logout

@@ -15,7 +15,7 @@ export const useSignUp = () => {
   ) => {
     try {
       e.preventDefault()
-      signup(name, email, password)
+      await signup(name, email, password)
       setMessage('Sign up successful! Please log in.')
       navigateTo('/login')
     } catch (error) {

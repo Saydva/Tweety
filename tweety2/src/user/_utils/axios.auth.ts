@@ -1,28 +1,19 @@
-import axios from 'axios'
-import { useNavigateTo } from './navigate'
+import { axiosInstance } from '@/utils/axios'
 import { useAuthStore } from '../_store/auth.store'
 
 export const useAuthAxios = () => {
   const { accessToken } = useAuthStore()
 
-  const authAxios = () => {
-    return axios.create({
-      baseURL: 'http://localhost:4000/auth/',
-      timeout: 10000,
-      headers: {
-        'Content-Type': 'application/json',
-        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-      },
-    })
-  }
-
   const signup = async (name: string, email: string, password: string) => {
     try {
-      const response = await authAxios().post('signup', {
-        name,
-        email,
-        password,
-      })
+      const response = await axiosInstance(accessToken ?? undefined).post(
+        'auth/signup',
+        {
+          name,
+          email,
+          password,
+        }
+      )
 
       return response.data
     } catch (error: Error | any) {
@@ -38,7 +29,10 @@ export const useAuthAxios = () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await authAxios().post('login', { email, password })
+      const response = await axiosInstance(accessToken ?? undefined).post(
+        'auth/login',
+        { email, password }
+      )
       return response.data
     } catch (error) {
       console.error('Error during login:', error)
@@ -48,7 +42,9 @@ export const useAuthAxios = () => {
 
   const getUserInfo = async () => {
     try {
-      const response = await authAxios().get('user/me')
+      const response = await axiosInstance(accessToken ?? undefined).get(
+        'auth/user/me'
+      )
       return response.data
     } catch (error) {
       console.error('Error fetching user info:', error)
@@ -58,7 +54,10 @@ export const useAuthAxios = () => {
 
   const logout = async (userId: string) => {
     try {
-      const response = await authAxios().post('logout', { userId })
+      const response = await axiosInstance(accessToken ?? undefined).post(
+        'auth/logout',
+        { userId }
+      )
       return response.data
     } catch (error) {
       console.error('Error during logout:', error)

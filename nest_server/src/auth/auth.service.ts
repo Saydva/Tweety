@@ -11,13 +11,14 @@ import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
+import { RefreshToken } from 'src/auth-refresh/schema/refreshtoken.schema';
 
 @Injectable()
 @UsePipes(new ValidationPipe())
 export class AuthService {
   constructor(
     @InjectModel(User.name) private UserModel: Model<User>,
-    @InjectModel('RefreshToken') private RefreshTokenModel: Model<any>,
+    @InjectModel('RefreshToken') private RefreshTokenModel: Model<RefreshToken>,
     private jwtService: JwtService,
   ) {}
 
@@ -39,19 +40,21 @@ export class AuthService {
 
   async login(loginData: LoginDto) {
     const { email, password } = loginData;
-    const user = await this.UserModel.findOne({ email });
+    const user = (await this.UserModel.findOne({ email })) as User & {
+      _id: string;
+    };
 
     if (!user) {
-      throw new BadRequestException('Wrong credentials');
+      throw new BadRequestException('User not found');
     }
     const name = user?.name;
     const _id = user?._id;
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      throw new BadRequestException('Wrong credentials');
+      throw new BadRequestException('Wrong password');
     }
-    const tokens = await this._generateTokens((user._id as any).toString());
+    const tokens = await this._generateTokens(user._id.toString());
 
     const expiryDate = new Date();
     expiryDate.setMinutes(expiryDate.getMinutes() + 30);

@@ -30,7 +30,7 @@ export class AuthController {
 
   @Post('logout')
   @UseGuards(AuthGuard)
-  async logout(@Body() body: any) {
+  async logout(@Body() body: { userId: string }) {
     const { userId } = body;
     return this.authService.logout(userId);
   }
