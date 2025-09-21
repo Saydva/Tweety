@@ -12,12 +12,17 @@ import {
 import { CreateTweetyDto } from './dto/CreateTweetyDto';
 import { TweetyService } from './tweety.service';
 import { AuthGuard } from 'src/_guards/authGuard';
+import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 
 @Controller('tweety')
 export class TweetyController {
   constructor(private readonly tweetyService: TweetyService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new tweety' })
+  @ApiBody({ type: CreateTweetyDto })
+  @ApiResponse({ status: 201, description: 'Tweety created successfully.' })
+  @ApiResponse({ status: 400, description: 'Invalid input data.' })
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async createTweet(@Body() createTweetDto: CreateTweetyDto) {
@@ -25,17 +30,18 @@ export class TweetyController {
   }
 
   @Get()
-  @UsePipes(new ValidationPipe())
+  @ApiOperation({ summary: 'Get all tweeties' })
+  @ApiResponse({ status: 200, description: 'List of all tweeties.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async getAllTweeties() {
     return this.tweetyService.getAllTweeties();
   }
 
-  @Get(':id')
-  @UseGuards(AuthGuard)
-  @UsePipes(new ValidationPipe())
-  async getTweetyById(@Param('id') id: string) {}
-
   @Delete(':id')
+  @ApiParam({ name: 'id', required: true, description: 'Tweety ID' })
+  @ApiResponse({ status: 200, description: 'Tweety deleted successfully.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({ status: 404, description: 'Tweety not found.' })
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async deleteTweety(@Param('id') id: string) {

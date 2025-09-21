@@ -1,18 +1,19 @@
-import { axiosInstance } from '@/utils/axios'
+import { AuthApi } from '@/api'
 import { useAuthStore } from '../_store/auth.store'
 
-export const useAuthAxios = () => {
+export const useAuthApi = () => {
   const { accessToken } = useAuthStore()
+  const api = new AuthApi(undefined, 'http://localhost:4000')
 
   const signup = async (name: string, email: string, password: string) => {
     try {
-      const response = await axiosInstance(accessToken ?? undefined).post(
-        'auth/signup',
+      const response = await api.authControllerSignUp(
         {
           name,
           email,
           password,
-        }
+        },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       )
 
       return response.data
@@ -29,10 +30,10 @@ export const useAuthAxios = () => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axiosInstance(accessToken ?? undefined).post(
-        'auth/login',
-        { email, password }
-      )
+      const response = await api.authControllerLogin({
+        email,
+        password,
+      })
       return response.data
     } catch (error) {
       console.error('Error during login:', error)
@@ -42,9 +43,7 @@ export const useAuthAxios = () => {
 
   const getUserInfo = async () => {
     try {
-      const response = await axiosInstance(accessToken ?? undefined).get(
-        'auth/user/me'
-      )
+      const response = await api.authControllerGetMe(`Bearer ${accessToken}`)
       return response.data
     } catch (error) {
       console.error('Error fetching user info:', error)
@@ -54,9 +53,9 @@ export const useAuthAxios = () => {
 
   const logout = async (userId: string) => {
     try {
-      const response = await axiosInstance(accessToken ?? undefined).post(
-        'auth/logout',
-        { userId }
+      const response = await api.authControllerLogout(
+        { userId },
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       )
       return response.data
     } catch (error) {

@@ -1,9 +1,9 @@
-import { useAuthAxios } from '@/user/_utils/axios.auth'
+import { useAuthApi } from '@/user/_utils/api.auth'
 import { useUserStore } from '../_store/user.store'
 import { useNavigateTo } from '@/user/_utils/navigate'
 
 export const useSignUp = () => {
-  const { signup } = useAuthAxios()
+  const { signup } = useAuthApi()
   const { setMessage } = useUserStore()
   const { navigateTo } = useNavigateTo()
 

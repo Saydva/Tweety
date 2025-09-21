@@ -1,11 +1,11 @@
 import { useUserStore } from '@/user/_store/user.store'
 import { useAuthStore } from '@/user/_store/auth.store'
-import { useAuthAxios } from '@/user/_utils/axios.auth'
+import { useAuthApi } from '@/user/_utils/api.auth'
 
 export const useLogOut = () => {
   const { _id, resetUser, setIsLoggedIn, setMessage } = useUserStore()
   const { clearTokens } = useAuthStore()
-  const { logout } = useAuthAxios()
+  const { logout } = useAuthApi()
 
   const logOutHandler = async () => {
     try {

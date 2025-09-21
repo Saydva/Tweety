@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type Tweet = {
+export type Tweet = {
   _id: string
   owner: string
   content: string

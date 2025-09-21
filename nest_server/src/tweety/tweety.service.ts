@@ -32,18 +32,6 @@ export class TweetyService {
     return await this.tweetyModel.find();
   }
 
-  async getTweetyById(id: string) {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new BadRequestException('Invalid ID format');
-    }
-
-    const tweety = await this.tweetyModel.findById(id);
-    if (!tweety) {
-      throw new NotFoundException('Tweety not found');
-    }
-    return tweety;
-  }
-
   async deleteTweety(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Invalid ID format');

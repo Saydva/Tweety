@@ -1,0 +1,16 @@
+.gitignore
+.npmignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+docs/AppApi.md
+docs/AuthApi.md
+docs/AuthRefreshApi.md
+docs/CreateTweetyDto.md
+docs/LoginDto.md
+docs/RefreshTokenDto.md
+docs/SignUpDto.md
+docs/TweetyApi.md
+git_push.sh
+index.ts

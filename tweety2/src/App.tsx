@@ -1,29 +1,33 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { _getAllTweets } from './tweets/utils/_getAllTweets'
+import { TweetyApi } from './api'
 import { BrowserRouter } from 'react-router-dom'
 
-import { useAuthAxios } from './user/_utils/axios.auth'
+import { useAuthApi } from './user/_utils/api.auth'
 import { useAuthStore } from './user/_store/auth.store'
 
 import HomeComp from './home/HomeComp'
 import Navbar from './navbar/Navbar'
 import SignUp from './user/signUp/SignUp'
 import Login from './user/login/Login'
-import { useUserStore } from './user/_store/user.store'
-import { useTweetStore } from './tweets/_store/useTweetStore'
+import { useUserStore, type UserProps } from './user/_store/user.store'
+import { useTweetStore, type Tweet } from './tweets/_store/useTweetStore'
 
 function App() {
   const { accessToken } = useAuthStore()
   const { setTweetList } = useTweetStore()
 
-  const { getUserInfo } = useAuthAxios()
+  const { getUserInfo } = useAuthApi()
   const { setId, setName, setIsLoggedIn } = useUserStore()
+
+  const api = new TweetyApi(undefined, 'http://localhost:4000')
 
   useEffect(() => {
     const fetchTweets = async () => {
-      const data = await _getAllTweets()
-      setTweetList(data)
+      const response = (await api.tweetyControllerGetAllTweeties()) as
+        | Tweet[]
+        | any
+      setTweetList(response.data)
     }
     fetchTweets()
   }, [setTweetList])
@@ -32,7 +36,7 @@ function App() {
     const fetchUserInfo = async () => {
       if (accessToken) {
         try {
-          const data = await getUserInfo()
+          const data = (await getUserInfo()) as UserProps
           setId(data._id)
           setName(data.name)
           setIsLoggedIn(true)

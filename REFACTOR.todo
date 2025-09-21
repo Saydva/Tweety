@@ -1,159 +1,66 @@
-# REFACTOR TODO - Tweety Project
+Swagger Implementacia -- 
 
-## 🚨 KRITICKÉ CHYBY (Vysoká priorita - opraviť okamžite)
 
-### Backend (NestJS)
-- [ ] **PRÁZDNA FUNKCIA getTweetyById** (tweety.controller.ts:28)
-  - Endpoint je definovaný ale prázdny
-  - Môže spôsobiť 500 chybu pri volaní GET /tweety/:id
-  - Riešenie: Implementovať return this.tweetyService.getTweetyById(id)
+# TODO: Prechod z axios na OpenAPI (Swagger) generovaného klienta v projekte Tweety
 
-- [ ] **NEKONZISTENTNÉ ERROR HANDLING** (auth.service.ts)
-  - Rovnaké chyby majú rovnakú správu "Wrong credentials"
-  - Riešenie: Rozlíšiť medzi "User not found" a "Invalid password"
+## 1. Príprava backendu a OpenAPI špecifikácie
+- [ ] Over, že backend poskytuje aktuálnu Swagger/OpenAPI špecifikáciu (napr. na `http://localhost:3000/api-json` alebo podobnom endpointe).
+- [ ] Skontroluj, že všetky dôležité endpointy pre tweety sú v špecifikácii správne popísané (GET, POST, DELETE, PATCH...).
+- [ ] Ak v špecifikácii niečo chýba alebo má zlé typy, uprav backend podľa potreby a reštartuj server.
 
-- [ ] **PORT KONFLIKT** (main.ts vs .env)
-  - .env má PORT=4000, ale fallback v main.ts je 3000
-  - Riešenie: Zjednotiť na 4000 alebo použiť process.env.PORT
+## 2. Generovanie OpenAPI klienta vo frontende
+- [ ] Ak ešte nemáš, nainštaluj si OpenAPI generator CLI:
+  ```bash
+  npm install @openapitools/openapi-generator-cli -D
+  ```
+- [ ] V koreňovom adresári frontend projektu spusti:
+  ```bash
+  npx @openapitools/openapi-generator-cli generate -i http://localhost:3000/api-json -g typescript-axios -o ./src/api
+  ```
+  - `-i` = cesta k OpenAPI špecifikácii.
+  - `-g typescript-axios` = vygeneruje typovo bezpečný klient s axios pod kapotou.
+  - `-o ./src/api` = export klienta do zložky `src/api`.
+- [ ] Skontroluj, že v `src/api` pribudli súbory (napr. `apis`, `models`, `configuration.ts`...).
 
-- [ ] **NEKONZISTENTNÁ EXPIRÁCIA TOKENOV** (auth-refresh.service.ts)
-  - Refresh tokeny majú nastavenú expiráciu na 30 minút, ale access tokeny nemajú explicitne nastavenú dobu
-  - V JWT konfigurácii je nastavené `expiresIn: '1h'`, ale nie je použité konzistentne
-  - Riešenie: Zabezpečiť konzistentné nastavenie expirácie pre všetky tokeny
+## 3. Refaktoring: Nahradenie axios za OpenAPI klienta
+- [ ] Vyhľadaj v projekte všetky importy a použitia `axios` (aj cez `ctrl+shift+f` alebo grep).
+- [ ] Identifikuj všetky služby, hooky, utils alebo komponenty, kde sa axios používa pre prácu s tweetmi (čítanie, vytváranie, mazanie, úprava).
+- [ ] Namiesto axios importuj a používaj entity z generovaného klienta, napr.:
+  ```typescript
+  import { TweetsApi, Configuration } from "../api";
+  const api = new TweetsApi(new Configuration({ basePath: "http://localhost:3000" }));
+  ```
+- [ ] Pre každú akciu (get, create, delete, update):
+    - [ ] Nahraď axios volanie za príslušnú funkciu z klienta, napr.:
+      ```typescript
+      // predtým
+      axios.get("/api/tweets")
+      // potom
+      api.getAllTweets()
+      ```
+    - [ ] Skontroluj, či nový klient vracia dáta v rovnakom tvare (typicky budeš používať `.data`).
+    - [ ] Ak máš vlastné hooky (napr. `useTweets`, `useCreateTweet`), uprav ich implementáciu.
 
-- [ ] **CHÝBAJÚCA CSRF OCHRANA** (auth endpointy)
-  - Chýba implementácia CSRF tokenov pre citlivé operácie
-  - Riešenie: Implementovať CSRF ochranu pre autentifikačné endpointy
+## 4. Úprava typov a modelov vo fronte
+- [ ] Ak si mal vlastné typy pre tweety, môžeš ich nahradiť/rozšíriť tými z generovaného klienta (`TweetDto`, `Tweet`, atď.).
+- [ ] Skontroluj výskyt použitia starých typov a uprav importy podľa potreby.
 
-### Frontend (React)
-- [ ] **CHÝBAJÚCI AWAIT** (useSignUp.ts:17)
-  - signup(name, email, password) nemá await
-  - Funkcia sa nevykoná správne
-  - Riešenie: Pridať await signup(name, email, password)
+## 5. Otestovanie funkcionality
+- [ ] Otestuj načítanie tweetov, pridávanie, mazanie, úpravu aj detail.
+- [ ] Over správnosť typov, automatické dopĺňanie v editore, návratové hodnoty a chybové hlášky.
+- [ ] Skontroluj, že nikde v projekte už nie je žiadny priamy import/kód s axiosom.
 
-- [ ] **NEÚPLNÉ DEPENDENCY ARRAYS** (App.tsx useEffect)
-  - useEffect má chýbajúce dependencies
-  - Riešenie: Pridať getUserInfo, setId, setName, setIsLoggedIn do dependency array
+## 6. Aktualizácia klienta pri zmene backendu
+- [ ] Ak zmeníš API v backend projekte (pribudne endpoint, zmení sa typ), vždy znova spusti generovanie klienta (krok 2).
 
-- [ ] **NEOŠETRENÉ CHYBY V USEEFFECT** (App.tsx)
-  - Catch blok len loguje, užívateľ neví o chybe
-  - Riešenie: Pridať user-friendly error handling
+## 7. Dokumentácia
+- [ ] Do README alebo interného dokumentu pridaj krátky návod:
+    - Ako generovať OpenAPI klienta.
+    - Ako používať klienta namiesto axiosu.
+    - Ako aktualizovať klienta pri zmene backendu.
+    - Príklad použitia v kóde.
 
-- [ ] **PROBLÉM S ASYNCHRÓNNYM STAVOM** (useAddTweet.ts)
-  - Pri viacerých rýchlych požiadavkách môže dôjsť ku race condition
-  - Riešenie: Použiť funkčný update pattern (`setTweetList(prev => [...prev, newTweet])`)
+---
 
-- [ ] **NEBEZPEČNÉ UKLADANIE ACCESS TOKENU** (auth.store.ts)
-  - JWT tokeny v localStorage bez dodatočnej ochrany
-  - Riešenie: Použiť httpOnly cookies (backend) alebo implementovať token refresh mechanizmus
-
-- [ ] **NEDOSTATOČNÁ XSS OCHRANA** (Tweet.tsx)
-  - Chýba sanitácia obsahu tweetov pred zobrazením
-  - Riešenie: Implementovať sanitáciu textového obsahu
-
-## ⚠️ STREDNÉ PROBLÉMY (Stredná priorita)
-
-### Bezpečnosť
-- [ ] **HARDCODED URLs** (axios.auth.ts, _tweetsAxios.ts)
-  - http://localhost:4000 je hardcoded
-  - Riešenie: Použiť environment variables (REACT_APP_API_URL)
-
-- [ ] **NEVHODNÉ ALERT()** (axios.auth.ts)
-  - alert() je zlé UX
-  - Riešenie: Nahradiť toast notifikáciami alebo proper error handling
-
-### Validácia a Typy
-- [ ] **CHÝBAJÚCA VALIDÁCIA ID** (tweety.controller.ts)
-  - Param validation nie je konzistentná
-  - Riešenie: Pridať @IsMongoId() dekorátor
-
-- [ ] **TYPOVÁ BEZPEČNOSŤ** (viaceré súbory)
-  - Používanie 'any' typov
-  - Riešenie: Definovать proper interfaces a types
-
-## ⚡ MENŠIE PROBLÉMY (Nízka priorita)
-
-### Code Quality
-- [ ] **DUPLICITNÝ KÓD** 
-  - Axios inštancie sa vytvárajú na viacerých miestach
-  - Riešenie: Centralizovať do api.config.ts
-
-- [ ] **NEPOUŽITÉ IMPORTY**
-  - useNavigateTo v axios.auth.ts nie je použité
-  - Riešenie: Odstrániť alebo použiť
-
-- [ ] **CONSOLE.LOG V PRODUKCII** (App.tsx:42)
-  - Debug logy v produkčnom kóde
-  - Riešenie: Odstrániť alebo použiť proper logging
-
-### Performance
-- [ ] **CHÝBAJÚCE LAZY LOADING**
-  - Komponenty sa loadujú všetky naraz
-  - Riešenie: Implementovať React.lazy() pre routes
-
-- [ ] **CHÝBAJÚCE ERROR BOUNDARIES**
-  - Žiadne error boundaries v React app
-  - Riešenie: Pridať ErrorBoundary komponenty
-
-## 🔧 REFACTORING PRÍLEŽITOSTI
-
-### Architektúra
-- [ ] **CENTRALIZÁCIA TOKEN LOGIKY**
-  - AuthService a AuthRefreshService majú duplicitnú logiku
-  - Riešenie: Vytvoriť TokenService
-
-- [ ] **REPOSITORY PATTERN**
-  - Priamy prístup k Mongoose modelom
-  - Riešenie: Implementovať Repository pattern
-
-- [ ] **GLOBAL ERROR FILTER**
-  - Chýba centralizované error handling
-  - Riešenie: Vytvoriť GlobalExceptionFilter
-
-### State Management
-- [ ] **ZLEPŠENIE ZUSTAND STORES**
-  - Chýbajúca typová bezpečnosť v actions
-  - Riešenie: Pridať proper typing pre store actions
-
-- [ ] **PERSISTENT STATE**
-  - User state sa stráca pri refresh
-  - Riešenie: Implementovať persist middleware
-
-### Testing
-- [ ] **CHÝBAJÚCE TESTY**
-  - Žiadne unit/integration testy
-  - Riešenie: Pridať Jest testy pre kritické funkcie
-
-## 📋 PRIORITNÝ PLÁN REFAKTORINGU
-
-### Týždeň 1: Kritické chyby
-1. Opraviť getTweetyById endpoint
-2. Pridať await do signup
-3. Opraviť error handling v useEffect
-4. Zjednotiť port configuration
-5. Implementovať CSRF ochranu
-6. Opraviť expiráciu tokenov
-7. Implementovať XSS ochranu
-
-### Týždeň 2: Bezpečnosť a UX
-1. Environment variables pre URLs
-2. Nahradiť alert() proper error handling
-3. Zlepšiť error messages
-4. Bezpečnejšie ukladanie JWT tokenov
-5. Opraviť asynchrónne aktualizácie stavov
-
-### Týždeň 3: Code quality
-1. Centralizovať Axios konfiguráciu
-2. Odstrániť duplicitný kód
-3. Zlepšiť typovú bezpečnosť
-
-### Týždeň 4: Performance a architektúra
-1. Lazy loading
-2. Error boundaries
-3. Token service refactor
-
-## 📝 POZNÁMKY
-- Pred každým refaktoringom pridať testy
-- Refaktorovať po malých častiach
-- Vždy testovať po každej zmene
-- Udržiavať backward compatibility
+**Poznámka:**  
+Po tejto migrácii budeš mať v projekte plne typovo bezpečné volania REST API bez potreby vlastných axios requestov – stačí použiť generované funkcie podľa OpenAPI/Swagger definície.

@@ -4,13 +4,11 @@ import Tweet from '../tweet/Tweet'
 const TweetList = () => {
   const { tweetList } = useTweetStore()
 
-  const itemList = tweetList
-    .map((tweet) => (
-      <div key={tweet._id}>
-        <Tweet tweet={tweet} />
-      </div>
-    ))
-    .reverse()
+  const itemList = tweetList.map((tweet) => (
+    <div key={tweet._id}>
+      <Tweet tweet={tweet} />
+    </div>
+  ))
 
   return (
     <div>
