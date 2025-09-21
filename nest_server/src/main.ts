@@ -9,7 +9,7 @@ async function bootstrap() {
     .setTitle('NestJS MongoDB API')
     .setDescription('The NestJS MongoDB API description')
     .setVersion('1.0')
-    .addServer('http://localhost:${process.env.PORT }')
+    .addServer('http://localhost:${process.env.PORT ?? 3000}')
     .addTag('nestjs', 'mongodb')
     .build();
   const documnet = SwaggerModule.createDocument(app, config);
