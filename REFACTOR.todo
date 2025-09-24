@@ -4,57 +4,57 @@ Swagger Implementacia --
 # TODO: Prechod z axios na OpenAPI (Swagger) generovaného klienta v projekte Tweety
 
 ## 1. Príprava backendu a OpenAPI špecifikácie
-- [ ] Over, že backend poskytuje aktuálnu Swagger/OpenAPI špecifikáciu (napr. na `http://localhost:3000/api-json` alebo podobnom endpointe).
-- [ ] Skontroluj, že všetky dôležité endpointy pre tweety sú v špecifikácii správne popísané (GET, POST, DELETE, PATCH...).
-- [ ] Ak v špecifikácii niečo chýba alebo má zlé typy, uprav backend podľa potreby a reštartuj server.
+[√] Over, že backend poskytuje aktuálnu Swagger/OpenAPI špecifikáciu (napr. na `http://localhost:3000/api-json` alebo podobnom endpointe).
+[√] Skontroluj, že všetky dôležité endpointy pre tweety sú v špecifikácii správne popísané (GET, POST, DELETE, PATCH...).
+[ ] Ak v špecifikácii niečo chýba alebo má zlé typy, uprav backend podľa potreby a reštartuj server.
 
 ## 2. Generovanie OpenAPI klienta vo frontende
-- [ ] Ak ešte nemáš, nainštaluj si OpenAPI generator CLI:
+[√] Ak ešte nemáš, nainštaluj si OpenAPI generator CLI:
   ```bash
   npm install @openapitools/openapi-generator-cli -D
   ```
-- [ ] V koreňovom adresári frontend projektu spusti:
+[√] V koreňovom adresári frontend projektu spusti:
   ```bash
   npx @openapitools/openapi-generator-cli generate -i http://localhost:3000/api-json -g typescript-axios -o ./src/api
   ```
   - `-i` = cesta k OpenAPI špecifikácii.
   - `-g typescript-axios` = vygeneruje typovo bezpečný klient s axios pod kapotou.
   - `-o ./src/api` = export klienta do zložky `src/api`.
-- [ ] Skontroluj, že v `src/api` pribudli súbory (napr. `apis`, `models`, `configuration.ts`...).
+[√] Skontroluj, že v `src/api` pribudli súbory (napr. `apis`, `models`, `configuration.ts`...).
 
 ## 3. Refaktoring: Nahradenie axios za OpenAPI klienta
-- [ ] Vyhľadaj v projekte všetky importy a použitia `axios` (aj cez `ctrl+shift+f` alebo grep).
-- [ ] Identifikuj všetky služby, hooky, utils alebo komponenty, kde sa axios používa pre prácu s tweetmi (čítanie, vytváranie, mazanie, úprava).
-- [ ] Namiesto axios importuj a používaj entity z generovaného klienta, napr.:
+[√] Vyhľadaj v projekte všetky importy a použitia `axios` (aj cez `ctrl+shift+f` alebo grep).
+[√] Identifikuj všetky služby, hooky, utils alebo komponenty, kde sa axios používa pre prácu s tweetmi (čítanie, vytváranie, mazanie, úprava).
+[√] Namiesto axios importuj a používaj entity z generovaného klienta, napr.:
   ```typescript
   import { TweetsApi, Configuration } from "../api";
   const api = new TweetsApi(new Configuration({ basePath: "http://localhost:3000" }));
   ```
-- [ ] Pre každú akciu (get, create, delete, update):
-    - [ ] Nahraď axios volanie za príslušnú funkciu z klienta, napr.:
+[√] Pre každú akciu (get, create, delete, update):
+    [√] Nahraď axios volanie za príslušnú funkciu z klienta, napr.:
       ```typescript
       // predtým
       axios.get("/api/tweets")
       // potom
       api.getAllTweets()
       ```
-    - [ ] Skontroluj, či nový klient vracia dáta v rovnakom tvare (typicky budeš používať `.data`).
-    - [ ] Ak máš vlastné hooky (napr. `useTweets`, `useCreateTweet`), uprav ich implementáciu.
+    [√] Skontroluj, či nový klient vracia dáta v rovnakom tvare (typicky budeš používať `.data`).
+    [√] Ak máš vlastné hooky (napr. `useTweets`, `useCreateTweet`), uprav ich implementáciu.
 
 ## 4. Úprava typov a modelov vo fronte
-- [ ] Ak si mal vlastné typy pre tweety, môžeš ich nahradiť/rozšíriť tými z generovaného klienta (`TweetDto`, `Tweet`, atď.).
-- [ ] Skontroluj výskyt použitia starých typov a uprav importy podľa potreby.
+[√] Ak si mal vlastné typy pre tweety, môžeš ich nahradiť/rozšíriť tými z generovaného klienta (`TweetDto`, `Tweet`, atď.).
+[√] Skontroluj výskyt použitia starých typov a uprav importy podľa potreby.
 
 ## 5. Otestovanie funkcionality
-- [ ] Otestuj načítanie tweetov, pridávanie, mazanie, úpravu aj detail.
-- [ ] Over správnosť typov, automatické dopĺňanie v editore, návratové hodnoty a chybové hlášky.
-- [ ] Skontroluj, že nikde v projekte už nie je žiadny priamy import/kód s axiosom.
+[√] Otestuj načítanie tweetov, pridávanie, mazanie, úpravu aj detail.
+[√] Over správnosť typov, automatické dopĺňanie v editore, návratové hodnoty a chybové hlášky.
+[√] Skontroluj, že nikde v projekte už nie je žiadny priamy import/kód s axiosom.
 
 ## 6. Aktualizácia klienta pri zmene backendu
-- [ ] Ak zmeníš API v backend projekte (pribudne endpoint, zmení sa typ), vždy znova spusti generovanie klienta (krok 2).
+[√] Ak zmeníš API v backend projekte (pribudne endpoint, zmení sa typ), vždy znova spusti generovanie klienta (krok 2).
 
 ## 7. Dokumentácia
-- [ ] Do README alebo interného dokumentu pridaj krátky návod:
+[ ] Do README alebo interného dokumentu pridaj krátky návod:
     - Ako generovať OpenAPI klienta.
     - Ako používať klienta namiesto axiosu.
     - Ako aktualizovať klienta pri zmene backendu.

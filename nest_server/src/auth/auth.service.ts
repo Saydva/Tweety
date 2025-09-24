@@ -3,6 +3,7 @@ import {
   BadRequestException,
   UsePipes,
   ValidationPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/user.schema';
@@ -12,6 +13,7 @@ import { SignUpDto } from './dto/signup.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { RefreshToken } from 'src/auth-refresh/schema/refreshtoken.schema';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 @UsePipes(new ValidationPipe())
@@ -82,7 +84,7 @@ export class AuthService {
 
   async getSafeUserById(id: string) {
     const user = await this.UserModel.findOne({ _id: id });
-    if (!user) return null;
+    if (!user) throw new NotFoundException('User not found');
     const { password, ...safeUser } = user.toObject();
     return safeUser;
   }

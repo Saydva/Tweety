@@ -10,22 +10,12 @@ import {
 } from '@nestjs/common';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
+import { UserDto } from './dto/user.dto';
 import { Request } from 'express';
 import { AuthGuard } from 'src/_guards/authGuard';
 import { AuthService } from './auth.service';
 
 import { ApiBody, ApiHeader, ApiOperation, ApiResponse } from '@nestjs/swagger';
-
-class LoginResponse {
-  tokens: { accessToken: string; refreshToken: string };
-  _id: string;
-  name: string;
-}
-
-class UserProps {
-  _id: string;
-  name: string;
-}
 
 @Controller('auth')
 export class AuthController {
@@ -48,10 +38,10 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'User successfully logged in.',
-    type: LoginResponse,
+    type: UserDto,
   })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
-  async login(@Body() loginData: LoginDto) {
+  async login(@Body() loginData: LoginDto): Promise<UserDto> {
     return this.authService.login(loginData);
   }
 
@@ -65,23 +55,5 @@ export class AuthController {
   async logout(@Body() body: { userId: string }) {
     const { userId } = body;
     return this.authService.logout(userId);
-  }
-
-  @Get('/user/me')
-  @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Get Current User data' })
-  @ApiHeader({
-    name: 'Authorization',
-    description: 'Bearer token',
-    required: true,
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Current user data retrieved.',
-    type: UserProps,
-  })
-  @ApiResponse({ status: 401, description: 'Unauthorized.' })
-  async getMe(@Req() req: Request & { user: { userId: string } }) {
-    return this.authService.getSafeUserById(req.user.userId);
   }
 }

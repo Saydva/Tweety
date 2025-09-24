@@ -13,7 +13,6 @@ export class SignUpDto {
   @ApiProperty({ example: 'strongPassword123', description: 'User password' })
   @IsString()
   @MinLength(6)
-  // At least 6 characters
   @Matches(/^.{6,}$/, {
     message: 'Password must be at least 6 characters.',
   })
