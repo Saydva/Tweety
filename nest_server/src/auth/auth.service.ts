@@ -13,6 +13,7 @@ import { SignUpDto } from './dto/signup.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { RefreshToken } from 'src/auth-refresh/schema/refreshtoken.schema';
+import { LoginResponseDto } from './dto/loginResponse.dto';
 
 @Injectable()
 @UsePipes(new ValidationPipe())
@@ -39,7 +40,7 @@ export class AuthService {
     });
   }
 
-  async login(loginData: LoginDto) {
+  async login(loginData: LoginDto): Promise<LoginResponseDto> {
     const { email, password } = loginData;
     const user = (await this.UserModel.findOne({ email })) as User & {
       _id: string;
@@ -76,12 +77,5 @@ export class AuthService {
       accessToken,
       refreshToken,
     };
-  }
-
-  async getSafeUserById(id: string) {
-    const user = await this.UserModel.findOne({ _id: id });
-    if (!user) throw new NotFoundException('User not found');
-    const { password, ...safeUser } = user.toObject();
-    return safeUser;
   }
 }

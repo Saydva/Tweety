@@ -11,6 +11,7 @@ import {
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { LoginResponseDto } from './dto/loginResponse.dto';
+import { UserDto } from './dto/user.dto';
 import { AuthGuard } from 'src/_guards/authGuard';
 import { AuthService } from './auth.service';
 
@@ -33,7 +34,7 @@ export class AuthController {
   @Post('login')
   @UsePipes(new ValidationPipe())
   @ApiOperation({ summary: 'User Login' })
-  @ApiBody({ type: LoginDto })
+  @ApiBody({ type: LoginResponseDto })
   @ApiResponse({
     status: 200,
     description: 'User successfully logged in.',
