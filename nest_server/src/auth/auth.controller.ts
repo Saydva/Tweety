@@ -10,12 +10,11 @@ import {
 } from '@nestjs/common';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
-import { UserDto } from './dto/user.dto';
-import { Request } from 'express';
+import { LoginResponseDto } from './dto/loginResponse.dto';
 import { AuthGuard } from 'src/_guards/authGuard';
 import { AuthService } from './auth.service';
 
-import { ApiBody, ApiHeader, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -38,10 +37,10 @@ export class AuthController {
   @ApiResponse({
     status: 200,
     description: 'User successfully logged in.',
-    type: UserDto,
+    type: LoginResponseDto,
   })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
-  async login(@Body() loginData: LoginDto): Promise<UserDto> {
+  async login(@Body() loginData: LoginDto): Promise<LoginResponseDto> {
     return this.authService.login(loginData);
   }
 
