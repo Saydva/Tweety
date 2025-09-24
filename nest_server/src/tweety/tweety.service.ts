@@ -5,9 +5,10 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { CreateTweetyDto } from 'src/tweety/dto/CreateTweetyDto';
+import { CreateTweetyDto } from './dto/createTweetyDto';
 import { Tweety } from 'src/tweety/schema/tweety.schema';
 import { User } from 'src/auth/schema/user.schema';
+import { TweetyResponseDto } from './dto/tweetyResponse.dto';
 @Injectable()
 export class TweetyService {
   constructor(
@@ -28,8 +29,14 @@ export class TweetyService {
     return newTweety;
   }
 
-  async getAllTweeties() {
-    return await this.tweetyModel.find();
+  async getAllTweeties(): Promise<TweetyResponseDto[]> {
+    const response = await this.tweetyModel.find();
+    // mapovanie na DTO, ak treba
+    return response.map((t) => ({
+      _id: t._id.toString(),
+      content: t.content,
+      owner: t.owner,
+    }));
   }
 
   async deleteTweety(id: string) {

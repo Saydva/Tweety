@@ -9,7 +9,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateTweetyDto } from './dto/CreateTweetyDto';
+import { CreateTweetyDto } from './dto/createTweetyDto';
+import { TweetyResponseDto } from './dto/tweetyResponse.dto';
 import { TweetyService } from './tweety.service';
 import { AuthGuard } from 'src/_guards/authGuard';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
@@ -31,7 +32,12 @@ export class TweetyController {
 
   @Get()
   @ApiOperation({ summary: 'Get all tweeties' })
-  @ApiResponse({ status: 200, description: 'List of all tweeties.' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all tweeties.',
+    type: [TweetyResponseDto],
+    isArray: true,
+  })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async getAllTweeties() {
     return this.tweetyService.getAllTweeties();

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { TweetyApi } from './api'
+import { Api } from './api/generated/api'
 import { BrowserRouter } from 'react-router-dom'
 
 import { useAuthApi } from './user/_utils/api.auth'
@@ -11,7 +11,7 @@ import Navbar from './navbar/Navbar'
 import SignUp from './user/signUp/SignUp'
 import Login from './user/login/Login'
 import { useUserStore, type UserProps } from './user/_store/user.store'
-import { useTweetStore, type Tweet } from './tweets/_store/useTweetStore'
+import { useTweetStore } from './tweets/_store/useTweetStore'
 
 function App() {
   const { accessToken } = useAuthStore()
@@ -20,13 +20,13 @@ function App() {
   const { getUserInfo } = useAuthApi()
   const { setId, setName, setIsLoggedIn } = useUserStore()
 
-  const api = new TweetyApi(undefined, 'http://localhost:4000')
+  const api = new Api({ baseUrl: 'http://localhost:4000' })
 
   useEffect(() => {
     const fetchTweets = async () => {
-      const response = (await api.tweetyControllerGetAllTweeties()) as
-        | Tweet[]
-        | any
+      const response = await api.tweety.tweetyControllerGetAllTweeties({
+        format: 'json',
+      })
       setTweetList(response.data)
     }
     fetchTweets()

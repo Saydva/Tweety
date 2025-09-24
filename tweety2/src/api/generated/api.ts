@@ -35,22 +35,20 @@ export interface SignUpDto {
   password: string;
 }
 
-export interface LoginDto {
+export interface LoginResponseDto {
   /**
-   * User email
-   * @example "test@.gmail.com"
+   * User ID
+   * @example "64b7f8c9e1b2c3d4e5f6a7b8"
    */
-  email: string;
+  _id: string;
   /**
-   * User password
-   * @example "12345"
+   * User full name
+   * @example "John Doe"
    */
-  password: string;
+  name: string;
+  /** Authentication tokens */
+  tokens: object;
 }
-
-export type LoginResponse = object;
-
-export type UserProps = object;
 
 export interface RefreshTokenDto {
   /** @example "your-refresh-token-here" */
@@ -368,9 +366,10 @@ export class Api<
      * @request GET:/tweety
      */
     tweetyControllerGetAllTweeties: (params: RequestParams = {}) =>
-      this.request<void, void>({
+      this.request<any[], void>({
         path: `/tweety`,
         method: "GET",
+        format: "json",
         ...params,
       }),
 
@@ -414,8 +413,8 @@ export class Api<
      * @summary User Login
      * @request POST:/auth/login
      */
-    authControllerLogin: (data: LoginDto, params: RequestParams = {}) =>
-      this.request<LoginResponse, void>({
+    authControllerLogin: (data: LoginResponseDto, params: RequestParams = {}) =>
+      this.request<LoginResponseDto, void>({
         path: `/auth/login`,
         method: "POST",
         body: data,
@@ -438,22 +437,6 @@ export class Api<
         method: "POST",
         body: data,
         type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name AuthControllerGetMe
-     * @summary Get Current User data
-     * @request GET:/auth/user/me
-     */
-    authControllerGetMe: (params: RequestParams = {}) =>
-      this.request<UserProps, void>({
-        path: `/auth/user/me`,
-        method: "GET",
-        format: "json",
         ...params,
       }),
   };

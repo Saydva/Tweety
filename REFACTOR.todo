@@ -64,3 +64,16 @@ Swagger Implementacia --
 
 **Poznámka:**  
 Po tejto migrácii budeš mať v projekte plne typovo bezpečné volania REST API bez potreby vlastných axios requestov – stačí použiť generované funkcie podľa OpenAPI/Swagger definície.
+
+skontrolujme cely kod ci sme pozili swagger typescrip vsade kde sa len da
+
+Z kontroly kódu vyplýva:
+
+Swagger-typescript-api klient (Api z ./api/generated/api) sa používa v App.tsx a typ Tweety v useTweetStore.ts.
+V iných častiach projektu (napr. useAddTweet.ts, api.auth.ts, common.ts, atď.) sa stále používajú staré custom API volania, typy z axiosu alebo ručne písané API utility.
+Čo treba spraviť pre plné využitie swagger-typescript-api:
+
+Všetky API volania (pridávanie tweetu, login, registrácia, atď.) refaktorovať na použitie vygenerovaného klienta z ./api/generated/api.
+Odstrániť/zredukovať závislosti na axios, custom typoch a ručne písaných API helperoch.
+Všade, kde sa pracuje s dátami z API, používať typy z vygenerovaného klienta.
+Ak chcete, môžem začať refaktorovať konkrétny súbor (napr. useAddTweet.ts alebo api.auth.ts) na použitie swagger-typescript-api. Stačí napísať, ktorý súbor chcete upraviť ako prvý!
