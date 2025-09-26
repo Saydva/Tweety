@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { Api } from './api/generated/api'
+import { Api, type TweetyResponseDto } from './api/generated/api'
 import { BrowserRouter } from 'react-router-dom'
 
 import HomeComp from './home/HomeComp'
@@ -24,10 +24,8 @@ function App() {
 
   useEffect(() => {
     const fetchTweets = async () => {
-      const response = await api.tweety.tweetyControllerGetAllTweeties({
-        format: 'json',
-      })
-      setTweetList(response.data)
+      const response = await api.tweety.tweetyControllerGetAllTweeties()
+      setTweetList(response.data as TweetyResponseDto[])
     }
     fetchTweets()
   }, [setTweetList])

@@ -17,6 +17,24 @@ export interface CreateTweetyDto {
   content: string;
 }
 
+export interface TweetyResponseDto {
+  /**
+   * Tweety ID
+   * @example "64b7c2f4c9e1f2a5b6c7d8e9"
+   */
+  _id: string;
+  /**
+   * Content of the tweety
+   * @example "This is my first tweety!"
+   */
+  content: string;
+  /**
+   * Owner of the tweety
+   * @example "John Doe"
+   */
+  owner: string;
+}
+
 export interface SignUpDto {
   /**
    * User full name
@@ -392,7 +410,7 @@ export class Api<
      * @request GET:/tweety
      */
     tweetyControllerGetAllTweeties: (params: RequestParams = {}) =>
-      this.request<any[], void>({
+      this.request<TweetyResponseDto[], void>({
         path: `/tweety`,
         method: "GET",
         format: "json",

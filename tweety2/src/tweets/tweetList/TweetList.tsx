@@ -1,12 +1,13 @@
 import { useTweetStore } from '@/tweets/_store/useTweetStore'
 import Tweet from '../tweet/Tweet'
+import type { TweetyResponseDto } from '@/api/generated/api'
 
 const TweetList = () => {
   const { tweetList } = useTweetStore()
 
-  const itemList = tweetList.map((tweet) => (
+  const itemList = tweetList.map((tweet: TweetyResponseDto) => (
     <div key={tweet._id}>
-      <Tweet tweet={tweet} />
+      <Tweet {...tweet} />
     </div>
   ))
 

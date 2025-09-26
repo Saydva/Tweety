@@ -1,11 +1,8 @@
 import { useUserStore } from '@/user/_store/user.store'
 import { useDeleteTweet } from './useDeleteTweet'
+import type { TweetyResponseDto } from '@/api/generated/api'
 
-type TweetProps = {
-  tweet: { _id: string; owner: string; content: string }
-}
-
-const Tweet = ({ tweet }: TweetProps) => {
+const Tweet = (tweet: TweetyResponseDto) => {
   const { isLoggedIn, name } = useUserStore()
   const { deleteTweet } = useDeleteTweet()
 

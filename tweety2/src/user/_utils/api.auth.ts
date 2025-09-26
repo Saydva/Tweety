@@ -13,7 +13,7 @@ export const useAuthApi = () => {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       )
 
-      return response.data
+      return response
     } catch (error: Error | any) {
       console.error('Error during registration:', error)
       alert(
@@ -28,7 +28,7 @@ export const useAuthApi = () => {
   const login = async (email: string, password: string) => {
     try {
       const response = await api.auth.authControllerLogin({ email, password })
-      return response.data
+      return response
     } catch (error) {
       console.error('Error during login:', error)
       throw error
@@ -41,7 +41,7 @@ export const useAuthApi = () => {
         { userId },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       )
-      return response.data
+      return response
     } catch (error) {
       console.error('Error during logout:', error)
       throw error

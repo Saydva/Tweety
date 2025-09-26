@@ -36,7 +36,6 @@ export class TweetyController {
     status: 200,
     description: 'List of all tweeties.',
     type: [TweetyResponseDto],
-    isArray: true,
   })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async getAllTweeties() {

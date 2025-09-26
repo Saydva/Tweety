@@ -1,15 +1,15 @@
 import { create } from 'zustand'
-import type { Tweety } from '@/api/generated/api'
+import type { TweetyResponseDto } from '@/api/generated/api'
 
 type TweetListProps = {
-  tweetList: Tweety[]
+  tweetList: TweetyResponseDto[]
 }
 
 type TweetActions = {
-  setTweetList: (tweets: Tweety[]) => void
+  setTweetList: (tweets: TweetyResponseDto[]) => void
 }
 
 export const useTweetStore = create<TweetListProps & TweetActions>((set) => ({
   tweetList: [],
-  setTweetList: (tweets: Tweety[]) => set({ tweetList: tweets }),
+  setTweetList: (tweets: TweetyResponseDto[]) => set({ tweetList: tweets }),
 }))
