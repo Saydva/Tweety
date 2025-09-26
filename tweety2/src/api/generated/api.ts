@@ -35,6 +35,32 @@ export interface SignUpDto {
   password: string;
 }
 
+export interface LoginDto {
+  /**
+   * User email
+   * @example "test@.gmail.com"
+   */
+  email: string;
+  /**
+   * User password
+   * @example "12345"
+   */
+  password: string;
+}
+
+export interface TokensDto {
+  /**
+   * Access token
+   * @example "access-token-string"
+   */
+  accessToken: string;
+  /**
+   * Refresh token
+   * @example "refresh-token-string"
+   */
+  refreshToken: string;
+}
+
 export interface LoginResponseDto {
   /**
    * User ID
@@ -47,7 +73,7 @@ export interface LoginResponseDto {
    */
   name: string;
   /** Authentication tokens */
-  tokens: object;
+  tokens: TokensDto;
 }
 
 export interface RefreshTokenDto {
@@ -413,7 +439,7 @@ export class Api<
      * @summary User Login
      * @request POST:/auth/login
      */
-    authControllerLogin: (data: LoginResponseDto, params: RequestParams = {}) =>
+    authControllerLogin: (data: LoginDto, params: RequestParams = {}) =>
       this.request<LoginResponseDto, void>({
         path: `/auth/login`,
         method: "POST",

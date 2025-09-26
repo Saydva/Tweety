@@ -3,22 +3,22 @@ import { Routes, Route } from 'react-router-dom'
 import { Api } from './api/generated/api'
 import { BrowserRouter } from 'react-router-dom'
 
-import { useAuthApi } from './user/_utils/api.auth'
-import { useAuthStore } from './user/_store/auth.store'
-
 import HomeComp from './home/HomeComp'
 import Navbar from './navbar/Navbar'
 import SignUp from './user/signUp/SignUp'
 import Login from './user/login/Login'
-import { useUserStore, type UserProps } from './user/_store/user.store'
+
 import { useTweetStore } from './tweets/_store/useTweetStore'
+import { useAuthStore } from './user/_store/auth.store'
+import { useUserStore } from './user/_store/user.store'
+import { useAuthLocalStorage } from './user/_store/auth.localStorage.handler'
 
 function App() {
-  const { accessToken } = useAuthStore()
   const { setTweetList } = useTweetStore()
-
-  const { getUserInfo } = useAuthApi()
+  const { setTokens } = useAuthStore()
   const { setId, setName, setIsLoggedIn } = useUserStore()
+
+  const { loadAuth } = useAuthLocalStorage()
 
   const api = new Api({ baseUrl: 'http://localhost:4000' })
 
@@ -33,20 +33,16 @@ function App() {
   }, [setTweetList])
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      if (accessToken) {
-        try {
-          const data = (await getUserInfo()) as UserProps
-          setId(data._id)
-          setName(data.name)
-          setIsLoggedIn(true)
-        } catch (error) {
-          console.error('Failed to fetch user info:', error)
-        }
-      }
+    const authData = loadAuth()
+    const { accessToken, refreshToken, userId, name } = authData
+
+    if (accessToken && refreshToken && userId && name) {
+      setTokens(accessToken, refreshToken)
+      setId(userId)
+      setName(name)
+      setIsLoggedIn(true)
     }
-    fetchUserInfo()
-  }, [accessToken, setId, setName, setIsLoggedIn])
+  }, [])
 
   return (
     <BrowserRouter>

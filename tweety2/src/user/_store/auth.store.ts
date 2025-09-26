@@ -18,7 +18,7 @@ export const useAuthStore = create<AuthState>()(
       clearTokens: () => set({ accessToken: null, refreshToken: null }),
     }),
     {
-      name: 'auth-storage', // key in localStorage
+      name: 'auth-storage',
     }
   )
 )

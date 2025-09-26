@@ -1,15 +1,15 @@
 import { useAuthStore } from '@/user/_store/auth.store'
 import { useTweetStore } from '../_store/useTweetStore'
-import { TweetyApi } from '@/api'
+import { Api } from '@/api/generated/api'
 
 export const useDeleteTweet = () => {
-  const api = new TweetyApi(undefined, 'http://localhost:4000')
+  const api = new Api({ baseUrl: 'http://localhost:4000' })
   const { tweetList, setTweetList } = useTweetStore()
   const { accessToken } = useAuthStore()
   const deleteTweet = async (tweetId: string) => {
     if (!tweetId || !accessToken) return
     try {
-      await api.tweetyControllerDeleteTweety(tweetId, {
+      await api.tweety.tweetyControllerDeleteTweety(tweetId, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       const updatedTweetList = tweetList.filter(

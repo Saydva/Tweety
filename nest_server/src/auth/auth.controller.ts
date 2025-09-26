@@ -34,7 +34,7 @@ export class AuthController {
   @Post('login')
   @UsePipes(new ValidationPipe())
   @ApiOperation({ summary: 'User Login' })
-  @ApiBody({ type: LoginResponseDto })
+  @ApiBody({ type: LoginDto })
   @ApiResponse({
     status: 200,
     description: 'User successfully logged in.',

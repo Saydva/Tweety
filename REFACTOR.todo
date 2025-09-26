@@ -77,3 +77,45 @@ Všetky API volania (pridávanie tweetu, login, registrácia, atď.) refaktorova
 Odstrániť/zredukovať závislosti na axios, custom typoch a ručne písaných API helperoch.
 Všade, kde sa pracuje s dátami z API, používať typy z vygenerovaného klienta.
 Ak chcete, môžem začať refaktorovať konkrétny súbor (napr. useAddTweet.ts alebo api.auth.ts) na použitie swagger-typescript-api. Stačí napísať, ktorý súbor chcete upraviť ako prvý!
+
+25.9.20025
+
+skontroluj cely kod fronend aj beckend ako som implementoval swagger-typescript
+
+Tu je stručný checklist a odporúčania na kontrolu správnej implementácie swagger-typescript-api v celom tvojom projekte:
+
+Backend (NestJS)
+Správne:
+
+Všetky DTO majú dekorátory @ApiProperty.
+Kontroléry používajú @ApiBody, @ApiResponse, @ApiOperation s presnými typmi (napr. LoginDto pre vstup, LoginResponseDto pre výstup).
+Swagger endpoint je dostupný (napr. /api-json).
+Po každej zmene v DTO/kontroléri reštartuješ server a vygeneruješ nový OpenAPI JSON.
+Najčastejšie chyby:
+
+Zle nastavený typ v @ApiResponse (napr. namiesto LoginResponseDto je tam LoginDto).
+Chýbajúce alebo nepresné dekorátory v DTO.
+Endpointy vracajú any alebo object namiesto konkrétneho DTO.
+Frontend (React)
+Správne:
+
+Všetky API volania idú cez vygenerovaného klienta z @/api/generated/api (trieda Api).
+Nepoužívaš custom axios/fetch utility ani custom typy pre API odpovede.
+Typy pre dáta (napr. LoginResponseDto, TweetyResponseDto) importuješ priamo z vygenerovaného klienta.
+Pri login/registrácii/pridávaní tweetu používaš správne typy podľa OpenAPI (napr. LoginDto pre vstup, LoginResponseDto pre výstup).
+Všetky tokeny a user info synchronizuješ s localStorage (pre zachovanie stavu po refreshi).
+Najčastejšie chyby:
+
+Používanie response.data tam, kde vrátený objekt je už správne typovaný (stačí response._id atď.).
+Nesprávne typovanie v hookoch alebo store (napr. použitie any).
+Zvyšky starých custom API helperov alebo axios importov.
+Čo ešte skontrolovať:
+Backend:
+
+Každý endpoint má správne typované vstupy/výstupy v dekorátoroch.
+Swagger UI zobrazuje presné schémy.
+Frontend:
+
+Všetky API volania sú cez vygenerovaného klienta.
+Všade používate typy z generovaného API.
+Všetky hooky/store synchronizujú stav s localStorage.
