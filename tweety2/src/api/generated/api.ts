@@ -22,7 +22,7 @@ export interface TweetyResponseDto {
    * Tweety ID
    * @example "64b7c2f4c9e1f2a5b6c7d8e9"
    */
-  _id: string;
+  id: string;
   /**
    * Content of the tweety
    * @example "This is my first tweety!"
@@ -156,7 +156,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "http://localhost:${process.env.PORT ?? 3000}";
+  public baseUrl: string = "http://localhost:${process.env.PORT ?? 2000}";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
@@ -361,7 +361,7 @@ export class HttpClient<SecurityDataType = unknown> {
 /**
  * @title NestJS MongoDB API
  * @version 1.0
- * @baseUrl http://localhost:${process.env.PORT ?? 3000}
+ * @baseUrl http://localhost:${process.env.PORT ?? 2000}
  * @contact
  *
  * The NestJS MongoDB API description

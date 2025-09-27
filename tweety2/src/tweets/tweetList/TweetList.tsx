@@ -6,7 +6,7 @@ const TweetList = () => {
   const { tweetList } = useTweetStore()
 
   const itemList = tweetList.map((tweet: TweetyResponseDto) => (
-    <div key={tweet._id}>
+    <div key={tweet.id}>
       <Tweet {...tweet} />
     </div>
   ))

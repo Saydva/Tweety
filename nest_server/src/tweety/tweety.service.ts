@@ -29,7 +29,7 @@ export class TweetyService {
     });
     await newTweety.save();
     return {
-      _id: newTweety._id.toString(),
+      id: newTweety.id.toString(),
       content: newTweety.content,
       owner: newTweety.owner,
     };
@@ -38,7 +38,7 @@ export class TweetyService {
   async getAllTweeties(): Promise<TweetyResponseDto[]> {
     const response = await this.tweetyModel.find();
     return response.map((t) => ({
-      _id: t._id.toString(),
+      id: t.id.toString(),
       content: t.content,
       owner: t.owner,
     }));

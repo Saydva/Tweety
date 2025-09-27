@@ -26,7 +26,9 @@ export class TweetyController {
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
-  async createTweet(@Body() createTweetDto: CreateTweetyDto) {
+  async createTweet(
+    @Body() createTweetDto: CreateTweetyDto,
+  ): Promise<TweetyResponseDto> {
     return this.tweetyService.createTweety(createTweetDto);
   }
 

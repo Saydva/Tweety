@@ -38,6 +38,7 @@ export class AuthService {
       email,
       password: hashedPassword,
     });
+    return { message: 'User created successfully' };
   }
 
   async login(loginData: LoginDto): Promise<LoginResponseDto> {
