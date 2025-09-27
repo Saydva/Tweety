@@ -66,32 +66,36 @@ export interface LoginDto {
   password: string;
 }
 
-export interface TokensDto {
-  /**
-   * Access token
-   * @example "access-token-string"
-   */
-  accessToken: string;
-  /**
-   * Refresh token
-   * @example "refresh-token-string"
-   */
-  refreshToken: string;
-}
-
-export interface LoginResponseDto {
-  /**
-   * User ID
-   * @example "64b7f8c9e1b2c3d4e5f6a7b8"
-   */
-  _id: string;
+export interface UserDto {
   /**
    * User full name
    * @example "John Doe"
    */
   name: string;
-  /** Authentication tokens */
-  tokens: TokensDto;
+  /**
+   * User email
+   * @example "john@gmail.com"
+   */
+  email: string;
+  /**
+   * User ID
+   * @example "64a7b2f4c9e1f2a5b6c7d8e9"
+   */
+  _id: string;
+}
+
+export interface LoginResponseDto {
+  user: UserDto;
+  /**
+   * Acces Token
+   * @example "accessToken"
+   */
+  accessToken: string;
+  /**
+   * Refresh token
+   * @example "refreshToken"
+   */
+  refreshToken: string;
 }
 
 export interface RefreshTokenDto {

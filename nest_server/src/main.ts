@@ -9,19 +9,19 @@ async function bootstrap() {
     .setTitle('NestJS MongoDB API')
     .setDescription('The NestJS MongoDB API description')
     .setVersion('1.0')
-    .addServer('http://localhost:${process.env.PORT ?? 3000}')
+    .addServer('http://localhost:${process.env.PORT ?? 2000}')
     .addTag('nestjs', 'mongodb')
     .build();
   const documnet = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documnet);
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 2000);
   console.log(
     `MongoDB is running on:`,
     process.env.MONGO_URI,
     'port:',
     process.env.PORT,
   );
-  console.log('swagger.port:' + `${process.env.PORT ?? 3000}`);
+  console.log('swagger.port:' + `${process.env.PORT ?? 2000}`);
 }
 bootstrap();

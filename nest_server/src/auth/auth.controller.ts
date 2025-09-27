@@ -1,17 +1,14 @@
 import {
   Body,
   Controller,
-  Get,
   Post,
-  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { SignUpDto } from './dto/signup.dto';
-import { LoginDto } from './dto/login.dto';
-import { LoginResponseDto } from './dto/loginResponse.dto';
-import { UserDto } from './dto/user.dto';
+import { SignUpDto } from './dto/signupDto';
+import { LoginDto } from './dto/loginDto';
+import { LoginResponseDto } from './dto/loginResponseDto';
 import { AuthGuard } from 'src/_guards/authGuard';
 import { AuthService } from './auth.service';
 

@@ -21,17 +21,14 @@ export const useLogin = () => {
       const response = await login(email, password)
       setIsLoggedIn(true)
       setMessage('Login successful!')
-      setId(response.data._id)
-      setName(response.data.name)
-      setTokens(
-        response.data.tokens.accessToken,
-        response.data.tokens.refreshToken
-      )
+      setId(response.data.user._id)
+      setName(response.data.user.name)
+      setTokens(response.data.accessToken, response.data.refreshToken)
       saveAuth(
-        response.data.tokens.accessToken,
-        response.data.tokens.refreshToken,
-        response.data._id,
-        response.data.name
+        response.data.accessToken,
+        response.data.refreshToken,
+        response.data.user._id,
+        response.data.user.name
       )
       navigateTo('/')
     } catch (error) {

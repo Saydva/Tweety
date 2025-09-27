@@ -7,20 +7,12 @@ export const useAuthApi = () => {
 
   const signup = async (name: string, email: string, password: string) => {
     try {
-      // Use the correct signup/register endpoint and DTO
       const response = await api.auth.authControllerSignUp(
         { name, email, password },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       )
-
       return response
     } catch (error: Error | any) {
-      console.error('Error during registration:', error)
-      alert(
-        'Registration failed. Please try again.' +
-          ' ' +
-          error.response?.data?.message
-      )
       throw error
     }
   }
@@ -30,7 +22,6 @@ export const useAuthApi = () => {
       const response = await api.auth.authControllerLogin({ email, password })
       return response
     } catch (error) {
-      console.error('Error during login:', error)
       throw error
     }
   }
@@ -43,8 +34,7 @@ export const useAuthApi = () => {
       )
       return response
     } catch (error) {
-      console.error('Error during logout:', error)
-      throw error
+      return error
     }
   }
 

@@ -6,14 +6,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schema/user.schema';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDto } from './dto/signup.dto';
 import * as bcrypt from 'bcrypt';
-import { LoginDto } from './dto/login.dto';
+import { User } from './schema/user.schema';
+import { SignUpDto } from './dto/signupDto';
+import { LoginDto } from './dto/loginDto';
 import { RefreshToken } from 'src/auth-refresh/schema/refreshtoken.schema';
-import { LoginResponseDto } from './dto/loginResponse.dto';
+import { LoginResponseDto } from './dto/loginResponseDto';
 
 @Injectable()
 @UsePipes(new ValidationPipe())
@@ -42,19 +42,17 @@ export class AuthService {
 
   async login(loginData: LoginDto): Promise<LoginResponseDto> {
     const { email, password } = loginData;
-    const user = (await this.UserModel.findOne({ email })) as User & {
-      _id: string;
-    };
+    const user = await this.UserModel.findOne({ email });
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new NotFoundException('User not found');
     }
-    const name = user?.name;
-    const _id = user?._id;
+    const name = user.name;
+    const _id = user._id as string;
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       throw new BadRequestException('Wrong password');
     }
-    const tokens = await this._generateTokens(user._id.toString());
+    const tokens = await this._generateTokens(_id);
     const expiryDate = new Date();
     expiryDate.setMinutes(expiryDate.getMinutes() + 30);
     await this.RefreshTokenModel.updateOne(
@@ -62,7 +60,11 @@ export class AuthService {
       { $set: { expiryDate, token: tokens.refreshToken } },
       { upsert: true },
     );
-    return { name, _id, tokens };
+    return {
+      user: { name, email, _id },
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    };
   }
 
   async logout(userId: string) {

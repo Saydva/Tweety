@@ -19,11 +19,10 @@ export const useSignUp = () => {
       setMessage('Sign up successful! Please log in.')
       navigateTo('/login')
     } catch (error) {
-      console.error('Sign up failed:', error)
-      setMessage('Sign up failed. Please try again.')
+      console.log(error)
+      throw alert('Registration failed. Please try again.')
     }
   }
-
   return {
     signUpHandler,
   }

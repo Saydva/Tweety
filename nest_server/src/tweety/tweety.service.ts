@@ -16,7 +16,9 @@ export class TweetyService {
     @InjectModel('User') private readonly userModel: Model<User>,
   ) {}
 
-  async createTweety(createTweetyDto: CreateTweetyDto) {
+  async createTweety(
+    createTweetyDto: CreateTweetyDto,
+  ): Promise<TweetyResponseDto> {
     const user = await this.userModel.findById(createTweetyDto.userId);
     if (!user) {
       throw new NotFoundException('User not found');
@@ -26,12 +28,15 @@ export class TweetyService {
       owner: user.name,
     });
     await newTweety.save();
-    return newTweety;
+    return {
+      _id: newTweety._id.toString(),
+      content: newTweety.content,
+      owner: newTweety.owner,
+    };
   }
 
   async getAllTweeties(): Promise<TweetyResponseDto[]> {
     const response = await this.tweetyModel.find();
-    // mapovanie na DTO, ak treba
     return response.map((t) => ({
       _id: t._id.toString(),
       content: t.content,
