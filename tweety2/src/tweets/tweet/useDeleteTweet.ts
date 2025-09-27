@@ -12,9 +12,7 @@ export const useDeleteTweet = () => {
       await api.tweety.tweetyControllerDeleteTweety(tweetId, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
-      const updatedTweetList = tweetList.filter(
-        (tweet) => tweet._id !== tweetId
-      )
+      const updatedTweetList = tweetList.filter((tweet) => tweet.id !== tweetId)
       setTweetList(updatedTweetList)
     } catch (error) {
       console.error('Failed to delete tweet via API:', error)

@@ -16,7 +16,7 @@ const Tweet = (tweet: TweetyResponseDto) => {
         {isLoggedIn && tweet.owner === name && (
           <button
             onClick={async () => {
-              await deleteTweet(tweet._id)
+              await deleteTweet(tweet.id)
             }}
             className='btn btn-secondary btn-sm'
           >
